@@ -202,6 +202,12 @@ export const TYPE_LABEL: Record<ItemType, string> = {
   'best-practice': 'Best practice',
 }
 
+/** A real picture for an item: its own poster, or YouTube's for the video it plays. Empty when it has neither. */
+export function thumbnail(item: Pick<Item, 'poster_url' | 'youtube_id'>): string {
+  if (item.poster_url) return item.poster_url
+  return item.youtube_id ? `https://i.ytimg.com/vi/${encodeURIComponent(item.youtube_id)}/hqdefault.jpg` : ''
+}
+
 export function duration(seconds: number): string {
   if (!seconds) return ''
   const m = Math.round(seconds / 60)

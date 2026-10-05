@@ -2,7 +2,7 @@
 
     START -> user_context -> conversation
                |-- greeting | small talk | thanks | goodbye | help -> respond -> END
-               '-- task -> guardrails -> understand
+               '-- task -> follow_up -> guardrails -> understand
                        |-- the model reads it as conversation -> respond -> END
                        '-- governance -> route
                        -> prompts | marketplace | learning | community   fan-out (Send)
@@ -12,6 +12,11 @@
 Conversation never reaches a pillar or the planner: respond answers it
 directly, naturally where the data policy lets the model see it, and in a
 fixed line where it does not.
+
+A follow-up ("is there a quick reference for it?") is read with the topic of
+the conversation's earlier request before anything else runs (followup.py), so
+the privacy check, the plan, every search and the usage log see the request as
+it was meant.
 
 The model plans every task, judges each agent's shortlist and writes the
 reply. While it reads the request, the rules' reading of the intents streams
@@ -59,7 +64,7 @@ from ..journeys.store import CardBuilder  # noqa: E402
 from ..journeys.store import store as journey_store  # noqa: E402
 from ..prompts.draft import goal_of, is_authoring  # noqa: E402
 from ..prompts.models import Draft  # noqa: E402
-from . import conversation, governance, guardrails, pillars, planner, synthesis, telemetry  # noqa: E402
+from . import conversation, followup, governance, guardrails, pillars, planner, synthesis, telemetry  # noqa: E402
 from .models import AskRequest, Capability, PillarGroup  # noqa: E402
 
 log = logging.getLogger(__name__)
@@ -90,6 +95,8 @@ class HubState(TypedDict, total=False):
     # The persona's example requests, offered as suggestions.
     examples: list[str]
     conversation: conversation.Gate
+    # The request read with the conversation it continues.
+    reading: followup.Reading
     capabilities: list[Capability]
     guard: guardrails.Guard
     entitlements: guardrails.Entitlements
@@ -143,7 +150,12 @@ def conversation_gate(state: HubState) -> dict:
 
 def entry_router(state: HubState) -> str:
     """Only a task goes on; small talk is answered where it stands."""
-    return "guardrails" if state["conversation"].kind == "task" else "respond"
+    return "follow_up" if state["conversation"].kind == "task" else "respond"
+
+
+def follow_up(state: HubState) -> dict:
+    """A follow-up with no topic of its own, read with the earlier request's."""
+    return {"reading": followup.read(state["conversation"].task_query, state["request"].history)}
 
 
 def after_understanding(state: HubState) -> str:
@@ -196,22 +208,31 @@ def respond(state: HubState) -> dict:
 
 
 def guardrails_check(state: HubState) -> dict:
-    # The request without the greeting in front of it.
-    guard = guardrails.check(state["conversation"].task_query, state["request"].subject)
+    # The request without the greeting in front of it, read with the conversation.
+    guard = guardrails.check(state["reading"].text, state["request"].subject)
     return {"guard": guard, "sanitized_query": guard.masked, "entitlements": guardrails.entitlements()}
+
+
+def _history_view(state: HubState) -> tuple[str, ...]:
+    """The earlier requests as the data policy lets the model see each one:
+    the same check every request gets, and none that the policy keeps from it."""
+    subject = state["request"].subject
+    views = (guardrails.check(h, subject).model_view for h in state["reading"].earlier)
+    return tuple(v for v in views if v is not None)
 
 
 def understand(state: HubState) -> dict:
     """The model plans every task. While it reads the request, the rules'
     reading of the intents streams at once."""
-    p, guard = state["persona"], state["guard"]
+    p, guard, reading = state["persona"], state["guard"], state["reading"]
     journeys, earlier = state["journeys"], state["request"].journey
-    first = planner.first_reading(guard.masked, guard.model_view, journeys, earlier)
+    first = planner.first_reading(guard.masked, guard.model_view, journeys, earlier, reading.follows_up)
     if first is not None:
         _writer()(
             {"type": "task_understood", "intents": first.intents, "planned_by": "rules", "reason": first.reason, "provisional": True}
         )
-    return {"plan": planner.plan(guard.masked, guard.model_view, p.label, journeys, earlier)}
+    history = _history_view(state) if reading.follows_up and guard.model_view is not None else ()
+    return {"plan": planner.plan(guard.masked, guard.model_view, p.label, journeys, earlier, reading.follows_up, history)}
 
 
 def govern(state: HubState) -> dict:
@@ -439,6 +460,7 @@ def build():
     g.add_node("user_context", _timed("user_context", user_context))
     g.add_node("conversation", _timed("conversation", conversation_gate))
     g.add_node("respond", _timed("respond", respond))
+    g.add_node("follow_up", _timed("follow_up", follow_up))
     g.add_node("guardrails", _timed("guardrails", guardrails_check))
     g.add_node("understand", _timed("understand", understand))
     g.add_node("governance", _timed("governance", govern))
@@ -450,8 +472,9 @@ def build():
 
     g.add_edge(START, "user_context")
     g.add_edge("user_context", "conversation")
-    g.add_conditional_edges("conversation", entry_router, ["respond", "guardrails"])
+    g.add_conditional_edges("conversation", entry_router, ["respond", "follow_up"])
     g.add_edge("respond", END)
+    g.add_edge("follow_up", "guardrails")
     g.add_edge("guardrails", "understand")
     g.add_conditional_edges("understand", after_understanding, ["respond", "governance"])
     g.add_edge("governance", "route")

@@ -1,10 +1,22 @@
-import { BookOpen, Check, Clock, FileText, GraduationCap, Layers, Lightbulb, ListChecks, PlayCircle } from 'lucide-react'
-import type { ComponentType } from 'react'
+import {
+  BookOpen,
+  Check,
+  Clock,
+  FileText,
+  GraduationCap,
+  Layers,
+  Lightbulb,
+  ListChecks,
+  PlayCircle,
+  type LucideIcon,
+} from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { TYPE_LABEL, duration, itemHref, type Item, type ItemType } from '../../lib/learning'
+import { TYPE_LABEL, duration, itemHref, thumbnail, type Item, type ItemType } from '../../lib/learning'
+import { providerTone } from '../../lib/visuals'
+import { Cover } from '../Cover'
 import { RatingSummary } from './StarRating'
 
-const ICON: Record<ItemType, ComponentType<{ size?: number; strokeWidth?: number }>> = {
+const ICON: Record<ItemType, LucideIcon> = {
   video: PlayCircle,
   course: GraduationCap,
   confluence: FileText,
@@ -21,24 +33,23 @@ export function ItemCard({ item, fromAgentId, compact }: { item: Item; fromAgent
 
   return (
     <Link to={itemHref(item.id, fromAgentId)} className={`icard icard--${item.type}${compact ? ' icard--compact' : ''}`}>
-      {isVideo && item.poster_url ? (
-        <div className="icard__thumb">
-          <img src={item.poster_url} alt="" loading="lazy" />
-          <span className="icard__play">
-            <PlayCircle size={compact ? 26 : 32} strokeWidth={1.8} />
+      <div className="card-media">
+        <Cover
+          icon={Icon}
+          tone={providerTone(item.source, item.type)}
+          image={thumbnail(item)}
+          badge={item.source === 'Microsoft Learn'}
+          label={item.source || TYPE_LABEL[item.type]}
+          video={isVideo}
+          duration={isVideo ? time : undefined}
+          size={compact ? 'compact' : 'card'}
+        />
+        {item.status === 'in_progress' && (
+          <span className="icard__bar" aria-label={`${item.progress}% complete`}>
+            <span style={{ width: `${Math.max(item.progress, 4)}%` }} />
           </span>
-          {time && <span className="icard__duration">{time}</span>}
-          {item.status === 'in_progress' && (
-            <span className="icard__bar" aria-label={`${item.progress}% complete`}>
-              <span style={{ width: `${item.progress}%` }} />
-            </span>
-          )}
-        </div>
-      ) : (
-        <div className="icard__cover" aria-hidden="true">
-          <Icon size={compact ? 30 : 44} strokeWidth={1.4} />
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="icard__body">
         <span className="icard__meta">

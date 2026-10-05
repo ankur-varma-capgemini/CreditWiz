@@ -1,7 +1,8 @@
-import { ArrowRight, Bell } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { ArrowRight, ArrowUp, Bell, MessagesSquare } from 'lucide-react'
+import { useEffect, useState, type FormEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { fetchNotifications, isAbort } from '../lib/api'
+import { useChats } from '../lib/chats'
 import { useHub } from '../lib/hub'
 import { fetchJourneys, type JourneysHome } from '../lib/journeys'
 import { fetchMarketplaceHome, type Agent } from '../lib/marketplace'
@@ -10,7 +11,7 @@ import type { Notification } from '../lib/types'
 import '../home.css'
 import '../journeys.css'
 import { ForYou } from './home/ForYou'
-import { HomeChat } from './home/HomeChat'
+import { HubMark } from './home/HubMark'
 import { JourneyGrid } from './journeys/JourneyGrid'
 
 function timeAgo(iso: string): string {
@@ -21,22 +22,60 @@ function timeAgo(iso: string): string {
   return d === 1 ? 'yesterday' : `${d}d ago`
 }
 
-/**
- * Home is the hub's front door, not the marketplace's: one conversation that
- * takes any request. It is where the hub's router agent (LangGraph, each
- * pillar an agent) plugs in later; today /api/ask reads the intent and the job,
- * and the hub search answers the rest.
- */
-const EXAMPLES = [
-  'Screen a client against sanctions lists',
-  'Who ultimately owns a company',
-  'Summarise a contract',
-  'Check W-8 and FATCA classification',
-]
+/** "Good morning" before noon, "Good afternoon" before six, then "Good evening". */
+function greeting(hour = new Date().getHours()) {
+  return hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
+}
 
+/**
+ * A question typed on home goes straight to the Super Agent, already asked:
+ * the conversation happens there, on its own page, and home stays home.
+ */
+function AskBar({ conversations }: { conversations: number }) {
+  const navigate = useNavigate()
+  const [q, setQ] = useState('')
+  function ask(e: FormEvent) {
+    e.preventDefault()
+    const text = q.trim()
+    if (text) navigate(`/super-agent?q=${encodeURIComponent(text)}`)
+  }
+  return (
+    <div className="askbar-wrap">
+      <form className="askbar" role="search" aria-label="Ask the Super Agent" onSubmit={ask}>
+        <span className="askbar__mark">
+          <HubMark size={18} />
+        </span>
+        <input
+          className="askbar__input"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Ask the Super Agent about a task"
+          aria-label="Ask the Super Agent"
+          maxLength={500}
+        />
+        <button type="submit" className="askbar__go" disabled={!q.trim()} aria-label="Ask">
+          <span className="askbar__go-label">Ask</span>
+          <ArrowUp size={15} strokeWidth={2.4} aria-hidden="true" />
+        </button>
+      </form>
+      <Link to="/super-agent" className="askbar__link">
+        <MessagesSquare size={14} strokeWidth={2.2} aria-hidden="true" />
+        {conversations ? `Your conversations (${conversations})` : 'Open the Super Agent'}
+        <ArrowRight size={14} strokeWidth={2.4} aria-hidden="true" />
+      </Link>
+    </div>
+  )
+}
+
+/**
+ * Home: the person's own front page. What to pick up next, their work, the
+ * agents picked for them and what is new. The Super Agent has a page of its
+ * own, below Home in the sidebar; a question asked here opens there.
+ */
 export function HomePage() {
   const data = useHub()
   const { persona } = usePersona()
+  const conversations = useChats(data.user.id).length
   const [work, setWork] = useState<JourneysHome | null>(null)
   const [picked, setPicked] = useState<Agent[] | null>(null)
   const [error, setError] = useState('')
@@ -163,18 +202,16 @@ export function HomePage() {
     </>
   )
 
-  // Keyed by user and persona, so a persona preview starts its own conversation.
-  const key = `mufg.home-chat.${data.user.id}.${persona}`
   return (
-    <HomeChat
-      key={key}
-      storeKey={key}
-      firstName={data.user.first_name}
-      initials={data.user.initials}
-      persona={persona}
-      personaLabel={work?.persona_label ?? data.user.persona.label}
-      examples={work?.examples.length ? work.examples : EXAMPLES}
-      below={below}
-    />
+    <div className="content home">
+      <section className="dash-hero" aria-labelledby="dash-title">
+        <h1 className="dash-hero__title" id="dash-title">
+          {greeting()}, {data.user.first_name}
+        </h1>
+        <p className="dash-hero__sub">Your work, your learning and your communities, in one place.</p>
+        <AskBar conversations={conversations} />
+      </section>
+      {below}
+    </div>
   )
 }

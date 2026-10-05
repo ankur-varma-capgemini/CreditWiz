@@ -31,7 +31,7 @@ export function Composer({ value, onChange, onSend, busy, personaLabel, placehol
   return (
     <form
       className="composer"
-      aria-label="Ask the AI Hub"
+      aria-label="Ask the Super Agent"
       onSubmit={(e) => {
         e.preventDefault()
         onSend(value)
@@ -50,7 +50,7 @@ export function Composer({ value, onChange, onSend, busy, personaLabel, placehol
           }
         }}
         placeholder={placeholder}
-        aria-label="Ask the AI Hub"
+        aria-label="Ask the Super Agent"
       />
       <div className="composer__tools">
         {personaLabel && (

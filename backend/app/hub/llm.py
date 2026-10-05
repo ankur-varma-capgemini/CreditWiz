@@ -140,6 +140,8 @@ Return:
 - intents: every intent the request contains, primary first. Most requests have one; list a second only when the request asks for two different things.
 - objective: what they are trying to achieve, in one short sentence in their words.
 - activity: the id of the employee's job below that the request belongs to, or null. A follow-up that names no job continues the earlier one, if there was one.
+- A follow-up is read against their earlier requests, when they are given: "it", "that" or "the same" mean what those were about, and "what about X" asks the earlier request again for X. Write its subqueries about that topic.
+- A request ending in " — " and a topic was read with the topic of their earlier request: the topic is what it is about.
 - needs: up to three short phrases.
 - sensitivity: internal, unless the request involves a client or deal (client_confidential) or material non-public information (confidential).
 - subqueries: one for each place worth searching, at most four. Write each as a short search of that place's catalogue. When the request is already clear, reuse its words and set reformulated to false. Rewrite only when a conversational or vague request would retrieve poorly, and then set reformulated to true.
@@ -150,10 +152,17 @@ The employee is a {persona}. Their jobs:
 {jobs}"""
 
 
-def plan(sanitized: str, persona: str, journeys: list[Journey], earlier: str | None) -> ModelPlan | None:
+def plan(
+    sanitized: str, persona: str, journeys: list[Journey], earlier: str | None, history: tuple[str, ...] = ()
+) -> ModelPlan | None:
+    """`earlier` is the job the conversation was on, and `history` its earlier
+    requests, oldest first, each as the data policy lets the model see it."""
     m = model()
     jobs = "\n".join(f"- {j.id}: {j.title}. {j.summary}" for j in journeys) or "(none mapped yet)"
     messages, extra = _messages(m)
+    context = [f"the job: {earlier}"] if earlier else []
+    if history:
+        context.append("their earlier requests, oldest first: " + "; ".join(f'"{h}"' for h in history))
 
     def run():
         response = messages.parse(
@@ -163,7 +172,7 @@ def plan(sanitized: str, persona: str, journeys: list[Journey], earlier: str | N
             messages=[
                 {
                     "role": "user",
-                    "content": f"Request: {sanitized}\nEarlier in this conversation: {earlier or 'nothing yet'}",
+                    "content": f"Request: {sanitized}\nEarlier in this conversation: {'; '.join(context) or 'nothing yet'}",
                 }
             ],
             output_format=ModelPlan,

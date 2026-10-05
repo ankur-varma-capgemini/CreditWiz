@@ -4,24 +4,29 @@
    transcript that fills the screen with the composer resting at its foot.
    ========================================================================== */
 
+/* A conversation fills the page below the top bar, and the page is what
+   scrolls: one scrollbar, at the window's edge, never one inside the column. */
 .home--talking {
-  padding-bottom: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
 }
 
 .chat {
   max-width: 860px;
   margin: 0 auto;
-  padding-top: var(--s-6);
+  padding-top: var(--s-8);
   text-align: left;
 }
 
 .chat__title {
   margin: 0;
-  font-size: 28px;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-size: 32px;
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
   color: var(--ink-950);
+  text-wrap: balance;
 }
 
 .chat__sub {
@@ -32,22 +37,26 @@
 
 /* ---- composer ---- */
 
+/* The one place to start: a raised card, calm in focus rather than alarm red. */
 .composer {
   max-width: none;
-  margin: var(--s-4) 0 0;
-  padding: 10px 10px 8px 14px;
+  margin: var(--s-5) 0 0;
+  padding: 14px 12px 10px 16px;
   text-align: left;
   background: var(--surface);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-2);
   transition:
     border-color var(--fast),
     box-shadow var(--fast);
 }
 
 .composer:focus-within {
-  border-color: var(--red);
-  box-shadow: 0 0 0 3px var(--red-tint);
+  border-color: var(--ink-300);
+  box-shadow:
+    var(--e-2),
+    0 0 0 4px var(--ink-100);
 }
 
 .composer__input {
@@ -81,11 +90,12 @@
 .composer__pill {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  height: 22px;
-  padding: 0 6px;
-  border-radius: 4px;
-  background: var(--ink-100);
+  gap: 5px;
+  height: 24px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-full);
+  background: var(--ink-50);
   font-size: var(--t-xs);
   font-weight: 500;
   color: var(--ink-700);
@@ -98,17 +108,24 @@
 
 .composer__send {
   flex: none;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   margin-left: auto;
   display: grid;
   place-items: center;
   border: 0;
-  border-radius: var(--r-sm);
+  border-radius: var(--r-full);
   background: var(--red);
   color: #fff;
   cursor: pointer;
-  transition: background var(--fast);
+  box-shadow: 0 1px 2px rgba(179, 26, 31, 0.25);
+  transition:
+    background var(--fast),
+    transform var(--fast);
+}
+
+.composer__send:active:not(:disabled) {
+  transform: scale(0.94);
 }
 
 .composer__send:hover:not(:disabled) {
@@ -119,6 +136,7 @@
   opacity: 1;
   background: var(--ink-100);
   color: var(--ink-400);
+  box-shadow: none;
   cursor: not-allowed;
 }
 
@@ -156,6 +174,71 @@
   color: var(--ink-700);
 }
 
+/* Home's starting requests: an even grid of cards, each with what it is about. */
+.suggests--start {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: var(--s-4);
+}
+
+.suggest--start {
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 14px 8px 9px;
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
+  color: var(--ink-800);
+  font-weight: 500;
+  text-align: left;
+  transition:
+    border-color var(--base),
+    box-shadow var(--base),
+    transform var(--base),
+    color var(--base);
+}
+
+.suggest__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--ink-50);
+  color: var(--ink-600);
+  transition:
+    background var(--base),
+    border-color var(--base),
+    color var(--base);
+}
+
+.suggest--start:hover {
+  border-color: var(--ink-200);
+  box-shadow: var(--e-2);
+  color: var(--ink-950);
+  transform: translateY(-1px);
+}
+
+.suggest--start:hover .suggest__icon {
+  border-color: var(--red-tint-2);
+  background: var(--red-tint);
+  color: var(--red);
+}
+
+@media (max-width: 640px) {
+  .suggests--start {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .suggest--start:hover {
+    transform: none;
+  }
+}
+
 .suggest--chip {
   min-height: 32px;
   padding: 0 13px;
@@ -170,80 +253,242 @@
   color: var(--ink-950);
 }
 
-/* What home shows under the composer before a conversation starts. */
-.home-below {
-  margin-top: 56px;
+/* ---- home: the person's own front page ---- */
+
+.dash-hero {
+  margin: var(--s-2) 0 40px;
+}
+
+.dash-hero__title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--ink-950);
+  text-wrap: balance;
+}
+
+.dash-hero__sub {
+  margin: 6px 0 0;
+  font-size: var(--t-md);
+  color: var(--ink-600);
+}
+
+.askbar-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin-top: var(--s-5);
+}
+
+/* The Super Agent, offered from home: a question here opens its page, already asked. */
+.askbar {
+  display: flex;
+  flex: 1 1 520px;
+  align-items: center;
+  gap: 10px;
+  max-width: 760px;
+  height: 54px;
+  padding: 0 7px 0 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-full);
+  background: var(--surface);
+  box-shadow: var(--e-2);
+  transition:
+    border-color var(--fast),
+    box-shadow var(--fast);
+}
+
+.askbar:focus-within {
+  border-color: var(--ink-300);
+  box-shadow:
+    var(--e-2),
+    0 0 0 4px var(--ink-100);
+}
+
+.askbar__mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+}
+
+.askbar__input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--ink-900);
+  font: inherit;
+  font-size: var(--t-md);
+}
+
+.askbar__input::placeholder {
+  color: var(--ink-500);
+}
+
+.askbar__go {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: var(--r-full);
+  background: var(--red);
+  color: #fff;
+  font: inherit;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--fast);
+}
+
+.askbar__go:hover:not(:disabled) {
+  background: var(--red-700);
+}
+
+.askbar__go:disabled {
+  background: var(--ink-100);
+  color: var(--ink-400);
+  cursor: not-allowed;
+}
+
+/* On a phone the input needs the room more than the button needs its word. */
+@media (max-width: 520px) {
+  .askbar__go {
+    width: 40px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .askbar__go-label {
+    display: none;
+  }
+}
+
+.askbar__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--link);
+}
+
+.askbar__link:hover {
+  text-decoration: underline;
+}
+
+/* ---- the Super Agent's own page ---- */
+
+.chat__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 4px 12px 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-full);
+  background: var(--surface);
+  box-shadow: var(--e-1);
+  color: var(--ink-700);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 /* ---- the conversation ---- */
 
+/* Grows to the foot of the page, so a short conversation still has its
+   composer at the bottom of the screen. */
 .chat.is-talking {
   display: flex;
+  flex: 1;
   flex-direction: column;
-  height: calc(100dvh - var(--topbar-h, 64px) - var(--s-6) - var(--s-4));
+  width: 100%;
   padding-top: 0;
 }
 
+/* Stays under the top bar while the conversation scrolls, so its title (which
+   switches conversations) and "New conversation" are always one click away. */
 .chat__bar {
+  position: sticky;
+  top: var(--topbar-h, 64px);
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--s-3);
-  margin-bottom: var(--s-3);
-  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-4);
+  padding: var(--s-3) 0;
   border-bottom: 1px solid var(--line);
-}
-
-.chat__bar-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: var(--t-md);
-  font-weight: 600;
-  color: var(--ink-900);
-}
-
-.chat__bar-title svg {
-  color: var(--ink-700);
+  /* Frosted: what scrolls beneath it softens rather than vanishing at an edge. */
+  background: rgba(244, 245, 247, 0.94);
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
 }
 
 .chat__new {
+  flex: none;
   display: inline-flex;
   align-items: center;
   gap: 7px;
   height: 34px;
-  padding: 0 13px;
+  padding: 0 14px;
   border: 1px solid var(--line);
-  border-radius: var(--r-sm);
+  border-radius: var(--r-full);
   background: var(--surface);
+  box-shadow: var(--e-1);
   font: inherit;
   font-size: var(--t-sm);
   font-weight: 600;
-  color: var(--ink-700);
+  color: var(--ink-800);
   cursor: pointer;
+  transition:
+    border-color var(--fast),
+    box-shadow var(--fast);
 }
 
 .chat__new:hover {
-  border-color: var(--ink-400);
+  border-color: var(--ink-300);
+  box-shadow: var(--e-2);
   color: var(--ink-950);
 }
 
+/* No scrolling of its own: the transcript shares the column's edges with the
+   title above it and the composer below. */
 .chatlog {
   flex: 1;
-  min-height: 0;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 4px 8px 12px 0;
+  padding: 4px 0 12px;
   text-align: left;
 }
 
 .msg {
   display: flex;
   align-items: flex-start;
-  gap: 11px;
+  gap: 12px;
   max-width: 88%;
+  animation: msg-in 260ms var(--out) both;
+}
+
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msg {
+    animation: none;
+  }
 }
 
 .msg--me {
@@ -257,50 +502,63 @@
 
 .msg__who {
   flex: none;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   display: grid;
   place-items: center;
+  border: 1px solid var(--line);
   border-radius: 50%;
-  background: var(--ink-100);
-  color: #fff;
+  background: var(--surface);
+  box-shadow: var(--e-1);
+  color: var(--ink-800);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .msg--me .msg__who {
+  border-color: var(--ink-900);
   background: var(--ink-900);
+  color: #fff;
 }
 
 .bubble {
   min-width: 0;
-  padding: 11px 14px;
+  padding: 12px 16px;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  border-top-left-radius: 4px;
+  border-radius: var(--r-lg);
   background: var(--surface);
   font-size: var(--t-base);
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--ink-900);
 }
 
+/* The hub's answer: a crisp card, the transcript's main surface. */
 .msg--ai .bubble {
   flex: 1;
-  background: var(--ink-50);
+  padding: 16px 18px;
+  border-top-left-radius: 4px;
+  box-shadow: var(--e-1);
 }
 
 .msg--me .bubble {
+  padding: 10px 16px;
   border-color: var(--ink-900);
-  border-top-left-radius: 14px;
-  border-top-right-radius: 4px;
+  /* The squared corner points at its avatar, as the answer's does. */
+  border-radius: 18px 4px 18px 18px;
   background: var(--ink-900);
   color: #fff;
 }
 
+/* The composer stays at the foot of the screen while the page scrolls, with
+   the transcript fading out beneath it rather than cut off by an edge. */
 .dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
   flex: none;
-  padding-top: var(--s-2);
-  background: var(--canvas);
+  padding: var(--s-4) 0 var(--s-4);
+  background: linear-gradient(to bottom, transparent, var(--canvas) var(--s-4));
 }
 
 .dock .composer {

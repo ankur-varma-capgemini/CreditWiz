@@ -8,6 +8,8 @@ import {
   type KnowledgeSources,
   type SystemKind,
 } from '../../lib/knowledge'
+import { toneFor } from '../../lib/visuals'
+import { Cover } from '../Cover'
 import { PageBand } from '../PageBand'
 import '../../knowledge.css'
 
@@ -71,9 +73,7 @@ export function KnowledgeSourcesPage() {
               return (
                 <li key={s.id} className="panel ks-card">
                   <div className="ks-card__head">
-                    <span className="pick__icon" aria-hidden="true">
-                      <Icon size={18} strokeWidth={2} />
-                    </span>
+                    <Cover icon={Icon} tone={toneFor(s.kind)} size="tile" />
                     <div>
                       <h3 className="panel__title">{s.name}</h3>
                       <p className="ks-kind">{SYSTEM_KIND_LABEL[s.kind]}</p>

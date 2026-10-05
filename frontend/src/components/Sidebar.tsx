@@ -1,4 +1,4 @@
-import { CircleHelp, Home, Plug } from 'lucide-react'
+import { CircleHelp, Home, Plug, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { PillarGlyph } from '../lib/icons'
@@ -67,6 +67,11 @@ export function Sidebar({ pillars, open = false, onClose }: Props) {
         <NavLink to="/" end className={cls('nav__item nav__item--home')}>
           <Home className="nav__icon" strokeWidth={2.2} />
           <span className="nav__label">Home</span>
+        </NavLink>
+        {/* The Super Agent: one conversation across every pillar, on a page of its own. */}
+        <NavLink to="/super-agent" className={cls('nav__item nav__item--home')}>
+          <Sparkles className="nav__icon" strokeWidth={2.2} />
+          <span className="nav__label">Super Agent</span>
         </NavLink>
 
         <div className="nav__section">Workspace</div>

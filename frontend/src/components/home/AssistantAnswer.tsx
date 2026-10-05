@@ -5,6 +5,7 @@ import {
   Check,
   ChevronRight,
   Copy,
+  CornerDownRight,
   GraduationCap,
   Info,
   Layers,
@@ -192,10 +193,17 @@ function PillarGroupView({ group, onOpen }: { group: PillarGroup; onOpen?: (hit:
   )
 }
 
-function ContextChips({ task }: { task: TaskContext }) {
-  if (!task.subject && task.sensitivity === 'internal') return null
+function ContextChips({ task, followsOn = '' }: { task: TaskContext; followsOn?: string }) {
+  if (!followsOn && !task.subject && task.sensitivity === 'internal') return null
   return (
     <p className="answer__context">
+      {/* A follow-up read with the conversation's earlier topic says which. */}
+      {followsOn && (
+        <span className="ctxchip" title="Read with what you asked earlier in this conversation">
+          <CornerDownRight size={13} strokeWidth={2.2} aria-hidden="true" />
+          Following on: <b>{followsOn}</b>
+        </span>
+      )}
       {task.subject && (
         <span className="ctxchip">
           <Briefcase size={13} strokeWidth={2.2} aria-hidden="true" />
@@ -601,7 +609,9 @@ export function AssistantAnswer({
   // Pages only from the pillars the plan asked: a request for an agent is not
   // answered with Community's pages too.
   const asked = pillars.filter((p) => (plan.selected_pillars as string[]).includes(p.id))
-  const pages = activity ? [] : matchSections(asked, turn.q, SHOWN).filter((h) => !listed.has(h.section.href))
+  // A follow-up's pages are matched with the topic it was read with, as its searches were.
+  const matched = plan.follows_on ? `${turn.q} ${plan.follows_on}` : turn.q
+  const pages = activity ? [] : matchSections(asked, matched, SHOWN).filter((h) => !listed.has(h.section.href))
   const nothing = !activity && !groups.length && !pages.length
   // Nothing matched a request that named no task: the hub says what it can do instead.
   const offerCapabilities = a.capabilities.length > 0
@@ -649,7 +659,7 @@ export function AssistantAnswer({
         {task.intent_cue && <span className="answer__cue">because you said &ldquo;{task.intent_cue}&rdquo;</span>}
       </p>
 
-      <ContextChips task={task} />
+      <ContextChips task={task} followsOn={plan.follows_on} />
 
       <p className="answer__reply">{a.reply}</p>
 

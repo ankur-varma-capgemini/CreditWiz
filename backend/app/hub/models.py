@@ -1,6 +1,6 @@
 """What the home assistant receives and returns."""
 
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, Field
 
@@ -91,6 +91,10 @@ class Plan(BaseModel):
     timings_ms: dict[str, int]
     # The model used for either call; blank when none was.
     model: str = ""
+    # A follow-up with no topic of its own ("any agents too?") is read with
+    # the topic of the conversation's earlier request: that topic, as typed.
+    # Shown back to the person who typed it; blank when nothing carried over.
+    follows_on: str = ""
 
 
 class AskRequest(BaseModel):
@@ -103,6 +107,10 @@ class AskRequest(BaseModel):
     # name neither. Session context: sent by the client, never stored here.
     journey: str | None = None
     subject: str | None = Field(default=None, max_length=120)
+    # The conversation's earlier requests, oldest first, for a follow-up to be
+    # read with ("is there a quick reference for it?"). Session context like
+    # the two above: held in the browser, sent with each request, never stored.
+    history: list[Annotated[str, Field(max_length=500)]] = Field(default=[], max_length=8)
     # The conversation, for telemetry. A new one starts when this is absent.
     session: str | None = Field(default=None, pattern=r"^[a-f0-9-]{8,64}$")
 

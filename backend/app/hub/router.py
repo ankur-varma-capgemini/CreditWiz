@@ -97,6 +97,7 @@ def _response(req: AskRequest, s: dict, took: int) -> AskResponse:
             governance=g.notes,
             timings_ms={**s["timings"], "total": took},
             model=llm.model() if used_model else "",
+            follows_on=s["reading"].topic,
         ),
         recommended=s["toolkit"][:RECOMMENDED],
         pillars=[results[p] for p in s["selected_pillars"] if p in results],

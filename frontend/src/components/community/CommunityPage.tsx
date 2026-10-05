@@ -14,6 +14,7 @@ import {
   Star,
   ThumbsUp,
   UserCheck,
+  Users,
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
@@ -36,6 +37,8 @@ import {
 } from '../../lib/community'
 import { fetchItems, type Item } from '../../lib/learning'
 import { usePersona } from '../../lib/personaContext'
+import { subjectIcon, toneFor } from '../../lib/visuals'
+import { Cover } from '../Cover'
 import { CourseDrawer } from '../learning/CourseDrawer'
 import { CourseCard } from '../learning/ProviderShelves'
 import '../../community.css'
@@ -438,10 +441,13 @@ export function CommunityPage() {
           {directory ? (
             <div className="cm-grid">
               {(home?.communities ?? []).map((c) => (
-                <article key={c.id} className="cm-card">
-                  <span className="cm-dot cm-dot--lg" aria-hidden="true">
-                    {initials(c.name)}
-                  </span>
+                <article key={c.id} className="cm-card cm-card--cover">
+                  <Cover
+                    icon={subjectIcon(`${c.name} ${c.topics.join(' ')}`, Users)}
+                    tone={toneFor(c.id)}
+                    label={c.privacy === 'private' ? 'Private' : 'Public'}
+                    size="compact"
+                  />
                   <h2 className="cm-card__title">{c.name}</h2>
                   <p className="cm-card__text">{c.description}</p>
                   <p className="cm-card__facts">

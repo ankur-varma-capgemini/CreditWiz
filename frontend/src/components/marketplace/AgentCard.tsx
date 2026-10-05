@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { track } from '../../lib/context'
 import { STATUS_LABEL, type Agent } from '../../lib/marketplace'
 import { usePersona } from '../../lib/personaContext'
+import { subjectIcon, toneFor } from '../../lib/visuals'
+import { Cover } from '../Cover'
 
 interface Props {
   agent: Agent
@@ -23,6 +25,7 @@ function AccessIcon({ type }: { type: Agent['access']['type'] }) {
 export function AgentCard({ agent, why, reasons, source, compact, hideForYou }: Props) {
   const { persona } = usePersona()
   const forYou = !hideForYou && agent.personas.includes(persona)
+  const domain = agent.business_domains[0] ?? ''
   return (
     <Link
       to={`/marketplace/agents/${agent.id}`}
@@ -37,17 +40,20 @@ export function AgentCard({ agent, why, reasons, source, compact, hideForYou }: 
         })
       }
     >
-      <div className="acard__top">
-        <span className="acard__kicker">
-          {agent.business_domains[0]}
-          <span className="acard__dot">•</span>
-          <span className={`status status--${agent.status}`}>{STATUS_LABEL[agent.status]}</span>
-        </span>
-        {forYou && (
-          <span className="acard__foryou" title="Built for your persona">
-            For you
+      <div className="card-head">
+        <Cover icon={subjectIcon(domain)} tone={toneFor(domain || agent.id)} size="tile" />
+        <div className="acard__top">
+          <span className="acard__kicker">
+            {domain}
+            <span className="acard__dot">•</span>
+            <span className={`status status--${agent.status}`}>{STATUS_LABEL[agent.status]}</span>
           </span>
-        )}
+          {forYou && (
+            <span className="acard__foryou" title="Built for your persona">
+              For you
+            </span>
+          )}
+        </div>
       </div>
       <h3 className="acard__name">{agent.name}</h3>
       <p className="acard__tagline">{agent.tagline}</p>

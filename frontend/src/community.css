@@ -502,6 +502,17 @@
   box-shadow: var(--e-1);
 }
 
+/* A community's card opens with its cover, edge to edge, as in Viva Engage. */
+.cm-card--cover {
+  overflow: hidden;
+  padding-top: 0;
+}
+
+.cm-card--cover > .cover {
+  align-self: stretch;
+  margin: 0 calc(-1 * var(--s-5)) var(--s-2);
+}
+
 .cm-card__title {
   margin: var(--s-1) 0 0;
   font-size: var(--t-md);

@@ -25,6 +25,18 @@ export function TopBar({ user, onMenu }: Props) {
   const navigate = useNavigate()
   const create = useCreate()
 
+  // Its height, for what sticks beneath it (a conversation's header), at any width.
+  const bar = useRef<HTMLElement>(null)
+  useEffect(() => {
+    const el = bar.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const publish = () => document.documentElement.style.setProperty('--topbar-h', `${el.offsetHeight}px`)
+    publish()
+    const watch = new ResizeObserver(publish)
+    watch.observe(el)
+    return () => watch.disconnect()
+  }, [])
+
   // ---- search
   const [query, setQuery] = useState('')
   const [searchError, setSearchError] = useState('')
@@ -154,7 +166,7 @@ export function TopBar({ user, onMenu }: Props) {
   const showResults = searchOpen && !!query.trim() && results !== null
 
   return (
-    <header className="topbar">
+    <header className="topbar" ref={bar}>
       <button type="button" className="topbar__menu" onClick={onMenu} aria-label="Open navigation">
         <Menu size={20} strokeWidth={2.2} />
       </button>

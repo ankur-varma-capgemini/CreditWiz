@@ -64,18 +64,18 @@
   --s-8: 32px;
   --s-10: 40px;
 
-  /* radius */
+  /* radius: controls 8, cards 12, sheets 16, pills round */
   --r-sm: 6px;
-  --r-md: 6px;
-  --r-lg: 8px;
-  --r-xl: 8px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
   --r-full: 999px;
 
-  /* elevation — sharp and restrained */
-  --e-1: 0 1px 2px rgba(13, 14, 17, 0.05);
-  --e-2: 0 1px 2px rgba(13, 14, 17, 0.05), 0 4px 12px rgba(13, 14, 17, 0.06);
-  --e-3: 0 8px 28px rgba(13, 14, 17, 0.12);
-  --e-4: 0 16px 48px rgba(13, 14, 17, 0.18);
+  /* elevation: soft and layered, a hairline close in and a wide, faint fall-off */
+  --e-1: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --e-2: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 14px rgba(16, 24, 40, 0.06);
+  --e-3: 0 2px 6px rgba(16, 24, 40, 0.05), 0 14px 36px rgba(16, 24, 40, 0.12);
+  --e-4: 0 4px 12px rgba(16, 24, 40, 0.06), 0 24px 56px rgba(16, 24, 40, 0.18);
 
   /* motion */
   --fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -83,7 +83,7 @@
   --out: 240ms cubic-bezier(0.16, 1, 0.3, 1);
 
   --sidebar-w: 252px;
-  --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --font: 'Inter Variable', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
   color-scheme: light;
 }
 
@@ -169,11 +169,13 @@ h3 {
   min-width: 0;
 }
 
+/* Centred on a wide screen, so the space either side is even rather than all on the right. */
 .content {
   flex: 1;
   padding: var(--s-6) var(--s-8) var(--s-10);
   max-width: 1560px;
   width: 100%;
+  margin: 0 auto;
   animation: rise var(--out) both;
 }
 

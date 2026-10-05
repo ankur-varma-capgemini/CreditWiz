@@ -2992,7 +2992,8 @@
       "review_status": "approved",
       "reviewed_at": "2026-10-02",
       "owner": "Microsoft Learn",
-      "source_kind": "sample"
+      "source_kind": "sample",
+      "poster_url": "https://learn.microsoft.com/en-us/training/achievements/intro-generative-ai-explore-basics.svg"
     },
     {
       "id": "mslearn-copilot-chat",
@@ -3108,7 +3109,8 @@
       "review_status": "approved",
       "reviewed_at": "2026-10-02",
       "owner": "Microsoft Learn",
-      "source_kind": "sample"
+      "source_kind": "sample",
+      "poster_url": "https://learn.microsoft.com/en-us/training/achievements/power-virtual-agent-bots.svg"
     },
     {
       "id": "mslearn-generative-ai-apps-azure",
@@ -3180,7 +3182,8 @@
       "review_status": "approved",
       "reviewed_at": "2026-10-02",
       "owner": "Microsoft Learn",
-      "source_kind": "sample"
+      "source_kind": "sample",
+      "poster_url": "https://learn.microsoft.com/en-us/training/achievements/embrace-responsible-ai-principles-practices.svg"
     },
     {
       "id": "mslearn-explore-responsible-ai",

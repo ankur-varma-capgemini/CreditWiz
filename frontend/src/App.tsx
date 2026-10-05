@@ -20,6 +20,7 @@ import { AgentsListPage } from './components/marketplace/AgentsListPage'
 import { MarketplacePage } from './components/marketplace/MarketplacePage'
 import { PillarPage } from './components/PillarPage'
 import { SearchPage } from './components/SearchPage'
+import { SuperAgentPage } from './components/SuperAgentPage'
 import { Sidebar } from './components/Sidebar'
 import { HelpPage, NotFound, SettingsPage } from './components/SimplePages'
 import { TopBar } from './components/TopBar'
@@ -104,6 +105,7 @@ function Shell({ state, retry }: { state: LoadState; retry: () => void }) {
                 <TopBar user={state.data.user} onMenu={() => setNavOpen(true)} />
                 <Routes>
                   <Route path="/" element={<HomePage />} />
+                  <Route path="/super-agent" element={<SuperAgentPage />} />
                   <Route path="/help" element={<HelpPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/marketplace" element={<MarketplacePage />} />

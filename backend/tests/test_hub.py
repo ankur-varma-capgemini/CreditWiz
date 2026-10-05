@@ -36,7 +36,7 @@ def model(monkeypatch):
     monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
     sent: dict[str, list] = {"plan": [], "write": []}
 
-    def plan(sanitized, persona, journeys, earlier):
+    def plan(sanitized, persona, journeys, earlier, history=()):
         sent["plan"].append(sanitized)
         return llm.ModelPlan(small_talk=False, 
             intents=["find", "learn"],

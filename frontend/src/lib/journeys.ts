@@ -189,6 +189,8 @@ export interface Plan {
   governance: string[]
   timings_ms: Record<string, number>
   model: string
+  /** The earlier topic a follow-up was read with ("IFRS 9"); blank when it stood alone. */
+  follows_on: string
 }
 
 /** What the conversation gate made of a request. Only a task is planned and searched. */
@@ -245,6 +247,8 @@ export interface AskContext {
   journey?: string
   subject?: string
   session?: string
+  /** The conversation's earlier requests, oldest first, for a follow-up ("is there one for it?") to be read with. */
+  history?: string[]
 }
 
 /** What the hub sends while it answers, in the order it happens. */
@@ -348,6 +352,7 @@ export async function askHubStream(
       journey: context.journey || null,
       subject: context.subject || null,
       session: context.session || null,
+      history: context.history ?? [],
     }),
     signal,
   })

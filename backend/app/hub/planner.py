@@ -13,10 +13,9 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field, replace
 
-from ..journeys.intent import ROUTING_STEMS, classify_all, match_journey
+from ..journeys.intent import classify_all, match_journey
 from ..journeys.models import Intent, Journey, Sensitivity
-from ..text import subject_stems
-from . import llm
+from . import followup, llm
 from .models import Pillar, Source, SubQuery
 
 # Which pillars answer which intent, when rules plan.
@@ -33,7 +32,8 @@ PILLARS_FOR: dict[Intent, tuple[Pillar, ...]] = {
 _KINDS: dict[Pillar, str] = {
     "prompts": r"prompts?|templates?",
     "marketplace": r"agents?|tools?",
-    "learning": r"courses?|training|videos?|tutorials?",
+    # Quick references, cheat sheets, checklists and runbooks are Learning's.
+    "learning": r"courses?|training|videos?|tutorials?|quick\s?references?|cheat\s?sheets?|checklists?|runbooks?",
     "community": r"experts?|communit(?:y|ies)|forums?",
 }
 NAMED: tuple[tuple[Pillar, re.Pattern[str]], ...] = tuple(
@@ -55,16 +55,15 @@ _ASKED_FOR: tuple[tuple[Pillar, re.Pattern[str]], ...] = tuple(
 # The intent that asking for each kind of thing carries.
 _KIND_INTENT: dict[Pillar, Intent] = {"prompts": "find", "marketplace": "find", "learning": "learn", "community": "ask"}
 _NARROWABLE = ("find", "improve")
-# Words that point back at what the conversation was on.
-_BACK = re.compile(r"\b(?:this|that|it|its|them|these|those|same)\b", re.IGNORECASE)
 
 
 def follows_up(sanitized: str) -> bool:
     """True when a request continues the conversation's job: it points back
     at it ("and who owns it?") or has no subject of its own ("who can help?").
     "Find me a compliance agent" after a question about coverage planning is a
-    new request, not more of the last one."""
-    return bool(_BACK.search(sanitized)) or not [s for s in subject_stems(sanitized) if s not in ROUTING_STEMS]
+    new request, not more of the last one. The same test decides when a
+    follow-up is read with the conversation's topic (followup.py)."""
+    return followup.follows_up(sanitized)
 
 
 @dataclass
@@ -125,16 +124,20 @@ def _asked_for(intents: list[Intent], cue: str, sanitized: str) -> tuple[list[In
     return (out, cue or first) if out else (intents, cue)
 
 
-def rules_plan(sanitized: str, journeys: list[Journey], earlier: str | None) -> PlanDraft:
+def rules_plan(sanitized: str, journeys: list[Journey], earlier: str | None, follows: bool | None = None) -> PlanDraft:
+    """`follows` is whether the request as typed continues the conversation;
+    judged from `sanitized` when not given. It is given when a follow-up was
+    read with the conversation's topic, which `sanitized` then carries."""
     found = classify_all(sanitized)
     intents, cue = _asked_for(list(dict.fromkeys(i for i, _ in found)), found[0][1], sanitized)
     matched = match_journey(sanitized, journeys) if journeys else None
     pillars, narrowed = route(intents, sanitized)
+    follows = follows_up(sanitized) if follows is None else follows
     return PlanDraft(
         intents=intents,
         cue=cue,
         objective="",
-        activity=matched.id if matched else (earlier if follows_up(sanitized) else None),
+        activity=matched.id if matched else (earlier if follows else None),
         needs=[],
         subqueries=[SubQuery(pillar=p, query=sanitized, reformulated=False) for p in pillars],
         source="rules",
@@ -144,13 +147,15 @@ def rules_plan(sanitized: str, journeys: list[Journey], earlier: str | None) -> 
     )
 
 
-def first_reading(masked: str, model_view: str | None, journeys: list[Journey], earlier: str | None) -> PlanDraft | None:
+def first_reading(
+    masked: str, model_view: str | None, journeys: list[Journey], earlier: str | None, follows: bool | None = None
+) -> PlanDraft | None:
     """The rules' plan while the model reads the request: what a streaming
     caller can show at once. None when no model call is coming, since then
     the rules' plan is the plan."""
     if model_view is None or not llm.available():
         return None
-    return replace(rules_plan(masked, journeys, earlier), reason="A first reading of your words, while the model plans.")
+    return replace(rules_plan(masked, journeys, earlier, follows), reason="A first reading of your words, while the model plans.")
 
 
 def plan(
@@ -159,19 +164,25 @@ def plan(
     persona_label: str,
     journeys: list[Journey],
     earlier: str | None,
+    follows: bool | None = None,
+    history: tuple[str, ...] = (),
 ) -> PlanDraft:
     """The model's plan for every task. It gets `model_view`, which is what
     the data policy lets it receive; rules plan instead when that is nothing,
-    when no model is configured, and when the model does not return a plan."""
-    rules = rules_plan(masked, journeys, earlier)
+    when no model is configured, and when the model does not return a plan.
+    `history` is the conversation's earlier requests as the policy lets the
+    model see them, for a follow-up to be read against."""
+    rules = rules_plan(masked, journeys, earlier, follows)
     if model_view is None:
         return replace(rules, reason="Rules only: the data policy allows no model call for this request.")
     if not llm.available():
         return replace(rules, reason="Rules: no model is configured for the hub.")
 
-    # The model hears about the last job only when this request follows it up.
-    earlier_title = next((j.title for j in journeys if j.id == earlier), None) if follows_up(masked) else None
-    out = llm.plan(model_view, persona_label, journeys, earlier_title)
+    # The model hears about the last job, and the earlier requests, only when
+    # this request follows them up.
+    follows = follows_up(masked) if follows is None else follows
+    earlier_title = next((j.title for j in journeys if j.id == earlier), None) if follows else None
+    out = llm.plan(model_view, persona_label, journeys, earlier_title, history if follows else ())
     if out is None:
         return replace(rules, reason="Rules: the model did not return a plan, so rules planned it.")
     if out.small_talk:

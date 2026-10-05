@@ -1,9 +1,11 @@
-import { BookOpen, Clock, GraduationCap } from 'lucide-react'
+import { BookOpen, Clock, GraduationCap, Layers } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { isAbort } from '../../lib/api'
 import { fetchIntegrations, STATE_LABEL, type Integration } from '../../lib/integrations'
-import { duration, fetchItems, type Item, type Provider } from '../../lib/learning'
+import { duration, fetchItems, thumbnail, type Item, type Provider } from '../../lib/learning'
+import { providerTone } from '../../lib/visuals'
+import { Cover } from '../Cover'
 import { CourseDrawer } from './CourseDrawer'
 
 const SHOWN = 8
@@ -23,32 +25,41 @@ export function CourseCard({ item, onOpen }: { item: Item; onOpen: (id: string) 
   const kind = item.tags.includes('Learning path') ? 'Learning path' : item.read_in_hub ? 'Module' : 'Course'
   return (
     <button type="button" className="ccard" onClick={() => onOpen(item.id)}>
-      <span className={`provider provider--${item.source === 'Pluralsight' ? 'pluralsight' : 'mslearn'}`}>{item.source}</span>
-      <span className="ccard__title">{item.title}</span>
-      <span className="ccard__meta">
-        <span>
-          <GraduationCap size={13} strokeWidth={2.2} /> {kind}
-        </span>
-        {item.level && <span>{item.level}</span>}
-        {time && (
+      <Cover
+        icon={kind === 'Learning path' ? Layers : item.read_in_hub ? BookOpen : GraduationCap}
+        tone={providerTone(item.source, item.type)}
+        image={thumbnail(item)}
+        badge={item.source === 'Microsoft Learn'}
+        label={item.source}
+        size="compact"
+      />
+      <span className="ccard__body">
+        <span className="ccard__title">{item.title}</span>
+        <span className="ccard__meta">
           <span>
-            <Clock size={13} strokeWidth={2.2} /> {time}
+            <GraduationCap size={13} strokeWidth={2.2} /> {kind}
           </span>
-        )}
-        {item.read_in_hub && (
-          <span>
-            <BookOpen size={13} strokeWidth={2.2} /> Reads in the hub
+          {item.level && <span>{item.level}</span>}
+          {time && (
+            <span>
+              <Clock size={13} strokeWidth={2.2} /> {time}
+            </span>
+          )}
+          {item.read_in_hub && (
+            <span>
+              <BookOpen size={13} strokeWidth={2.2} /> Reads in the hub
+            </span>
+          )}
+        </span>
+        {item.status !== 'not_started' && (
+          <span className="ccard__progress">
+            <span className="ccard__bar">
+              <span style={{ width: `${item.status === 'completed' ? 100 : Math.max(item.progress, 4)}%` }} />
+            </span>
+            {item.status === 'completed' ? 'Completed' : item.progress ? `${item.progress}%` : 'Started'}
           </span>
         )}
       </span>
-      {item.status !== 'not_started' && (
-        <span className="ccard__progress">
-          <span className="ccard__bar">
-            <span style={{ width: `${item.status === 'completed' ? 100 : Math.max(item.progress, 4)}%` }} />
-          </span>
-          {item.status === 'completed' ? 'Completed' : item.progress ? `${item.progress}%` : 'Started'}
-        </span>
-      )}
     </button>
   )
 }
