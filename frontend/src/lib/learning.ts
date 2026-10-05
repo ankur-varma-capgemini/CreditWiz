@@ -55,6 +55,66 @@ export interface Item {
   /** Shrunk toward the catalogue mean. Not displayed; this is what a future ranker would sort on. */
   rating_weighted: number | null
   my_rating: number | null
+  /** Where Start opens: Pluralsight (single sign-on, or a search until connected) or the Microsoft Learn page. */
+  launch_url?: string
+  /** True when the content reads inside the hub (Microsoft Learn). */
+  read_in_hub?: boolean
+  /** True when the provider's own API supplied the details just now. */
+  live?: boolean
+}
+
+export const PROVIDERS = ['Pluralsight', 'Microsoft Learn'] as const
+export type Provider = (typeof PROVIDERS)[number]
+
+export interface LearnLink {
+  title: string
+  url: string
+}
+
+/** A Microsoft Learn module, path or unit, read through Microsoft's Learn MCP server. */
+export interface LearnPage {
+  url: string
+  title: string
+  kind: string
+  count: string
+  level: string
+  minutes: number | null
+  summary: string
+  objectives: string[]
+  prerequisites: string
+  units: LearnLink[]
+  markdown: string
+}
+
+/** A result from a provider's own library, beyond the hub's catalogue. */
+export interface ProviderResult {
+  title: string
+  /** A Microsoft Learn page (reads in the hub), or where the course opens on Pluralsight. */
+  url: string
+  excerpt: string
+  level: string
+  duration_seconds: number
+  read_in_hub: boolean
+}
+
+export interface ProviderResults {
+  provider: Provider
+  /** live: searched just now. sample: not connected, catalogue only. blocked: the provider refused. */
+  state: 'live' | 'sample' | 'blocked'
+  note: string
+  results: ProviderResult[]
+}
+
+export const fetchLearnPage = (url: string, signal?: AbortSignal) =>
+  getJson<LearnPage>(`/api/learning/microsoft-learn/page?url=${encodeURIComponent(url)}`, signal)
+
+/** The Learning search beyond the catalogue: Pluralsight and Microsoft Learn, together. */
+export const searchProviders = (q: string, signal?: AbortSignal) =>
+  getJson<ProviderResults[]>(`/api/learning/providers/search?q=${encodeURIComponent(q)}`, signal)
+
+/** The hub's reader for a Microsoft Learn page. */
+export function readerHref(url: string, itemId?: string) {
+  return `/learning/read?url=${encodeURIComponent(url)}${itemId ? `&item=${encodeURIComponent(itemId)}` : ''}`
 }
 
 export interface ItemDetail extends Item {

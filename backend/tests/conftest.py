@@ -37,6 +37,20 @@ def isolated_state(tmp_path, monkeypatch, request):
     monkeypatch.setattr(database, "VAR_DIR", tmp_path)
     database._ready.discard(str((tmp_path / "hub.db").resolve()))
     learning_store.invalidate()
+    # In-memory state of the connected systems: tokens, the last errors they
+    # reported, and what was fetched from them.
+    from app import entra, integrations
+    from app.community import vivaengage
+    from app.learning import mslearn, pluralsight
+
+    entra._grants.clear()
+    entra._pending.clear()
+    vivaengage._engage_ids.clear()
+    integrations._errors.clear()
+    mslearn._pages.clear()
+    pluralsight._held.clear()
+    for name in ("PLURALSIGHT_API_KEY", "PLURALSIGHT_SSO_ORG"):
+        monkeypatch.delenv(name, raising=False)
     auth.seed_users()
     token = auth.current_id.set("u-1001")
     client = getattr(request.module, "client", None)

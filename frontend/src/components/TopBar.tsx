@@ -66,14 +66,14 @@ export function TopBar({ user, onMenu }: Props) {
     navigate(href)
   }
 
-  // A typeahead that finds nothing should still take you somewhere. The
-  // marketplace page runs the same engine and, when it also finds nothing,
-  // says so properly and offers next steps.
-  function goToMarketplace() {
+  // The suggestions come from the hub's own catalogs, as fast as typing. The
+  // last row searches everywhere: Pluralsight, Microsoft Learn and Community
+  // too, which are too slow, and too rate-limited, to ask on every keystroke.
+  function searchEverywhere() {
     const q = query.trim()
     setSearchOpen(false)
     setQuery('')
-    navigate(`/marketplace?q=${encodeURIComponent(q)}`)
+    navigate(`/search?q=${encodeURIComponent(q)}`)
   }
 
   function onSearchKey(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -82,19 +82,22 @@ export function TopBar({ user, onMenu }: Props) {
       // leaving the person staring at an empty menu.
       if (e.key === 'Enter' && query.trim() && !searchError) {
         e.preventDefault()
-        goToMarketplace()
+        searchEverywhere()
       }
       return
     }
+    // The suggestions, then the "search everywhere" row.
+    const rows = results.length + 1
     if (e.key === 'ArrowDown') {
       e.preventDefault()
-      setHighlight((h) => (h + 1) % results.length)
+      setHighlight((h) => (h + 1) % rows)
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
-      setHighlight((h) => (h - 1 + results.length) % results.length)
+      setHighlight((h) => (h - 1 + rows) % rows)
     } else if (e.key === 'Enter') {
       e.preventDefault()
-      go(results[highlight].href)
+      if (highlight < results.length) go(results[highlight].href)
+      else searchEverywhere()
     }
   }
 
@@ -160,7 +163,7 @@ export function TopBar({ user, onMenu }: Props) {
         <input
           className="search__input"
           type="search"
-          placeholder="Search agents and learning"
+          placeholder="Search across AI Hub"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value)
@@ -186,29 +189,40 @@ export function TopBar({ user, onMenu }: Props) {
                   className="search__result search__result--fallback is-highlight"
                   role="option"
                   aria-selected="true"
-                  onClick={goToMarketplace}
+                  onClick={searchEverywhere}
                 >
                   <span className="search__kind search__kind--action">search</span>
-                  <span>
-                    Search the marketplace for “{query.trim()}”
-                  </span>
+                  <span>Search everywhere for “{query.trim()}”</span>
                 </button>
               )
             ) : (
-              results.map((r, i) => (
+              <>
+                {results.map((r, i) => (
+                  <button
+                    key={r.href}
+                    type="button"
+                    className={`search__result${i === highlight ? ' is-highlight' : ''}`}
+                    role="option"
+                    aria-selected={i === highlight}
+                    onMouseEnter={() => setHighlight(i)}
+                    onClick={() => go(r.href)}
+                  >
+                    <span className={`search__kind search__kind--${r.kind}`}>{r.kind}</span>
+                    <span>{r.title}</span>
+                  </button>
+                ))}
                 <button
-                  key={r.href}
                   type="button"
-                  className={`search__result${i === highlight ? ' is-highlight' : ''}`}
+                  className={`search__result search__result--fallback${highlight === results.length ? ' is-highlight' : ''}`}
                   role="option"
-                  aria-selected={i === highlight}
-                  onMouseEnter={() => setHighlight(i)}
-                  onClick={() => go(r.href)}
+                  aria-selected={highlight === results.length}
+                  onMouseEnter={() => setHighlight(results.length)}
+                  onClick={searchEverywhere}
                 >
-                  <span className={`search__kind search__kind--${r.kind}`}>{r.kind}</span>
-                  <span>{r.title}</span>
+                  <span className="search__kind search__kind--action">search</span>
+                  <span>Search everywhere for “{query.trim()}”</span>
                 </button>
-              ))
+              </>
             )}
           </div>
         )}

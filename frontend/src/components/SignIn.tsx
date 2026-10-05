@@ -1,8 +1,13 @@
+import { LogIn } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { getJson, isAbort, postJson, announceSessionChange } from '../lib/api'
+import { signInWithMicrosoft } from '../lib/integrations'
 
 export function SignIn({ onSignIn }: { onSignIn: () => void }) {
-  const [options, setOptions] = useState<{ demo: boolean; users: { id: string; name: string; role: string }[] } | null>(null)
+  const [options, setOptions] = useState<{ demo: boolean; microsoft: boolean; users: { id: string; name: string; role: string }[] } | null>(
+    null,
+  )
+  const failed = new URLSearchParams(window.location.search).get('entra') === 'failed'
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const [attempt, setAttempt] = useState(0)
@@ -35,6 +40,23 @@ export function SignIn({ onSignIn }: { onSignIn: () => void }) {
       </div>
       <h1>Welcome to the MUFG AI Hub</h1>
       <p>Discover agents and follow learning paths for your role.</p>
+      {options && (
+        <div className="signin__microsoft">
+          <button type="button" className="btn" disabled={!options.microsoft} onClick={() => signInWithMicrosoft('/')}>
+            <LogIn size={16} strokeWidth={2.2} /> Sign in with Microsoft
+          </button>
+          <p className="muted">
+            {options.microsoft
+              ? 'Your MUFG account. The hub then shows Viva Engage with your own permissions.'
+              : "Needs MUFG's app registration in Microsoft Entra ID. Until then, use a demo account."}
+          </p>
+          {failed && (
+            <p role="alert" className="state--error">
+              Microsoft sign-in did not complete. Sign in with a demo account to see the reason under Integrations.
+            </p>
+          )}
+        </div>
+      )}
       {error && (
         <p role="alert" className="state--error">
           {error}

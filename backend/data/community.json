@@ -1,0 +1,256 @@
+{
+  "_about": "Sample community content for the local proof of concept. It is not Viva Engage data and every person in it is fictional. The hub shows it only while Viva Engage is not connected, and says so on the page.",
+  "people": [
+    { "id": "p-ana-ortega", "name": "Ana Ortega", "title": "AI Hub product owner" },
+    { "id": "p-daniel-price", "name": "Daniel Price", "title": "Developer, AI platform" },
+    { "id": "p-mei-lin", "name": "Mei Lin", "title": "Responsible AI lead" },
+    { "id": "p-samuel-adeyemi", "name": "Samuel Adeyemi", "title": "Relationship manager" },
+    { "id": "p-priya-nair", "name": "Priya Nair", "title": "Compliance analyst" },
+    { "id": "p-tom-becker", "name": "Tom Becker", "title": "Operations AI champion" },
+    { "id": "p-laura-chen", "name": "Laura Chen", "title": "KYC operations lead" },
+    { "id": "p-omar-haddad", "name": "Omar Haddad", "title": "Risk analyst" },
+    { "id": "p-grace-kim", "name": "Grace Kim", "title": "Learning partner, AI enablement" },
+    { "id": "p-ravi-menon", "name": "Ravi Menon", "title": "Copilot Studio maker" }
+  ],
+  "communities": [
+    {
+      "id": "ai-hub",
+      "name": "AI Hub Community",
+      "description": "News, questions and ideas about the MUFG AI Hub.",
+      "privacy": "public",
+      "member_count": 1860,
+      "topics": ["AI Hub", "Announcements"],
+      "personas": []
+    },
+    {
+      "id": "generative-ai",
+      "name": "Generative AI at Work",
+      "description": "Everyday use of generative AI: what works, what does not, and what to learn next.",
+      "privacy": "public",
+      "member_count": 2310,
+      "topics": ["Generative AI", "Learning"],
+      "personas": []
+    },
+    {
+      "id": "copilot-builders",
+      "name": "Copilot Studio Builders",
+      "description": "Build agents in Copilot Studio and ask how others solved it.",
+      "privacy": "public",
+      "member_count": 642,
+      "topics": ["Copilot Studio", "Agents"],
+      "personas": ["developer", "operations_user"]
+    },
+    {
+      "id": "prompt-craft",
+      "name": "Prompt Engineering Circle",
+      "description": "Share prompts that work and improve each other's.",
+      "privacy": "public",
+      "member_count": 975,
+      "topics": ["Prompting"],
+      "personas": ["business_user", "relationship_manager", "operations_user"]
+    },
+    {
+      "id": "responsible-ai",
+      "name": "Responsible AI Forum",
+      "description": "Questions on data handling, policy and the safe use of AI.",
+      "privacy": "public",
+      "member_count": 538,
+      "topics": ["Responsible AI", "Policy"],
+      "personas": ["compliance_user", "risk_analyst"]
+    },
+    {
+      "id": "rm-ai-champions",
+      "name": "RM AI Champions",
+      "description": "Relationship managers sharing prompts and ways of working with AI.",
+      "privacy": "private",
+      "member_count": 214,
+      "topics": ["Client coverage", "Prompting"],
+      "personas": ["relationship_manager"]
+    },
+    {
+      "id": "compliance-ai",
+      "name": "Compliance AI Practitioners",
+      "description": "Compliance teams using AI for screening, KYC and reviews.",
+      "privacy": "private",
+      "member_count": 186,
+      "topics": ["Compliance", "KYC"],
+      "personas": ["compliance_user"]
+    }
+  ],
+  "posts": [
+    {
+      "id": "t-101",
+      "community_id": "copilot-builders",
+      "author": "p-ravi-menon",
+      "created_at": "2026-10-02T09:40:00Z",
+      "kind": "question",
+      "body": "Has anyone been able to use Anthropic's Claude models from Copilot Studio? I can see the model choice in Microsoft's documentation but not in our environment. Is it an admin setting, a licence question, or simply not approved yet?",
+      "topics": ["Copilot Studio", "Models"],
+      "likes": 12,
+      "replies": [
+        { "id": "r-101-1", "author": "p-daniel-price", "created_at": "2026-10-02T10:05:00Z", "body": "Model choice is switched on per environment by the platform admins, so it will not show up until they enable it.", "likes": 4 },
+        { "id": "r-101-2", "author": "p-mei-lin", "created_at": "2026-10-02T10:31:00Z", "body": "Raise it as an AI Request so the model is reviewed before anyone switches it on. Reviewed requests are what the admins act on.", "likes": 6 },
+        { "id": "r-101-3", "author": "p-ravi-menon", "created_at": "2026-10-02T11:12:00Z", "body": "Thanks both. Submitting the request now.", "likes": 1 }
+      ]
+    },
+    {
+      "id": "t-102",
+      "community_id": "ai-hub",
+      "author": "p-ana-ortega",
+      "created_at": "2026-10-01T15:00:00Z",
+      "kind": "announcement",
+      "title": "Pluralsight and Microsoft Learn now sit side by side in Learning",
+      "body": "You can browse both catalogs in the AI Hub, open any course's details without leaving the page, and read Microsoft Learn modules right here. Pluralsight videos still play on Pluralsight's own site.",
+      "topics": ["Learning", "AI Hub"],
+      "likes": 34,
+      "replies": [
+        { "id": "r-102-1", "author": "p-grace-kim", "created_at": "2026-10-01T15:42:00Z", "body": "The role-based recommendations now draw on both catalogs, so check For You again.", "likes": 9 },
+        { "id": "r-102-2", "author": "p-tom-becker", "created_at": "2026-10-01T16:20:00Z", "body": "Reading the Learn units in the hub is a real time saver. No more twenty open tabs.", "likes": 5 }
+      ]
+    },
+    {
+      "id": "t-103",
+      "community_id": "generative-ai",
+      "author": "p-tom-becker",
+      "created_at": "2026-09-30T13:25:00Z",
+      "kind": "discussion",
+      "title": "What Operations learned from three AI pilots",
+      "body": "This quarter we piloted three uses: drafting call summaries, triaging inbound documents, and checking forms for missing fields. The biggest lesson was to agree the human review step before the pilot starts, not after. Happy to share the checklist we used.",
+      "topics": ["Use cases", "Operations"],
+      "likes": 21,
+      "replies": [
+        { "id": "r-103-1", "author": "p-omar-haddad", "created_at": "2026-09-30T14:02:00Z", "body": "Please do share the checklist. We are about to start a pilot in Risk.", "likes": 3 },
+        { "id": "r-103-2", "author": "p-tom-becker", "created_at": "2026-09-30T14:30:00Z", "body": "Sent it to you directly. Anyone else who wants it, reply here.", "likes": 2 }
+      ]
+    },
+    {
+      "id": "t-104",
+      "community_id": "prompt-craft",
+      "author": "p-samuel-adeyemi",
+      "created_at": "2026-09-29T10:10:00Z",
+      "kind": "discussion",
+      "title": "A prompt pattern that cut my rework",
+      "body": "Give the model the output format first, then the source text, then the task. My summaries stopped drifting between runs. Has anyone found a better order?",
+      "topics": ["Prompting"],
+      "likes": 18,
+      "replies": [
+        { "id": "r-104-1", "author": "p-grace-kim", "created_at": "2026-09-29T11:00:00Z", "body": "Same here. Adding one short example of the output helps even more.", "likes": 4 },
+        { "id": "r-104-2", "author": "p-tom-becker", "created_at": "2026-09-29T12:45:00Z", "body": "I also ask it to list what it could not find in the source. It flags gaps instead of filling them.", "likes": 7 },
+        { "id": "r-104-3", "author": "p-samuel-adeyemi", "created_at": "2026-09-29T13:15:00Z", "body": "Good one. Adding that to my template.", "likes": 1 }
+      ]
+    },
+    {
+      "id": "t-105",
+      "community_id": "rm-ai-champions",
+      "author": "p-samuel-adeyemi",
+      "created_at": "2026-09-28T08:50:00Z",
+      "kind": "question",
+      "body": "What is everyone's workflow for preparing a client review pack? I use Copilot to draft the agenda but still pull the numbers together by hand.",
+      "topics": ["Client coverage"],
+      "likes": 9,
+      "replies": [
+        { "id": "r-105-1", "author": "p-ana-ortega", "created_at": "2026-09-28T09:30:00Z", "body": "Check Discover for agents tagged for relationship managers. A few of them assemble the standard sections for you.", "likes": 3 },
+        { "id": "r-105-2", "author": "p-samuel-adeyemi", "created_at": "2026-09-28T10:05:00Z", "body": "Found two. Requesting access now.", "likes": 0 }
+      ]
+    },
+    {
+      "id": "t-106",
+      "community_id": "responsible-ai",
+      "author": "p-priya-nair",
+      "created_at": "2026-09-27T16:15:00Z",
+      "kind": "question",
+      "body": "Before I try it: may I paste a client email into Copilot Chat if I remove the client's name first?",
+      "topics": ["Data handling"],
+      "likes": 15,
+      "replies": [
+        { "id": "r-106-1", "author": "p-mei-lin", "created_at": "2026-09-27T16:40:00Z", "body": "Check the data-handling policy in the Governance pillar first. It decides what may go into which tool, and removing a name is not always enough.", "likes": 8 },
+        { "id": "r-106-2", "author": "p-priya-nair", "created_at": "2026-09-27T17:02:00Z", "body": "Understood. I will check before pasting anything.", "likes": 2 }
+      ]
+    },
+    {
+      "id": "t-107",
+      "community_id": "compliance-ai",
+      "author": "p-priya-nair",
+      "created_at": "2026-09-26T11:20:00Z",
+      "kind": "praise",
+      "title": "Thank you to the KYC team",
+      "body": "Thanks to the KYC team for walking us through the screening agent. The first-pass review on the pilot set was much easier to follow.",
+      "topics": ["KYC", "Screening"],
+      "likes": 11,
+      "replies": [
+        { "id": "r-107-1", "author": "p-laura-chen", "created_at": "2026-09-26T12:00:00Z", "body": "Glad it helped. We are running the session again next month.", "likes": 3 }
+      ]
+    },
+    {
+      "id": "t-108",
+      "community_id": "generative-ai",
+      "author": "p-omar-haddad",
+      "created_at": "2026-09-25T09:05:00Z",
+      "kind": "question",
+      "body": "New to this. Should I start with a Pluralsight course on generative AI, or with Microsoft Learn's AI fluency modules?",
+      "topics": ["Learning", "Generative AI"],
+      "likes": 7,
+      "replies": [
+        { "id": "r-108-1", "author": "p-grace-kim", "created_at": "2026-09-25T09:40:00Z", "body": "Start with Microsoft Learn's Explore Generative AI. It is short and you can read it inside the hub. Then take a Pluralsight course for depth in your area.", "likes": 6 },
+        { "id": "r-108-2", "author": "p-omar-haddad", "created_at": "2026-09-25T10:10:00Z", "body": "Perfect, starting today.", "likes": 0 }
+      ]
+    },
+    {
+      "id": "t-109",
+      "community_id": "copilot-builders",
+      "author": "p-daniel-price",
+      "created_at": "2026-09-24T14:35:00Z",
+      "kind": "discussion",
+      "title": "Test agents before you publish them",
+      "body": "We now run every agent through a set of twenty test questions before publishing, including a few it should refuse. It has caught two topic routing mistakes already.",
+      "topics": ["Agents", "Testing"],
+      "likes": 16,
+      "replies": [
+        { "id": "r-109-1", "author": "p-ravi-menon", "created_at": "2026-09-24T15:20:00Z", "body": "The refuse cases are a great idea. Stealing that.", "likes": 2 }
+      ]
+    },
+    {
+      "id": "t-110",
+      "community_id": "ai-hub",
+      "author": "p-omar-haddad",
+      "created_at": "2026-09-23T10:00:00Z",
+      "kind": "question",
+      "body": "Where do I ask for access to an agent?",
+      "topics": ["AI Hub"],
+      "likes": 5,
+      "replies": [
+        { "id": "r-110-1", "author": "p-ana-ortega", "created_at": "2026-09-23T10:20:00Z", "body": "Open the agent's page in Discover and choose Request access. You can follow the request from your account page.", "likes": 4 }
+      ]
+    },
+    {
+      "id": "t-111",
+      "community_id": "prompt-craft",
+      "author": "p-grace-kim",
+      "created_at": "2026-09-22T12:30:00Z",
+      "kind": "discussion",
+      "title": "Prompt of the week: meeting notes to actions",
+      "body": "Ask for owners, dates and open questions as three separate lists. It keeps the summary honest about what was not decided.",
+      "topics": ["Prompting", "Meetings"],
+      "likes": 13,
+      "replies": []
+    },
+    {
+      "id": "t-112",
+      "community_id": "responsible-ai",
+      "author": "p-mei-lin",
+      "created_at": "2026-09-22T08:00:00Z",
+      "kind": "announcement",
+      "title": "Reminder: no client data in community posts",
+      "body": "Community posts are visible to everyone in the community. Keep client names, account numbers and any other client data out of posts and replies.",
+      "topics": ["Data handling", "Policy"],
+      "likes": 22,
+      "replies": []
+    }
+  ],
+  "experts": [
+    { "person": "p-mei-lin", "topics": ["Responsible AI", "Data handling"], "community_ids": ["responsible-ai"] },
+    { "person": "p-daniel-price", "topics": ["Copilot Studio", "Agents"], "community_ids": ["copilot-builders"] },
+    { "person": "p-grace-kim", "topics": ["Learning paths", "Prompting"], "community_ids": ["generative-ai", "prompt-craft"] },
+    { "person": "p-laura-chen", "topics": ["KYC", "Screening"], "community_ids": ["compliance-ai"] }
+  ]
+}

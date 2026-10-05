@@ -10,6 +10,25 @@ from .. import database
 Status = Literal["not_started", "in_progress", "completed"]
 _ORDER = {"not_started": 0, "in_progress": 1, "completed": 2}
 
+# Demo accounts start part-way through one Pluralsight course, so "Continue
+# learning" has something to show before Pluralsight is connected. Once it is,
+# the percentage comes from Pluralsight's own record of what was watched.
+DEMO_PROGRESS = (
+    ("demo-compliance", "model-risk-management-essentials", 42),
+    ("demo-risk", "model-risk-management-essentials", 60),
+    ("demo-credit", "financial-statement-analysis-deep-dive", 35),
+    ("demo-rm", "negotiation-skills-for-deal-teams", 20),
+)
+
+
+def seed_demo(conn) -> None:
+    """Only rows a demo account does not have yet, so what they did since stays."""
+    now = datetime.now(UTC).isoformat(timespec="milliseconds")
+    conn.executemany(
+        "INSERT OR IGNORE INTO learning_progress VALUES (?,?,'in_progress',?,?,NULL,?)",
+        [(uid, item_id, pct, now, now) for uid, item_id, pct in DEMO_PROGRESS],
+    )
+
 
 def all_for(user_id: str) -> dict[str, dict]:
     with database.connect() as conn:

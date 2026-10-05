@@ -154,6 +154,9 @@ def seed_users() -> None:
                     "WHERE users.id LIKE 'demo-%'",
                     (profile["id"], profile["email"].lower(), json.dumps(profile)),
                 )
+            from .learning import progress
+
+            progress.seed_demo(conn)
 
 
 def resolve_session(token: str | None) -> str | None:
@@ -202,8 +205,12 @@ def options() -> dict:
                 "SELECT profile FROM users WHERE active=1 ORDER BY id"
             )
         ]
+    from . import entra
+
     return {
         "demo": not production(),
+        # Whether "Sign in with Microsoft" can work: MUFG's app registration is configured.
+        "microsoft": entra.configured(),
         "users": []
         if production()
         else [
@@ -282,7 +289,11 @@ def login(body: Login, request: Request, response: Response):
 
 @router.post("/logout")
 def logout(request: Request, response: Response):
+    from . import entra
+
     token = request.cookies.get(COOKIE, "")
+    # Microsoft tokens go with the session.
+    entra.forget(resolve_session(token))
     with database.connect(write=True) as conn:
         conn.execute(
             "DELETE FROM sessions WHERE token_hash=?",

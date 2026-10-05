@@ -1,0 +1,520 @@
+/* ==========================================================================
+   Providers: Pluralsight and Microsoft Learn, browsed as hub cards, with a
+   course's details in a side panel and Learn modules read in the hub.
+   Global, because the side panel opens from Learning, Community and Home.
+   ========================================================================== */
+
+.provider {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: var(--ink-700);
+  background: var(--ink-100);
+}
+
+.provider--pluralsight {
+  color: #a3105f;
+  background: #fde8f3;
+}
+
+.provider--mslearn {
+  color: #0b5cad;
+  background: #e7f0fb;
+}
+
+/* provider rows on Learning */
+
+.shelf {
+  margin: var(--s-6) 0 var(--s-8);
+}
+
+.shelf__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  margin-bottom: var(--s-4);
+}
+
+.shelf__head .status {
+  text-decoration: none;
+}
+
+.shelf__title {
+  margin: 0;
+  font-size: var(--t-xl);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink-950);
+}
+
+.shelf__sub {
+  flex-basis: 100%;
+  color: var(--ink-500);
+  font-size: var(--t-sm);
+}
+
+.shelf__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: var(--s-3);
+}
+
+.ccard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-2);
+  min-height: 132px;
+  padding: var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--e-1);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color var(--fast),
+    box-shadow var(--fast);
+}
+
+.ccard:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--e-2);
+}
+
+.ccard:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+.ccard__title {
+  font-size: var(--t-md);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink-950);
+}
+
+.ccard__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: auto;
+  color: var(--ink-500);
+  font-size: var(--t-xs);
+}
+
+.ccard__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ccard__progress {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  color: var(--ink-600);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ccard__bar,
+.drawer__bar {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ink-100);
+  overflow: hidden;
+}
+
+.ccard__bar span,
+.drawer__bar span {
+  display: block;
+  height: 100%;
+  background: var(--ok-fg);
+}
+
+/* the Learning search, beyond the catalogue: Pluralsight and Microsoft Learn */
+
+.psearch {
+  margin-top: var(--s-8);
+}
+
+.psearch__groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--s-4);
+  align-items: start;
+}
+
+.psearch__group {
+  padding: var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--e-1);
+}
+
+.psearch__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-3);
+}
+
+.psearch__head .status {
+  text-decoration: none;
+}
+
+.psearch__note {
+  margin: 0 0 var(--s-2);
+  color: var(--ink-500);
+  font-size: var(--t-sm);
+}
+
+.psearch__list {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.psearch__hit {
+  display: grid;
+  gap: 3px;
+  padding: var(--s-3);
+  border-radius: var(--r-md);
+  color: inherit;
+  text-decoration: none;
+}
+
+.psearch__hit:hover {
+  background: var(--ink-50);
+}
+
+.psearch__title {
+  color: var(--link);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.psearch__excerpt {
+  color: var(--ink-600);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+}
+
+.psearch__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  color: var(--ink-500);
+  font-size: var(--t-xs);
+}
+
+.psearch__meta,
+.psearch__meta span {
+  align-items: center;
+}
+
+.psearch__meta span {
+  display: inline-flex;
+  gap: 4px;
+}
+
+/* the course side panel */
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+}
+
+.drawer__scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(13, 14, 17, 0.32);
+  cursor: pointer;
+}
+
+.drawer__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(480px, 100vw);
+  background: var(--surface);
+  box-shadow: var(--e-4);
+  animation: drawer-in var(--out) both;
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+
+.drawer__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-4) var(--s-5);
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer__close {
+  display: inline-flex;
+  margin-left: auto;
+  padding: 6px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--ink-600);
+  cursor: pointer;
+}
+
+.drawer__close:hover {
+  background: var(--ink-100);
+  color: var(--ink-950);
+}
+
+.drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--s-5) var(--s-5) var(--s-8);
+}
+
+.drawer__error {
+  padding: var(--s-5);
+  color: var(--ink-800);
+}
+
+.drawer__title {
+  margin: 0 0 var(--s-2);
+  font-size: var(--t-2xl);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--ink-950);
+  text-wrap: balance;
+}
+
+.drawer__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0 0 var(--s-4);
+  color: var(--ink-600);
+  font-size: var(--t-sm);
+}
+
+.drawer__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.drawer__why {
+  margin: 0 0 var(--s-4);
+  padding: var(--s-2) var(--s-3);
+  border-left: 3px solid var(--info-fg);
+  background: var(--info-bg);
+  color: var(--ink-800);
+  font-size: var(--t-sm);
+}
+.drawer__why-label {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--info-fg);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.drawer__progress {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-4);
+  color: var(--ink-700);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.drawer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.drawer__actions .btn,
+.drawer__actions .btn-outline {
+  text-decoration: none;
+}
+
+.drawer__note {
+  margin: var(--s-2) 0 0;
+  color: var(--ink-500);
+  font-size: var(--t-xs);
+  line-height: 1.5;
+}
+
+.drawer__h {
+  margin: var(--s-6) 0 var(--s-2);
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--ink-950);
+}
+
+.drawer__text {
+  margin: 0;
+  color: var(--ink-700);
+  line-height: 1.6;
+}
+
+.drawer__list {
+  margin: 0;
+  padding-left: 1.2em;
+  color: var(--ink-700);
+  line-height: 1.55;
+}
+
+.drawer__list li + li {
+  margin-top: 4px;
+}
+
+.drawer__units {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: unit;
+}
+
+.drawer__units li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--ink-100);
+  font-size: var(--t-sm);
+  counter-increment: unit;
+}
+
+.drawer__units li::before {
+  content: counter(unit);
+  min-width: 1.6em;
+  color: var(--ink-400);
+  font-variant-numeric: tabular-nums;
+}
+
+.drawer__units li > :first-child {
+  flex: 1;
+}
+
+.drawer__units li.is-current a {
+  color: var(--ink-950);
+  font-weight: 700;
+}
+
+.drawer__more {
+  display: inline-block;
+  margin-top: var(--s-6);
+}
+
+/* Microsoft Learn, read in the hub */
+
+.reader__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--s-8);
+  align-items: start;
+}
+
+.reader__main {
+  max-width: 78ch;
+}
+
+.reader__head {
+  margin: var(--s-2) 0 var(--s-5);
+}
+
+.reader__title {
+  margin: var(--s-2) 0;
+  font-size: var(--t-3xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink-950);
+  text-wrap: balance;
+}
+
+.reader__main .md img {
+  max-width: 100%;
+  height: auto;
+}
+
+.reader__pager {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: var(--s-8);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
+}
+
+.reader__pager a {
+  max-width: 48%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+}
+
+.reader__credit {
+  margin-top: var(--s-5);
+  color: var(--ink-500);
+  font-size: var(--t-xs);
+}
+
+.reader__side {
+  position: sticky;
+  top: var(--s-6);
+}
+
+@media (max-width: 1080px) {
+  .reader__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reader__side {
+    position: static;
+  }
+}
+
+/* "Sign in with Microsoft" on the sign-in page */
+
+.signin__microsoft {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-2);
+  margin: var(--s-4) 0 var(--s-6);
+  padding-bottom: var(--s-5);
+  border-bottom: 1px solid var(--line);
+}

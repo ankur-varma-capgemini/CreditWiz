@@ -1,4 +1,4 @@
-import { CircleHelp, Home } from 'lucide-react'
+import { CircleHelp, Home, Plug } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { PillarGlyph } from '../lib/icons'
@@ -81,6 +81,10 @@ export function Sidebar({ pillars, open = false, onClose }: Props) {
         <div className="nav__spacer" />
         <div className="nav__divider" />
 
+        <NavLink to="/integrations" className={cls('nav__item nav__item--util')}>
+          <Plug className="nav__icon" strokeWidth={2} />
+          <span className="nav__label">Integrations</span>
+        </NavLink>
         <NavLink to="/help" className={cls('nav__item nav__item--util')}>
           <CircleHelp className="nav__icon" strokeWidth={2} />
           <span className="nav__label">Help &amp; support</span>

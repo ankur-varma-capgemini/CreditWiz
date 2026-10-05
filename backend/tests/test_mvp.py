@@ -310,7 +310,7 @@ def test_password_login_production_disables_demo_and_limits_attempts(monkeypatch
         )
     monkeypatch.setenv("CREDITWIZ_ENV", "production")
     c = TestClient(app, base_url="https://testserver", headers=HEADERS)
-    assert c.get("/api/auth/options").json() == {"demo": False, "users": []}
+    assert c.get("/api/auth/options").json() == {"demo": False, "microsoft": False, "users": []}
     assert c.post("/api/auth/demo", json={"user_id": "u-1001"}).status_code == 404
     email = client.get("/api/me").json()["email"]
     for _ in range(5):
@@ -407,7 +407,7 @@ def test_account_provisioning_revokes_old_sessions():
     assert c.get("/api/me").status_code == 401
     assert validate() == {
         "agents": 18,
-        "learning_items": 50,
+        "learning_items": 58,
         "paths": 11,
         "journeys": 8,
         "prompts": 60,

@@ -8,6 +8,8 @@ import { useHub } from '../../lib/hub'
 import { BandSearch } from '../BandSearch'
 import { PageBand } from '../PageBand'
 import { ItemCard } from './ItemCard'
+import { ProviderSearch } from './ProviderSearch'
+import { ProviderShelves } from './ProviderShelves'
 
 export function LearningPage() {
   const { derived } = usePersona()
@@ -34,12 +36,13 @@ export function LearningPage() {
   const [draft, setDraft] = useState(q)
   useEffect(() => setDraft(q), [q])
   const status = params.get('status') ?? ''
-  const key = [derived.id, pathId, mode, type, q, status, attempt].join('|')
+  const source = params.get('source') ?? ''
+  const key = [derived.id, pathId, mode, type, q, status, source, attempt].join('|')
   useEffect(() => {
     const ctrl = new AbortController()
     const timer = setTimeout(
       () => {
-        Promise.all([fetchLearningHome(derived.id, ctrl.signal), fetchItems({ path: pathId, type, q, status }, ctrl.signal)])
+        Promise.all([fetchLearningHome(derived.id, ctrl.signal), fetchItems({ path: pathId, type, q, status, source }, ctrl.signal)])
           .then(([home, items]) => setData({ key, home, items }))
           .catch((e: unknown) => {
             if (!isAbort(e)) setFailure({ key, message: e instanceof Error ? e.message : 'Could not load learning' })
@@ -51,7 +54,7 @@ export function LearningPage() {
       clearTimeout(timer)
       ctrl.abort()
     }
-  }, [key, derived.id, pathId, type, q, status])
+  }, [key, derived.id, pathId, type, q, status, source])
   const current = data?.key === key ? data : null
   const error = failure?.key === key ? failure.message : ''
   const home = current?.home
@@ -159,6 +162,16 @@ export function LearningPage() {
               </select>
             </label>
           )}
+          {!pathId && mode === 'catalog' && (
+            <label className="field">
+              Provider
+              <select value={source} onChange={(e) => filter('source', e.target.value)}>
+                <option value="">All providers</option>
+                <option value="Pluralsight">Pluralsight</option>
+                <option value="Microsoft Learn">Microsoft Learn</option>
+              </select>
+            </label>
+          )}
           <label className="field">
             Progress
             <select value={status} onChange={(e) => filter('status', e.target.value)}>
@@ -180,6 +193,7 @@ export function LearningPage() {
         </div>
       ) : (
         <>
+          {!mode && !pathId && <ProviderShelves persona={derived.id} />}
           {(!mode || mode === 'paths') && !pathId && (
             <section>
               <h2 className="section-title">Paths for {home?.persona_label}</h2>
@@ -231,6 +245,7 @@ export function LearningPage() {
                   shown on each item.
                 </p>
               )}
+              {q && !pathId && <h2 className="section-title">In the AI Hub catalog</h2>}
               {current.items.length ? (
                 <div className="item-grid">
                   {current.items.map((i) => (
@@ -238,8 +253,10 @@ export function LearningPage() {
                   ))}
                 </div>
               ) : (
-                <div className="state">No learning matches these filters.</div>
+                <div className="state">{q ? `Nothing in the hub's catalog matches “${q}”.` : 'No learning matches these filters.'}</div>
               )}
+              {/* One search bar for all: the same words, in Pluralsight's and Microsoft Learn's own libraries. */}
+              {q && !pathId && <ProviderSearch q={q} source={source} catalog={current.items} />}
             </>
           )}
           {!mode &&

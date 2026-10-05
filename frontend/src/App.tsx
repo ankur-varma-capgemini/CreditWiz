@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom'
+import { CommunityPage } from './components/community/CommunityPage'
 import { CreateProvider } from './components/create/CreateProvider'
 import { HomePage } from './components/HomePage'
+import { IntegrationsPage } from './components/IntegrationsPage'
+import { LearnReaderPage } from './components/learning/LearnReaderPage'
 import { JourneyPage } from './components/journeys/JourneyPage'
 import { JourneysPage } from './components/journeys/JourneysPage'
 import { KnowledgeSourcesPage } from './components/knowledge/KnowledgeSourcesPage'
@@ -16,6 +19,7 @@ import { AgentDetailPage } from './components/marketplace/AgentDetailPage'
 import { AgentsListPage } from './components/marketplace/AgentsListPage'
 import { MarketplacePage } from './components/marketplace/MarketplacePage'
 import { PillarPage } from './components/PillarPage'
+import { SearchPage } from './components/SearchPage'
 import { Sidebar } from './components/Sidebar'
 import { HelpPage, NotFound, SettingsPage } from './components/SimplePages'
 import { TopBar } from './components/TopBar'
@@ -116,6 +120,11 @@ function Shell({ state, retry }: { state: LoadState; retry: () => void }) {
                   <Route path="/learning/docs" element={<LearningPage />} />
                   <Route path="/learning/quick-reference" element={<LearningPage />} />
                   <Route path="/learning/me" element={<MyLearningPage />} />
+                  <Route path="/learning/read" element={<LearnReaderPage />} />
+                  <Route path="/community" element={<CommunityPage />} />
+                  <Route path="/community/*" element={<CommunityPage />} />
+                  <Route path="/integrations" element={<IntegrationsPage />} />
+                  <Route path="/search" element={<SearchPage />} />
                   <Route path="/learning/items/:id" element={<ItemPage />} />
                   <Route path="/learning/videos/:id" element={<ItemPage />} />
                   <Route path="/journeys" element={<JourneysPage />} />

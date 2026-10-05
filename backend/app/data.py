@@ -102,7 +102,7 @@ PILLARS = [
         cta_label="Explore learning",
         cta_href="/learning",
         search=PillarSearch(
-            placeholder='e.g. sanctions screening, KYC, responsible AI',
+            placeholder='Search the catalog, Pluralsight and Microsoft Learn',
             action='Find learning',
             examples=['Sanctions screening', 'KYC', 'Responsible AI'],
         ),

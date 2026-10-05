@@ -7,8 +7,9 @@ from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 
-from . import auth, data, identity
+from . import auth, data, entra, identity, integrations
 from .account import router as account_router
+from .community.router import router as community_router
 from .context.router import router as context_router
 from .journeys.router import router as journeys_router
 from .knowledge.router import router as knowledge_router
@@ -68,9 +69,12 @@ app = FastAPI(
     title="MUFG AI Hub API", version="0.2.0", lifespan=lifespan
 )
 app.include_router(auth.router)
+app.include_router(entra.router)
+app.include_router(integrations.router)
 app.include_router(account_router)
 app.include_router(marketplace_router)
 app.include_router(learning_router)
+app.include_router(community_router)
 app.include_router(context_router)
 app.include_router(journeys_router)
 app.include_router(knowledge_router)
@@ -138,6 +142,9 @@ async def session_boundary(request: Request, call_next):
         "/api/auth/options",
         "/api/auth/login",
         "/api/auth/demo",
+        # The Microsoft sign-in round trip starts and ends signed out.
+        "/api/auth/microsoft/login",
+        "/api/auth/microsoft/callback",
     )
     uid = auth.resolve_session(request.cookies.get(auth.COOKIE))
     if not public and not uid:

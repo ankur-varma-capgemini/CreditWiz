@@ -592,9 +592,10 @@ def test_progress_is_sqlite_and_survives_reads(tmp_path):
         "/api/learning/progress",
         json={"item_id": "prompt-patterns-one-pager", "status": "completed"},
     )
+    # Demo accounts carry rows of their own, so count this person's.
     rows = (
         sqlite3.connect(db)
-        .execute("SELECT status, progress FROM learning_progress")
+        .execute("SELECT status, progress FROM learning_progress WHERE user_id='u-1001'")
         .fetchall()
     )
     assert len(rows) == 1 and rows[0] == ("completed", 100)

@@ -445,11 +445,17 @@ h3 {
   text-align: center;
 }
 
-/* The row offered when the typeahead finds nothing: an action, not a result,
-   so the badge carries the brand colour rather than the neutral one. */
+/* The row that searches everywhere: an action, not a result. */
 .search__kind--action {
   color: var(--ink-700);
   background: var(--ink-100);
+}
+
+/* "Search everywhere" after the suggestions: set apart as the way out of them. */
+.search__result + .search__result--fallback {
+  margin-top: 4px;
+  box-shadow: inset 0 1px 0 var(--line);
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
 }
 
 .topbar__actions {

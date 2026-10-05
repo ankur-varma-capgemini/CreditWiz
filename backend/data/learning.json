@@ -1956,7 +1956,8 @@
       ],
       "capabilities": [],
       "personas": [
-        "risk_analyst"
+        "risk_analyst",
+        "compliance_user"
       ],
       "required_for": [],
       "path": "risk-and-regulation",
@@ -2911,6 +2912,313 @@
       "review_status": "retired",
       "reviewed_at": "2023-09-14",
       "owner": "LinkedIn Learning",
+      "source_kind": "sample"
+    },
+    {
+      "id": "mslearn-explore-generative-ai",
+      "title": "Explore Generative AI",
+      "type": "course",
+      "description": "Discover the fundamentals of generative AI and how this technology is transforming our approach to creativity and productivity.",
+      "topics": [
+        "Generative AI"
+      ],
+      "capabilities": [],
+      "personas": [
+        "business_user",
+        "relationship_manager",
+        "compliance_user",
+        "risk_analyst",
+        "operations_user",
+        "developer"
+      ],
+      "required_for": [],
+      "path": "getting-started",
+      "level": "Beginner",
+      "duration_seconds": 0,
+      "tags": [
+        "Microsoft Learn",
+        "Module"
+      ],
+      "related_agents": [],
+      "url": "https://learn.microsoft.com/training/modules/explore-generative-ai/",
+      "source": "Microsoft Learn",
+      "provider_ref": "training/modules/explore-generative-ai",
+      "outcomes": [
+        "Distinguish between Natural Language Processing (NLP), Natural Language Generation (NLG), and Large Language Models (LLMs), assessing their roles, applications, and interrelationships with generating human language.",
+        "Assess the differences between generative AI and traditional AI models, focusing on their applications, capabilities, and the role of data.",
+        "Evaluate how generative AI services like Microsoft Copilot can enhance creativity in various fields."
+      ],
+      "licensed": true,
+      "active": true,
+      "review_status": "approved",
+      "reviewed_at": "2026-10-02",
+      "owner": "Microsoft Learn",
+      "source_kind": "sample"
+    },
+    {
+      "id": "mslearn-generative-ai-basics",
+      "title": "Introduction to generative AI - Exploring the basics",
+      "type": "course",
+      "description": "This module serves as a guide to understanding the basics of generative AI including its applications. You'll be introduced to Microsoft Copilot and the essential skills needed to use Large Language Models (LLMS) efficiently and responsibly.",
+      "topics": [
+        "Generative AI"
+      ],
+      "capabilities": [],
+      "personas": [
+        "business_user",
+        "relationship_manager",
+        "operations_user"
+      ],
+      "required_for": [],
+      "path": "getting-started",
+      "level": "Beginner",
+      "duration_seconds": 0,
+      "tags": [
+        "Microsoft Learn",
+        "Module"
+      ],
+      "related_agents": [],
+      "url": "https://learn.microsoft.com/training/modules/intro-generative-ai-explore-basics/",
+      "source": "Microsoft Learn",
+      "provider_ref": "training/modules/intro-generative-ai-explore-basics",
+      "outcomes": [
+        "Analyze the concepts of generative AI.",
+        "Interpret the functionality of large language models (LLMs) and their role in generative AI.",
+        "Evaluate your own critical thinking abilities, and learn how to critique these skills to improve your interaction with generative AI.",
+        "Compare various models of generative AI and their usage, and understand the selection of specific models for different training applications."
+      ],
+      "licensed": true,
+      "active": true,
+      "review_status": "approved",
+      "reviewed_at": "2026-10-02",
+      "owner": "Microsoft Learn",
+      "source_kind": "sample"
+    },
+    {
+      "id": "mslearn-copilot-chat",
+      "title": "Explore how Microsoft Copilot Chat works",
+      "type": "course",
+      "description": "This module introduces Microsoft Copilot Chat as a secure, AI-powered assistant that boosts productivity by applying web-based insights, while guiding you on how to access it, navigate the interface, and start using it effectively.",
+      "topics": [
+        "Microsoft 365 Copilot"
+      ],
+      "capabilities": [],
+      "personas": [
+        "business_user",
+        "relationship_manager",
+        "compliance_user",
+        "risk_analyst",
+        "operations_user"
+      ],
+      "required_for": [],
+      "path": "business",
+      "level": "Beginner",
+      "duration_seconds": 0,
+      "tags": [
+        "Microsoft Learn",
+        "Module"
+      ],
+      "related_agents": [],
+      "url": "https://learn.microsoft.com/training/modules/get-started-microsoft-365-copilot-business-chat/",
+      "source": "Microsoft Learn",
+      "provider_ref": "training/modules/get-started-microsoft-365-copilot-business-chat",
+      "outcomes": [
+        "Describe the purpose of Microsoft Copilot Chat.",
+        "Identify where and how to access Copilot Chat.",
+        "Distinguish between work and web grounding modes and their use cases.",
+        "Navigate the Copilot Chat interface and how to start chatting.",
+        "Describe how Enterprise Data Protection keeps your data secure while using Copilot Chat."
+      ],
+      "licensed": true,
+      "active": true,
+      "review_status": "approved",
+      "reviewed_at": "2026-10-02",
+      "owner": "Microsoft Learn",
+      "source_kind": "sample"
+    },
+    {
+      "id": "mslearn-draft-analyze-present",
+      "title": "Draft, analyze, and present with Microsoft Copilot",
+      "type": "course",
+      "description": "This course directs users to learn common prompt flows in Microsoft 365 apps including PowerPoint, Word, Excel, Teams, and Outlook. It also introduces Microsoft Copilot Chat and discusses the difference between work and web grounded data.",
+      "topics": [
+        "Microsoft 365 Copilot"
+      ],
+      "capabilities": [],
+      "personas": [
+        "business_user",
+        "relationship_manager",
+        "operations_user"
+      ],
+      "required_for": [],
+      "path": "business",
+      "level": "Beginner",
+      "duration_seconds": 0,
+      "tags": [
+        "Microsoft Learn",
+        "Learning path"
+      ],
+      "related_agents": [],
+      "url": "https://learn.microsoft.com/training/paths/get-started-with-microsoft-365-copilot/",
+      "source": "Microsoft Learn",
+      "provider_ref": "training/paths/get-started-with-microsoft-365-copilot",
+      "outcomes": [],
+      "licensed": true,
+      "active": true,
+      "review_status": "approved",
+      "reviewed_at": "2026-10-02",
+      "owner": "Microsoft Learn",
+      "source_kind": "sample"
+    },
+    {
+      "id": "mslearn-copilot-studio",
+      "title": "Get started with Microsoft Copilot Studio",
+      "type": "course",
+      "description": "Microsoft Copilot Studio is a graphical, low-code studio for building and managing agents and workflows. In this module, you explore the three agent harnesses and compare the classic, now called standard harness, authoring experience with the new GitHub Copilot harness experience. The procedures for topics, generative orchestration, and the test panel use the standard harness unless otherwise noted.",
+      "topics": [
+        "Copilot Studio",
+        "Agents"
+      ],
+      "capabilities": [],
+      "personas": [
+        "developer",
+        "operations_user"
+      ],
+      "required_for": [],
+      "path": "builders",
+      "level": "Beginner",
+      "duration_seconds": 0,
+      "tags": [
+        "Microsoft Learn",
+        "Module"
+      ],
+      "related_agents": [],
+      "url": "https://learn.microsoft.com/training/modules/power-virtual-agents-bots/",
+      "source": "Microsoft Learn",
+      "provider_ref": "training/modules/power-virtual-agents-bots",
+      "outcomes": [
+        "Compare the GitHub Copilot, standard, and Copilot chat harnesses",
+        "Compare the classic, or standard harness, and new GitHub Copilot harness authoring experiences",
+        "Create and configure agents",
+        "Work with topics and generative AI orchestration",
+        "Test, publish, and analyze agents"
+      ],
+      "licensed": true,
+      "active": true,
+      "review_status": "approved",
+      "reviewed_at": "2026-10-02",
+      "owner": "Microsoft Learn",
+      "source_kind": "sample"
+    },
+    {
+      "id": "mslearn-generative-ai-apps-azure",
+      "title": "Develop generative AI apps in Azure",
+      "type": "course",
+      "description": "Generative artificial intelligence (AI) is becoming more accessible through comprehensive development platforms like Microsoft Foundry. Learn how to build generative AI applications that use language models to interact with your users.",
+      "topics": [
+        "Generative AI",
+        "Azure"
+      ],
+      "capabilities": [],
+      "personas": [
+        "developer"
+      ],
+      "required_for": [],
+      "path": "builders",
+      "level": "Intermediate",
+      "duration_seconds": 0,
+      "tags": [
+        "Microsoft Learn",
+        "Learning path"
+      ],
+      "related_agents": [],
+      "url": "https://learn.microsoft.com/training/paths/create-custom-copilots-ai-studio/",
+      "source": "Microsoft Learn",
+      "provider_ref": "training/paths/create-custom-copilots-ai-studio",
+      "outcomes": [],
+      "licensed": true,
+      "active": true,
+      "review_status": "approved",
+      "reviewed_at": "2026-10-02",
+      "owner": "Microsoft Learn",
+      "source_kind": "sample"
+    },
+    {
+      "id": "mslearn-responsible-ai-practices",
+      "title": "Embrace responsible AI principles and practices",
+      "type": "course",
+      "description": "Learn how to embrace responsible AI practices that build trust and unlock value. Explore Microsoft’s principles, governance systems, and real-world examples to help you design policies, processes, and safeguards for ethical, secure, and scalable AI adoption.",
+      "topics": [
+        "Responsible AI"
+      ],
+      "capabilities": [],
+      "personas": [
+        "compliance_user",
+        "risk_analyst",
+        "developer"
+      ],
+      "required_for": [],
+      "path": "governance",
+      "level": "Beginner",
+      "duration_seconds": 0,
+      "tags": [
+        "Microsoft Learn",
+        "Module"
+      ],
+      "related_agents": [],
+      "url": "https://learn.microsoft.com/training/modules/embrace-responsible-ai-principles-practices/",
+      "source": "Microsoft Learn",
+      "provider_ref": "training/modules/embrace-responsible-ai-principles-practices",
+      "outcomes": [
+        "Explain why responsible AI matters and identify its societal implications.",
+        "Apply Microsoft’s six guiding principles for responsible AI in your organization.",
+        "Design a governance system that turns principles into actionable policies and controls.",
+        "Take practical steps to implement responsible AI across teams and processes."
+      ],
+      "licensed": true,
+      "active": true,
+      "review_status": "approved",
+      "reviewed_at": "2026-10-02",
+      "owner": "Microsoft Learn",
+      "source_kind": "sample"
+    },
+    {
+      "id": "mslearn-explore-responsible-ai",
+      "title": "Explore responsible AI",
+      "type": "course",
+      "description": "Understand and implement responsible AI practices, including best practices, principles, and the global implications of human-AI interaction.",
+      "topics": [
+        "Responsible AI"
+      ],
+      "capabilities": [],
+      "personas": [
+        "business_user",
+        "relationship_manager",
+        "compliance_user",
+        "operations_user"
+      ],
+      "required_for": [],
+      "path": "governance",
+      "level": "Beginner",
+      "duration_seconds": 0,
+      "tags": [
+        "Microsoft Learn",
+        "Module"
+      ],
+      "related_agents": [],
+      "url": "https://learn.microsoft.com/training/modules/responsible-ai/",
+      "source": "Microsoft Learn",
+      "provider_ref": "training/modules/responsible-ai",
+      "outcomes": [
+        "Evaluate the ethical implications in AI by critically analyzing AI-generated content and cross-verifying information from multiple sources.",
+        "Assess the ethical and security concerns associated with deepfakes, including their potential misuse in spreading misinformation and impersonation.",
+        "Evaluate the global human-AI interactions by analyzing key factors such as data privacy, algorithmic bias, transparency, and legal liability."
+      ],
+      "licensed": true,
+      "active": true,
+      "review_status": "approved",
+      "reviewed_at": "2026-10-02",
+      "owner": "Microsoft Learn",
       "source_kind": "sample"
     }
   ]

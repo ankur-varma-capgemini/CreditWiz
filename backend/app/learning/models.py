@@ -116,6 +116,13 @@ class ItemWithProgress(Item):
     blocked_by: list[str] = []
     prerequisite_unavailable: bool = False
     sequence: int | None = None
+    # Where Start opens: a Pluralsight single-sign-on link (or a search while
+    # Pluralsight is not connected), or the Microsoft Learn page.
+    launch_url: str = ""
+    # True when the content can be read inside the hub (Microsoft Learn).
+    read_in_hub: bool = False
+    # True when the provider's own API supplied the details just now.
+    live: bool = False
 
 
 class ItemDetail(ItemWithProgress):
@@ -140,6 +147,27 @@ class LearningHome(BaseModel):
     sections: list[Section]
     item_count: int
     role_paths: list[LearningPath] = []
+
+
+class ProviderResult(BaseModel):
+    """A search result from a provider's own library, beyond the hub's catalogue."""
+
+    title: str
+    # Where it opens: a Microsoft Learn page (read in the hub), or Pluralsight.
+    url: str
+    excerpt: str = ""
+    level: str = ""
+    duration_seconds: int = 0
+    read_in_hub: bool = False
+
+
+class ProviderResults(BaseModel):
+    provider: Literal["Pluralsight", "Microsoft Learn"]
+    # live: searched just now. sample: not connected, so only the hub's catalogue
+    # was searched. blocked: the provider refused or did not answer.
+    state: Literal["live", "sample", "blocked"]
+    note: str = ""
+    results: list[ProviderResult] = []
 
 
 class ProgressIn(BaseModel):

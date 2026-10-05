@@ -84,6 +84,17 @@ CREATE TABLE IF NOT EXISTS hub_sessions (
 );
 CREATE INDEX IF NOT EXISTS hub_sessions_user ON hub_sessions(user_id, created_at);
 CREATE INDEX IF NOT EXISTS hub_sessions_session ON hub_sessions(session_id);
+-- Replies and likes made in the hub while Viva Engage is not connected
+-- (community/sample.py). Once it is, they go to Viva Engage and none are kept here.
+CREATE TABLE IF NOT EXISTS community_replies (
+ id TEXT PRIMARY KEY, thread_id TEXT NOT NULL, user_id TEXT NOT NULL REFERENCES users(id),
+ body TEXT NOT NULL, created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS community_replies_thread ON community_replies(thread_id, created_at);
+CREATE TABLE IF NOT EXISTS community_likes (
+ user_id TEXT NOT NULL REFERENCES users(id), post_id TEXT NOT NULL, created_at TEXT NOT NULL,
+ PRIMARY KEY(user_id, post_id)
+);
 """
 
 

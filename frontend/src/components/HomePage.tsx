@@ -9,6 +9,7 @@ import { usePersona } from '../lib/personaContext'
 import type { Notification } from '../lib/types'
 import '../home.css'
 import '../journeys.css'
+import { ForYou } from './home/ForYou'
 import { HomeChat } from './home/HomeChat'
 import { JourneyGrid } from './journeys/JourneyGrid'
 
@@ -66,6 +67,8 @@ export function HomePage() {
 
   const below = (
     <>
+      <ForYou persona={persona} />
+
       {work && work.journeys.length > 0 && (
         <section className="home-work" aria-labelledby="home-work-title">
           <div className="home-work__head">

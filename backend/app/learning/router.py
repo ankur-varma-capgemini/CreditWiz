@@ -3,17 +3,21 @@
 from __future__ import annotations
 
 import os
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
 
+from .. import http, integrations
 from .. import personas as hub_personas
 from ..context import store as context_store
+from ..hub import guardrails
 from ..identity import derive_persona, load_profile
 from ..marketplace.store import store as marketplace_store
 from ..permissions import resolve_persona, visible
 from ..retrieval.ask import ask
 from ..retrieval.models import AgentAnswer, AgentSearch
+from . import mslearn, pluralsight
 from . import progress as progress_store
 from . import ratings as ratings_store
 from .models import (
@@ -24,6 +28,8 @@ from .models import (
     LearningPath,
     MyLearning,
     ProgressIn,
+    ProviderResult,
+    ProviderResults,
     RatingIn,
     Section,
     TopicCoverage,
@@ -132,6 +138,25 @@ def curation_score(item, persona):
     return sum(curation_breakdown(item, persona).values())
 
 
+def recommendation_reason(item, persona, path_titles: dict[str, str]) -> str:
+    """Why an item suits this person, from the same inputs that rank it.
+
+    Empty when nothing ties the item to them: it is simply in the catalogue.
+    """
+    role = persona.label.lower()
+    if persona.id in item.required_for:
+        return f"Required for your {role} role."
+    if persona.id in item.personas:
+        return f"Mapped to your {role} role."
+    if _affinity(item.path, persona.id, _PATH_AFFINITY):
+        return f"Part of the {path_titles.get(item.path, item.path)} path, one of your role's learning paths."
+    interests = {t.lower() for t in persona.interests.tags}
+    shared = [t for t in item.tags if t.lower() in interests]
+    if shared:
+        return f"Covers {', '.join(shared)}, which your role works with."
+    return ""
+
+
 def recommend_for_persona(persona, limit=6):
     _, items = _load()
     ranked = sorted(
@@ -195,7 +220,46 @@ def _with_progress(items, persona_id):
                 prerequisite_unavailable=any(dep not in allowed for dep in blocked),
             )
         )
-    return out
+    return _providers(out)
+
+
+def _providers(items: list[ItemWithProgress]) -> list[ItemWithProgress]:
+    """What each item's provider adds: Pluralsight's live details and the
+    learner's progress when Pluralsight is connected, where Start opens, and
+    whether the item can be read in the hub. A provider that fails leaves the
+    catalogue's own values, and the Integrations page says why."""
+    courses = [i for i in items if i.source == "Pluralsight"]
+    live: dict[str, dict] = {}
+    done: dict[str, tuple[int, bool]] = {}
+    if courses and pluralsight.configured():
+        refs = [i.provider_ref for i in courses]
+        try:
+            live = pluralsight.courses(refs)
+            done = pluralsight.progress(load_profile().email, refs)
+            integrations.clear_error("pluralsight", None)
+        except http.ExternalError as e:
+            integrations.record_error("pluralsight", None, integrations.explain(e))
+    for i in items:
+        if i.source == "Pluralsight":
+            data = live.get(i.provider_ref)
+            if data:
+                i.title = data.get("title") or i.title
+                i.description = data.get("description") or data.get("shortDescription") or i.description
+                i.level = data.get("level") or i.level
+                i.duration_seconds = int(data.get("courseSeconds") or i.duration_seconds)
+                if data.get("authors"):
+                    i.instructor = ", ".join(data["authors"])
+                i.live = True
+            if i.provider_ref in done:
+                # Pluralsight's own record of what was watched replaces self-reporting.
+                pct, finished = done[i.provider_ref]
+                i.progress = 100 if finished else pct
+                i.status = "completed" if finished else "in_progress" if pct else i.status
+            i.launch_url = pluralsight.launch_url(i.title, i.url, data)
+        elif i.source == "Microsoft Learn" and mslearn.is_learn_url(i.url):
+            i.launch_url = i.url
+            i.read_in_hub = True
+    return items
 
 
 def _paths_with_progress(paths, items):
@@ -247,16 +311,9 @@ def home(persona: str | None = None):
     role.sort(key=lambda i: (-i.priority, -curation_score(i, p), i.id))
     # Copy before annotating: these objects are shared with the type-based
     # sections below, and mutating them leaks the reason onto every other card.
+    titles = {path.id: path.title for path in paths}
     role = [
-        i.model_copy(
-            update={
-                "recommendation_reason": (
-                    f"Mapped to your {p.label.lower()} role."
-                    if p.id in i.personas
-                    else f"Matches topics in your {p.label.lower()} learning path."
-                )
-            }
-        )
+        i.model_copy(update={"recommendation_reason": recommendation_reason(i, p, titles)})
         for i in role
     ]
     sections = []
@@ -326,10 +383,13 @@ def list_items(
     status: str | None = None,
     q: str = "",
     persona: str | None = None,
+    source: str | None = None,
 ):
     paths, items = _load()
     p = resolve_persona(persona)
     ordered = None
+    if source:
+        items = [i for i in items if i.source.lower() == source.lower()]
     if path:
         selected = next((p for p in paths if p.id == path), None)
         if selected is None:
@@ -398,9 +458,13 @@ def item(item_id: str, persona: str | None = None):
         ),
     )[:3]
     enriched = {i.id: i for i in _with_progress([current, *related], p.id)}
+    # The detail page and the side panel say why it is suggested, wherever it
+    # was opened from: a shelf, a search or a recommendation.
+    titles = {path.id: path.title for path in paths}
+    detail = enriched[item_id].model_copy(update={"recommendation_reason": recommendation_reason(current, p, titles)})
     return ItemDetail(
-        **enriched[item_id].model_dump(),
-        path_title=next((p.title for p in paths if p.id == current.path), current.path),
+        **detail.model_dump(),
+        path_title=titles.get(current.path, current.path),
         related_items=[enriched[i.id] for i in related],
         related_agent_names={
             a.id: a.name
@@ -522,6 +586,94 @@ def for_agent(agent_id: str, persona: str | None = None):
 @router.get("/recommended", response_model=list[ItemWithProgress])
 def recommended(persona: str | None = None):
     return [i for s in home(persona).sections if s.id == "role" for i in s.items]
+
+
+def _search_pluralsight(text: str) -> ProviderResults:
+    if not pluralsight.configured():
+        return ProviderResults(
+            provider="Pluralsight",
+            state="sample",
+            note="Pluralsight isn't connected yet, so only its courses in the hub's catalogue were searched.",
+        )
+    try:
+        nodes = pluralsight.search(text) if text else []
+    except http.ExternalError as e:
+        reason = integrations.explain(e)
+        integrations.record_error("pluralsight", None, reason)
+        return ProviderResults(provider="Pluralsight", state="blocked", note=reason)
+    integrations.clear_error("pluralsight", None)
+    return ProviderResults(
+        provider="Pluralsight",
+        state="live",
+        results=[
+            ProviderResult(
+                title=n["title"],
+                url=pluralsight.launch_url(n["title"], "", n),
+                excerpt=n.get("shortDescription") or "",
+                level=n.get("level") or "",
+                duration_seconds=int(n.get("courseSeconds") or 0),
+            )
+            for n in nodes
+            if n and n.get("title")
+        ],
+    )
+
+
+def _search_microsoft_learn(text: str) -> ProviderResults:
+    try:
+        found = mslearn.search(text) if text else []
+    except http.ExternalError as e:
+        reason = integrations.explain(e)
+        integrations.record_error("microsoft_learn", None, reason)
+        return ProviderResults(provider="Microsoft Learn", state="blocked", note=reason)
+    integrations.clear_error("microsoft_learn", None)
+    return ProviderResults(
+        provider="Microsoft Learn",
+        state="live",
+        results=[ProviderResult(title=r.title, url=r.url, excerpt=r.excerpt, read_in_hub=True) for r in found],
+    )
+
+
+@router.get("/providers/search", response_model=list[ProviderResults])
+def provider_search(q: str = ""):
+    """The Learning search, beyond the hub's catalogue: Pluralsight's library
+    (once it is connected) and Microsoft Learn, searched together. One provider
+    failing never hides the other's results."""
+    text = q.strip()[:200]
+    if len(text) < 2:
+        raise HTTPException(422, "Type at least two characters.")
+    # The query leaves the bank, so client names and identifiers come out first.
+    guard = guardrails.check(text, None)
+    sendable = guardrails.for_retrieval(guard.masked, guard.names)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        ps = pool.submit(_search_pluralsight, sendable)
+        ms = pool.submit(_search_microsoft_learn, sendable)
+        return [ps.result(), ms.result()]
+
+
+@router.get("/microsoft-learn/page", response_model=mslearn.LearnPage)
+def microsoft_learn_page(url: str):
+    """A Microsoft Learn module, path or unit, read in the hub."""
+    if not mslearn.is_learn_url(url):
+        raise HTTPException(422, "Only Microsoft Learn pages can be read in the hub.")
+    try:
+        page = mslearn.page(url)
+    except http.ExternalError as e:
+        integrations.record_error("microsoft_learn", None, integrations.explain(e))
+        raise HTTPException(502, "Microsoft Learn didn't answer. Try again in a moment.") from None
+    integrations.clear_error("microsoft_learn", None)
+    context_store.record_event(
+        {
+            "pillar": "learning",
+            "type": "learning_view",
+            "subject_id": url,
+            "subject_type": "microsoft_learn",
+            "persona": _derived_persona_id(),
+            "topics": [],
+            "meta": {"source": "microsoft_learn", "kind": page.kind},
+        }
+    )
+    return page
 
 
 @router.get("/curation")
