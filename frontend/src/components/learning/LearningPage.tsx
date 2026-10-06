@@ -11,6 +11,27 @@ import { ItemCard } from './ItemCard'
 import { ProviderSearch } from './ProviderSearch'
 import { ProviderShelves } from './ProviderShelves'
 
+// Rows about this person, in the order the backend gives them: required, continue, recommended for their role.
+const PERSONAL = new Set(['required', 'continue', 'role'])
+
+function LearningSection({ section }: { section: LearningHome['sections'][number] }) {
+  return (
+    <section className={`lsection lsection--${section.id}`}>
+      <h2 className="section-title">{section.title}</h2>
+      <p className="section-sub">{section.subtitle}</p>
+      {section.items.length ? (
+        <div className="item-grid">
+          {section.items.map((i) => (
+            <ItemCard key={i.id} item={i} />
+          ))}
+        </div>
+      ) : (
+        <p className="muted">You're up to date.</p>
+      )}
+    </section>
+  )
+}
+
 export function LearningPage() {
   const { derived } = usePersona()
   const [params, setParams] = useSearchParams()
@@ -58,6 +79,9 @@ export function LearningPage() {
   const current = data?.key === key ? data : null
   const error = failure?.key === key ? failure.message : ''
   const home = current?.home
+  // The person's own rows lead the page; the type sections are a browse index below.
+  const personal = (home?.sections ?? []).filter((s) => PERSONAL.has(s.id))
+  const browseIndex = (home?.sections ?? []).filter((s) => !PERSONAL.has(s.id))
   const selectedPath = home?.paths.find((p) => p.id === pathId)
   const browse = !!pathId || (!!mode && mode !== 'paths')
   const title = pathId
@@ -193,6 +217,9 @@ export function LearningPage() {
         </div>
       ) : (
         <>
+          {/* What this person should do first: required, in progress, then
+              recommended for their role across every source. */}
+          {!mode && !pathId && personal.map((s) => <LearningSection key={s.id} section={s} />)}
           {!mode && !pathId && <ProviderShelves persona={derived.id} />}
           {(!mode || mode === 'paths') && !pathId && (
             <section>
@@ -259,23 +286,7 @@ export function LearningPage() {
               {q && !pathId && <ProviderSearch q={q} source={source} catalog={current.items} />}
             </>
           )}
-          {!mode &&
-            !pathId &&
-            home?.sections.map((s) => (
-              <section key={s.id} className={`lsection lsection--${s.id}`}>
-                <h2 className="section-title">{s.title}</h2>
-                <p className="section-sub">{s.subtitle}</p>
-                {s.items.length ? (
-                  <div className="item-grid">
-                    {s.items.map((i) => (
-                      <ItemCard key={i.id} item={i} />
-                    ))}
-                  </div>
-                ) : (
-                  <p className="muted">You're up to date.</p>
-                )}
-              </section>
-            ))}
+          {!mode && !pathId && browseIndex.map((s) => <LearningSection key={s.id} section={s} />)}
         </>
       )}
     </div>

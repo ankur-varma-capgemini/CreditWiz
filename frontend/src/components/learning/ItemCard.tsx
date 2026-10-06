@@ -11,8 +11,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { TYPE_LABEL, duration, itemHref, thumbnail, type Item, type ItemType } from '../../lib/learning'
-import { providerTone } from '../../lib/visuals'
+import { TYPE_LABEL, duration, isBadge, itemHref, thumbnail, type Item, type ItemType } from '../../lib/learning'
 import { Cover } from '../Cover'
 import { RatingSummary } from './StarRating'
 
@@ -26,9 +25,13 @@ const ICON: Record<ItemType, LucideIcon> = {
   'best-practice': Lightbulb,
 }
 
+// Read rather than watched or taken: their cover is labelled with the kind of document, not a provider.
+const DOCUMENT_TYPES: ReadonlySet<ItemType> = new Set(['guide', 'documentation', 'quick-reference', 'best-practice', 'confluence'])
+
 export function ItemCard({ item, fromAgentId, compact }: { item: Item; fromAgentId?: string; compact?: boolean }) {
   const Icon = ICON[item.type] ?? BookOpen
   const isVideo = item.type === 'video'
+  const isDocument = DOCUMENT_TYPES.has(item.type)
   const time = duration(item.duration_seconds)
 
   return (
@@ -36,10 +39,9 @@ export function ItemCard({ item, fromAgentId, compact }: { item: Item; fromAgent
       <div className="card-media">
         <Cover
           icon={Icon}
-          tone={providerTone(item.source, item.type)}
           image={thumbnail(item)}
-          badge={item.source === 'Microsoft Learn'}
-          label={item.source || TYPE_LABEL[item.type]}
+          badge={isBadge(thumbnail(item))}
+          label={isDocument ? TYPE_LABEL[item.type] : item.source || TYPE_LABEL[item.type]}
           video={isVideo}
           duration={isVideo ? time : undefined}
           size={compact ? 'compact' : 'card'}

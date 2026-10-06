@@ -37,7 +37,7 @@ import {
 } from '../../lib/community'
 import { fetchItems, type Item } from '../../lib/learning'
 import { usePersona } from '../../lib/personaContext'
-import { subjectIcon, toneFor } from '../../lib/visuals'
+import { subjectIcon } from '../../lib/visuals'
 import { Cover } from '../Cover'
 import { CourseDrawer } from '../learning/CourseDrawer'
 import { CourseCard } from '../learning/ProviderShelves'
@@ -444,7 +444,6 @@ export function CommunityPage() {
                 <article key={c.id} className="cm-card cm-card--cover">
                   <Cover
                     icon={subjectIcon(`${c.name} ${c.topics.join(' ')}`, Users)}
-                    tone={toneFor(c.id)}
                     label={c.privacy === 'private' ? 'Private' : 'Public'}
                     size="compact"
                   />

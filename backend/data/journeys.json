@@ -227,5 +227,212 @@
         ]
       }
     ]
+  },
+  {
+    "persona": "compliance_user",
+    "examples": [
+      "Where does a client's KYC review stand?",
+      "Speed up sanctions screening",
+      "Who can help with beneficial ownership?",
+      "How do I verify a client's identity?"
+    ],
+    "journeys": [
+      {
+        "id": "kyc-review",
+        "title": "KYC review",
+        "summary": "Take a client's KYC review through every check and close it with nothing missing.",
+        "objective": "Complete a client's KYC review",
+        "needs": ["Where the review stands", "The outcome of every check", "What is still missing"],
+        "keywords": ["kyc", "know your customer", "kyc review", "periodic review", "kyc refresh", "due diligence", "cdd", "edd", "completeness", "kyc file"],
+        "steps": [
+          { "title": "Open the record", "detail": "Where the review stands, and what is already on file." },
+          { "title": "Run the checks", "detail": "Identity, ownership, tax, sanctions and adverse media." },
+          { "title": "Chase what is missing", "detail": "Documents and answers the client still owes." },
+          { "title": "Close the review", "detail": "Once every check is complete, record the outcome in Konect." }
+        ],
+        "systems": [
+          { "system": "Konect", "does": "The KYC record and where its review stands." }
+        ],
+        "assets": [
+          { "ref": "asset:konect", "intent": "find", "why": "Where the client's KYC record and its review live." },
+          { "ref": "agent:kyc-supervisor-agent", "intent": "find", "why": "Runs the review across the specialist agents and brings their results together." },
+          { "ref": "learning:kyc-agent-runbook-confluence", "intent": "learn", "why": "Escalation paths and known failure modes for the KYC agents." },
+          { "ref": "agent:kyc-completeness-agent", "intent": "improve", "why": "Confirms every check has reported before Konect is updated." },
+          { "ref": "asset:kyc-lead-expert", "intent": "ask", "why": "Ask about documents, timings and follow-ups." },
+          { "ref": "asset:compliance-ai", "intent": "contribute", "why": "Share what makes a review faster." }
+        ]
+      },
+      {
+        "id": "identity-verification",
+        "title": "Identity verification",
+        "summary": "Confirm who the client is: identity documents, formation documents and the people authorised to act.",
+        "objective": "Verify a client's identity",
+        "needs": ["Documents that satisfy identification", "Formation documents for an entity", "Who is authorised to act"],
+        "keywords": ["identity", "identification", "verify", "verification", "cip", "customer identification", "kyc documents", "documents", "formation documents", "authorised persons", "authorized", "passport", "expiry"],
+        "steps": [
+          { "title": "Collect documents", "detail": "Identity and formation documents, and who may act for the client." },
+          { "title": "Check each document", "detail": "That it counts, matches the client and has not expired." },
+          { "title": "Follow up gaps", "detail": "Anything missing or expired goes back to the client." },
+          { "title": "Record the result", "detail": "Against the client's KYC record." }
+        ],
+        "systems": [
+          { "system": "Konect", "does": "The KYC record, where the identification checks are filed." }
+        ],
+        "assets": [
+          { "ref": "asset:konect", "intent": "find", "why": "Where the identification checks are filed." },
+          { "ref": "learning:kyc-verifier-walkthrough", "intent": "learn", "why": "What identification and verification involve, and which documents count." },
+          { "ref": "learning:kyc-document-checklist", "intent": "learn", "why": "Which documents satisfy identification, and the expiry rules that catch people out." },
+          { "ref": "agent:kyc-cip-agent", "intent": "improve", "why": "Handles the identification checks: identity documents, formation documents and authorised persons." },
+          { "ref": "asset:kyc-lead-expert", "intent": "ask", "why": "Ask whether a document will be accepted." },
+          { "ref": "asset:compliance-ai", "intent": "contribute", "why": "Share the document problems you see most." }
+        ]
+      },
+      {
+        "id": "sanctions-screening",
+        "title": "Sanctions screening",
+        "summary": "Screen a client against the sanctions lists and record a decision on every potential match.",
+        "objective": "Screen a client against sanctions lists",
+        "needs": ["Every list that applies", "A decision on each potential match", "A disposition that survives audit"],
+        "keywords": ["sanctions", "sanctions lists", "screening", "screen", "sanctions review", "ofac", "ofsi", "watchlist", "hits", "potential match", "false positive", "disposition", "pep", "peps"],
+        "steps": [
+          { "title": "Screen the client", "detail": "Against the OFAC, EU, UN and OFSI lists." },
+          { "title": "Review potential matches", "detail": "True match or false positive, with the evidence for each." },
+          { "title": "Record the disposition", "detail": "The decision and the reason, so it survives audit." },
+          { "title": "Escalate a true match", "detail": "To the accountable approver, with the evidence." }
+        ],
+        "systems": [
+          { "system": "Konect", "does": "The KYC record, where the screening outcome is filed with the review." }
+        ],
+        "assets": [
+          { "ref": "asset:konect", "intent": "find", "why": "Where the screening outcome is filed with the KYC review." },
+          { "ref": "learning:sanctions-screening-basics", "intent": "learn", "why": "The process step by step: lists, matching, hits and dispositions." },
+          { "ref": "learning:sanctions-screening-cheatsheet", "intent": "learn", "why": "How to record a disposition so it survives audit." },
+          { "ref": "agent:kyc-sanctions-review-agent", "intent": "improve", "why": "Screens against the OFAC, EU, UN and OFSI sanctions lists." },
+          { "ref": "agent:policy-qa-agent", "intent": "ask", "why": "Answers sanctions policy questions with a citation, or says it does not know." },
+          { "ref": "asset:kyc-lead-expert", "intent": "ask", "why": "Ask how hits and escalations are handled." },
+          { "ref": "asset:compliance-ai", "intent": "contribute", "why": "Share how you clear false positives." }
+        ]
+      },
+      {
+        "id": "adverse-media",
+        "title": "Adverse media",
+        "summary": "Search for financial crime and regulatory actions against a client, and decide what matters.",
+        "objective": "Check a client for adverse media",
+        "needs": ["What has been reported about the client", "Which findings are relevant", "A recorded conclusion"],
+        "keywords": ["adverse media", "adverse news", "negative news", "media", "news", "ahr", "financial crime", "enforcement", "reputational"],
+        "steps": [
+          { "title": "Search", "detail": "Financial crime and regulatory actions against the client." },
+          { "title": "Weigh the findings", "detail": "Set aside namesakes and stories that are not about the client." },
+          { "title": "Record the conclusion", "detail": "With its sources, alongside the rest of the review." },
+          { "title": "Escalate what matters", "detail": "A relevant finding goes to the accountable approver." }
+        ],
+        "systems": [
+          { "system": "Konect", "does": "The KYC record, where the conclusion is filed with the review." }
+        ],
+        "assets": [
+          { "ref": "asset:konect", "intent": "find", "why": "Where the conclusion is filed with the KYC review." },
+          { "ref": "learning:financial-crime-and-aml-analytics", "intent": "learn", "why": "Financial crime typologies, and how to cut false positives without losing coverage." },
+          { "ref": "agent:kyc-adverse-media-agent", "intent": "improve", "why": "Searches adverse media for financial crime and regulatory actions against the client." },
+          { "ref": "asset:kyc-lead-expert", "intent": "ask", "why": "Check how a finding should be treated." },
+          { "ref": "asset:compliance-ai", "intent": "contribute", "why": "Share searches that find what matters." }
+        ]
+      },
+      {
+        "id": "beneficial-ownership",
+        "title": "Beneficial ownership",
+        "summary": "Work out who ultimately owns and controls a client, and complete the beneficial ownership form.",
+        "objective": "Find out who ultimately owns a company",
+        "needs": ["The ownership chain", "Who has control", "A completed beneficial ownership form"],
+        "keywords": ["beneficial ownership", "beneficial owner", "ubo", "ultimate owner", "ownership chain", "company ownership", "org chart", "entity hierarchy", "fincen", "bo form"],
+        "steps": [
+          { "title": "Map the ownership", "detail": "The chain of entities up to the ultimate owners." },
+          { "title": "Identify who has control", "detail": "Owners, and anyone who controls the company." },
+          { "title": "Complete the form", "detail": "The FinCEN beneficial ownership form: the four ownership prongs and the control prong." },
+          { "title": "Record the result", "detail": "Against the client's KYC record." }
+        ],
+        "systems": [
+          { "system": "Konect", "does": "The KYC record, where the ownership findings are filed." }
+        ],
+        "assets": [
+          { "ref": "asset:konect", "intent": "find", "why": "Where the ownership findings are filed with the KYC review." },
+          { "ref": "agent:kyc-ownership-org-chart-agent", "intent": "improve", "why": "Works out the ultimate beneficial ownership chain and the entity hierarchy." },
+          { "ref": "agent:kyc-fincen-bo-form-agent", "intent": "improve", "why": "Completes the FinCEN beneficial ownership form." },
+          { "ref": "asset:kyc-lead-expert", "intent": "ask", "why": "Ask how complex structures are handled." },
+          { "ref": "asset:compliance-ai", "intent": "contribute", "why": "Share how you untangle a complex structure." }
+        ]
+      },
+      {
+        "id": "tax-classification",
+        "title": "Tax classification",
+        "summary": "Review a client's tax forms, FATCA and CRS classification and any treaty claim.",
+        "objective": "Check W-8 and FATCA classification",
+        "needs": ["A valid W-8 or W-9", "The FATCA and CRS classification", "Treaty eligibility, where claimed"],
+        "keywords": ["tax", "tax forms", "w-8", "w-8ben", "w-8ben-e", "w-9", "fatca", "crs", "classification", "treaty"],
+        "steps": [
+          { "title": "Collect the forms", "detail": "The W-8 or W-9 the client's status calls for." },
+          { "title": "Review the classification", "detail": "FATCA and CRS status against what the form claims." },
+          { "title": "Review treaty claims", "detail": "Eligibility for any treaty benefit claimed." },
+          { "title": "Record and follow up", "detail": "Note the outcome, and go back to the client for anything missing." }
+        ],
+        "systems": [
+          { "system": "Konect", "does": "The KYC record, where the tax review is filed." }
+        ],
+        "assets": [
+          { "ref": "asset:konect", "intent": "find", "why": "Where the tax review is filed with the KYC record." },
+          { "ref": "learning:kyc-agent-runbook-confluence", "intent": "learn", "why": "Escalation paths and known failure modes for the KYC agents." },
+          { "ref": "agent:kyc-tax-agent", "intent": "improve", "why": "Reviews W-8 and W-9 forms, FATCA and CRS classification, and treaty eligibility." },
+          { "ref": "agent:policy-qa-agent", "intent": "ask", "why": "Answers policy questions with a citation, or says it does not know." },
+          { "ref": "asset:kyc-lead-expert", "intent": "ask", "why": "Ask what the review accepts when a form is incomplete." },
+          { "ref": "asset:compliance-ai", "intent": "contribute", "why": "Share the classification questions that come up most." }
+        ]
+      },
+      {
+        "id": "client-outreach",
+        "title": "Client outreach",
+        "summary": "Ask the client for what the review still needs, and file what comes back.",
+        "objective": "Get missing information from a client",
+        "needs": ["What the review still needs", "A clear request to the client", "Responses routed to the right check"],
+        "keywords": ["outreach", "rfi", "rfi letter", "chase", "chaser", "chase emails", "follow up", "client response", "reminder", "missing information", "missing documents"],
+        "steps": [
+          { "title": "List what is missing", "detail": "Documents and answers the review still needs." },
+          { "title": "Send the request", "detail": "An RFI letter, then follow-ups and chasers." },
+          { "title": "Pick up responses", "detail": "Classify what comes back and route it to the right check." },
+          { "title": "Close the gap", "detail": "Confirm what arrived completes the review, or chase again." }
+        ],
+        "systems": [
+          { "system": "AMT mailbox", "does": "Where client responses arrive." },
+          { "system": "Konect", "does": "The KYC record the responses complete." }
+        ],
+        "assets": [
+          { "ref": "learning:human-in-the-loop-best-practice", "intent": "learn", "why": "When an agent may draft, when a person must approve, and how to evidence it." },
+          { "ref": "agent:kyc-email-drafting-agent", "intent": "improve", "why": "Drafts RFI letters, follow-up notifications and chase emails." },
+          { "ref": "agent:kyc-client-response-analyzer", "intent": "improve", "why": "Picks up client responses, classifies the documents and routes them to the right specialist." },
+          { "ref": "asset:kyc-lead-expert", "intent": "ask", "why": "Ask about timings and follow-ups." },
+          { "ref": "asset:compliance-ai", "intent": "contribute", "why": "Share outreach that gets a quick reply." }
+        ]
+      },
+      {
+        "id": "policy-questions",
+        "title": "Policy questions",
+        "summary": "Get a policy answer you can rely on, with the section it comes from.",
+        "objective": "Answer a policy question from the source",
+        "needs": ["The policy that applies", "What it says, with a citation", "Someone to ask when it is unclear"],
+        "keywords": ["policy", "policies", "procedure", "regulation", "regulatory", "requirement", "obligation", "permitted", "citation"],
+        "steps": [
+          { "title": "Ask the question", "detail": "In your own words, naming the policy if you know it." },
+          { "title": "Read the source", "detail": "The cited section, not only the answer." },
+          { "title": "Confirm what applies", "detail": "With someone who knows the area when the answer is unclear." }
+        ],
+        "systems": [
+          { "system": "Policy library", "does": "The approved policies the answers cite." }
+        ],
+        "assets": [
+          { "ref": "learning:grounding-agents-best-practice", "intent": "learn", "why": "How the Policy Q&A agent stays accurate, and when it refuses to answer." },
+          { "ref": "agent:policy-qa-agent", "intent": "ask", "why": "Answers questions about MUFG policies with citations to the source document." },
+          { "ref": "asset:kyc-lead-expert", "intent": "ask", "why": "Ask how a KYC policy is applied in practice." },
+          { "ref": "asset:compliance-ai", "intent": "contribute", "why": "Share answers others keep asking for." }
+        ]
+      }
+    ]
   }
 ]

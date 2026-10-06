@@ -396,6 +396,21 @@ def test_learning_home_sections_are_role_based():
     assert body["persona_label"] == "Compliance user"
 
 
+def test_role_recommendations_mix_every_source_with_a_reason():
+    body = client.get("/api/learning", params={"persona": "relationship_manager"}).json()
+    role = next(s for s in body["sections"] if s["id"] == "role")
+    assert 1 < len(role["items"]) <= 8
+    # One row across providers, not whichever provider happens to rank highest.
+    assert len({i["source"] for i in role["items"]}) >= 4
+    assert all(i["recommendation_reason"] for i in role["items"])
+
+
+def test_every_learning_item_carries_a_thumbnail():
+    from app.learning.router import _raw
+
+    assert all(i.get("poster_url") or i.get("youtube_id") for i in _raw()["items"])
+
+
 def test_progress_tracks_started_and_completed():
     started = client.post(
         "/api/learning/progress",

@@ -4,10 +4,17 @@ import {
   CreditCard,
   FileText,
   Headset,
+  IdCard,
   Landmark,
   Layers,
   LineChart,
+  Network,
+  Newspaper,
+  Receipt,
   Scale,
+  ScanSearch,
+  ScrollText,
+  Send,
   Settings2,
   ShieldAlert,
   ShieldCheck,
@@ -17,54 +24,20 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
-/**
- * How things look when they have no picture of their own: a colour (tone)
- * and an icon, always the same for the same thing, so a card is recognisable
- * at a glance and a grid reads as designed rather than empty.
- */
-export type Tone = 'navy' | 'sky' | 'rose' | 'indigo' | 'violet' | 'crimson' | 'teal' | 'emerald' | 'amber' | 'slate'
+// Things with no picture of their own share one neutral cover in every pillar
+// (Cover.tsx); nothing is colour-coded. The icon is what tells them apart.
 
-// Red, Pluralsight's pink and Microsoft's blue are kept for what they mean,
-// so a seed never lands on them by chance.
-const TONES: Tone[] = ['navy', 'teal', 'indigo', 'violet', 'emerald', 'amber', 'slate']
-
-/** The same seed always gets the same tone. */
-export function toneFor(seed: string): Tone {
-  let h = 0
-  for (const ch of seed) h = (h * 31 + ch.charCodeAt(0)) >>> 0
-  return TONES[h % TONES.length]
-}
-
-// Outside providers keep their own colours, so a course says where it comes from.
-const PROVIDER: [RegExp, Tone][] = [
-  [/pluralsight/i, 'rose'],
-  [/microsoft/i, 'sky'],
-  [/linkedin/i, 'indigo'],
-  [/udemy/i, 'violet'],
-  [/google/i, 'teal'],
-  [/aws|amazon/i, 'amber'],
-  [/ibm/i, 'navy'],
-  [/github/i, 'slate'],
-]
-
-// The hub's own content, by kind: a row of mixed kinds reads as such, and a
-// row of MUFG's own does not turn red.
-const KIND: Record<string, Tone> = {
-  course: 'navy',
-  video: 'violet',
-  guide: 'teal',
-  'best-practice': 'emerald',
-  'quick-reference': 'indigo',
-  documentation: 'slate',
-  confluence: 'slate',
-}
-
-export function providerTone(provider: string, kind = ''): Tone {
-  return PROVIDER.find(([pattern]) => pattern.test(provider))?.[1] ?? KIND[kind] ?? toneFor(provider || kind || 'hub')
-}
-
-// What a business domain or category is about, as an icon.
+// What a business domain or category is about, as an icon. The specific
+// compliance jobs come first, so each keeps its own icon rather than all
+// sharing the compliance shield.
 const SUBJECT: [RegExp, LucideIcon][] = [
+  [/identit|verif/i, IdCard],
+  [/sanction|screen/i, ScanSearch],
+  [/media|news/i, Newspaper],
+  [/ownership|hierarch/i, Network],
+  [/\btax\b|fatca/i, Receipt],
+  [/outreach/i, Send],
+  [/^polic/i, ScrollText],
   [/fraud|risk/i, ShieldAlert],
   [/complian|kyc|aml|sanction|regulat|policy/i, ShieldCheck],
   [/lend|credit|loan|bank/i, Landmark],

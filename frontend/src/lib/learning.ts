@@ -208,6 +208,11 @@ export function thumbnail(item: Pick<Item, 'poster_url' | 'youtube_id'>): string
   return item.youtube_id ? `https://i.ytimg.com/vi/${encodeURIComponent(item.youtube_id)}/hqdefault.jpg` : ''
 }
 
+/** A provider's badge or logo (an SVG), shown at its own size rather than filling the cover like a photo. */
+export function isBadge(url: string): boolean {
+  return /\.svg(\?|$)/i.test(url)
+}
+
 export function duration(seconds: number): string {
   if (!seconds) return ''
   const m = Math.round(seconds / 60)

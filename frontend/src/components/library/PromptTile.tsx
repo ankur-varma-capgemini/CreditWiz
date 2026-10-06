@@ -1,7 +1,7 @@
 import { Bookmark, BookmarkCheck, Clock, Sparkles, Star } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { RELATION_LABEL, type PromptCard, type Risk } from '../../lib/prompts'
-import { subjectIcon, toneFor } from '../../lib/visuals'
+import { subjectIcon } from '../../lib/visuals'
 import { Cover } from '../Cover'
 
 export function RiskPill({ risk }: { risk: Risk }) {
@@ -17,7 +17,7 @@ export function PromptTile({ p, onToggleSave }: { p: PromptCard; onToggleSave?: 
   return (
     <article className="ptile">
       <div className="card-head">
-        <Cover icon={subjectIcon(p.category, Sparkles)} tone={toneFor(p.category)} size="tile" />
+        <Cover icon={subjectIcon(p.category, Sparkles)} size="tile" />
         <div className="ptile__top">
           <span className="ptile__cat">{p.category}</span>
           <RiskPill risk={p.risk} />

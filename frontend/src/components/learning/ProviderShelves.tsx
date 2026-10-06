@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { isAbort } from '../../lib/api'
 import { fetchIntegrations, STATE_LABEL, type Integration } from '../../lib/integrations'
-import { duration, fetchItems, thumbnail, type Item, type Provider } from '../../lib/learning'
-import { providerTone } from '../../lib/visuals'
+import { duration, fetchItems, isBadge, thumbnail, type Item, type Provider } from '../../lib/learning'
 import { Cover } from '../Cover'
 import { CourseDrawer } from './CourseDrawer'
 
@@ -27,9 +26,8 @@ export function CourseCard({ item, onOpen }: { item: Item; onOpen: (id: string) 
     <button type="button" className="ccard" onClick={() => onOpen(item.id)}>
       <Cover
         icon={kind === 'Learning path' ? Layers : item.read_in_hub ? BookOpen : GraduationCap}
-        tone={providerTone(item.source, item.type)}
         image={thumbnail(item)}
-        badge={item.source === 'Microsoft Learn'}
+        badge={isBadge(thumbnail(item))}
         label={item.source}
         size="compact"
       />

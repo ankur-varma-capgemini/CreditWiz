@@ -245,6 +245,19 @@
     }
   },
   {
+    "id": "compliance-ai",
+    "kind": "community",
+    "title": "Compliance AI Practitioners",
+    "summary": "Compliance teams using AI for screening, KYC and reviews. Post what works and ask about what does not.",
+    "action_label": "Open community",
+    "action_url": "/community?c=compliance-ai",
+    "trust": {
+      "purpose": "Where compliance teams share and improve how they use AI.",
+      "who_can_use": "Compliance teams",
+      "how_to_access": "Open it from Community."
+    }
+  },
+  {
     "id": "meeting-prep-use-case",
     "kind": "use_case",
     "title": "Faster client meeting preparation",

@@ -292,6 +292,39 @@ def _paths_with_progress(paths, items):
     return output
 
 
+_ROLE_PICKS = 8
+
+
+def _provider(item) -> str:
+    """Where an item comes from, as a person would name it: MUFG for what the
+    bank publishes itself, and one group for videos, which come from many channels."""
+    if item.type == "video":
+        return "videos"
+    if not item.source or item.source.startswith(("MUFG", "Confluence")):
+        return "MUFG"
+    return item.source
+
+
+def _across_providers(ranked, limit):
+    """Each provider's best in turn, then each one's next: one row mixes MUFG's
+    own learning, every provider's courses and videos, instead of filling up
+    from whichever provider ranks highest. Order within a provider is kept."""
+    queues: dict[str, list] = {}
+    for item in ranked:
+        queues.setdefault(_provider(item), []).append(item)
+    picked = []
+    while len(picked) < limit and any(queues.values()):
+        for queue in queues.values():
+            if queue and len(picked) < limit:
+                picked.append(queue.pop(0))
+    return picked
+
+
+def _joined(names) -> str:
+    seen = list(dict.fromkeys(names))
+    return seen[0] if len(seen) == 1 else ", ".join(seen[:-1]) + " and " + seen[-1]
+
+
 @router.get("", response_model=LearningHome)
 def home(persona: str | None = None):
     paths, items = _load()
@@ -335,13 +368,14 @@ def home(persona: str | None = None):
                 items=continuing,
             )
         )
-    if role:
+    picked = _across_providers(role, _ROLE_PICKS)
+    if picked:
         sections.append(
             Section(
                 id="role",
                 title="Recommended for your role",
-                subtitle="Based on your role and the curated catalog.",
-                items=role[:4],
+                subtitle=f"Ranked for your role, across {_joined(_provider(i) for i in picked)}.",
+                items=picked,
             )
         )
     # The type sections are a browse index, so they stay complete for their type

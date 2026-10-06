@@ -21,6 +21,17 @@ RM_JOURNEYS = [
     "portfolio-review",
 ]
 
+COMPLIANCE_JOURNEYS = [
+    "kyc-review",
+    "identity-verification",
+    "sanctions-screening",
+    "adverse-media",
+    "beneficial-ownership",
+    "tax-classification",
+    "client-outreach",
+    "policy-questions",
+]
+
 
 def _ask(q: str, **extra) -> dict:
     response = client.post("/api/ask", json={"q": q, **RM, **extra}, headers={"X-CreditWiz-Request": "1"})
@@ -59,13 +70,16 @@ def test_the_relationship_manager_demo_account_is_offered():
     assert any(u["role"] == "Relationship Manager" for u in users)
 
 
-def test_a_relationship_manager_sees_their_journeys_and_others_see_none():
+def test_each_role_sees_its_own_journeys_and_a_role_without_any_sees_none():
     body = client.get("/api/journeys", params=RM).json()
     assert body["persona_label"] == "Relationship Manager"
     assert [j["id"] for j in body["journeys"]] == RM_JOURNEYS
     assert len(body["examples"]) == 4
-    # The default test user is a compliance analyst, who has no journeys yet.
-    assert client.get("/api/journeys").json()["journeys"] == []
+    # The default test user is a compliance analyst.
+    mine = client.get("/api/journeys").json()
+    assert [j["id"] for j in mine["journeys"]] == COMPLIANCE_JOURNEYS
+    assert len(mine["examples"]) == 4
+    assert client.get("/api/journeys", params={"persona": "developer"}).json()["journeys"] == []
 
 
 def test_every_journey_points_at_real_records():
@@ -105,6 +119,31 @@ def test_the_home_search_reads_intent_and_the_job(query, intent, journey):
     assert body["task"]["activity"]["id"] == journey
     # What they came for comes first.
     assert body["recommended"][0]["intent"] == intent
+
+
+@pytest.mark.parametrize(
+    ("query", "intent", "journey"),
+    [
+        ("Where does a client's KYC review stand?", "find", "kyc-review"),
+        ("Speed up sanctions screening", "improve", "sanctions-screening"),
+        ("Who can help with beneficial ownership?", "ask", "beneficial-ownership"),
+        ("How do I verify a client's identity?", "learn", "identity-verification"),
+    ],
+)
+def test_a_compliance_analysts_examples_land_on_their_jobs(query, intent, journey):
+    response = client.post("/api/ask", json={"q": query}, headers={"X-CreditWiz-Request": "1"})
+    body = response.json()
+    assert body["task"]["intent"] == intent
+    assert body["task"]["activity"]["id"] == journey
+    assert body["recommended"][0]["intent"] == intent
+
+
+def test_a_community_whose_owner_is_unconfirmed_says_nothing_about_one():
+    page = client.get("/api/journeys/sanctions-screening").json()
+    community = next(a for a in page["assets"] if a["ref"] == "asset:compliance-ai")
+    assert community["action_url"] == "/community?c=compliance-ai"
+    assert community["trust"]["owner_team"] == ""
+    assert community["trust"]["guardrails"] == []
 
 
 def test_a_request_outside_any_journey_gets_intent_but_no_journey():

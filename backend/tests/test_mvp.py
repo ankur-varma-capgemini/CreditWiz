@@ -409,10 +409,10 @@ def test_account_provisioning_revokes_old_sessions():
         "agents": 18,
         "learning_items": 58,
         "paths": 11,
-        "journeys": 8,
+        "journeys": 16,
         "prompts": 60,
         "templates": 4,
-        "assets": 20,
+        "assets": 21,
         "knowledge_systems": 5,
         "document_types": 4,
     }

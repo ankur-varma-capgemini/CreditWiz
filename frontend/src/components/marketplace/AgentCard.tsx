@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { track } from '../../lib/context'
 import { STATUS_LABEL, type Agent } from '../../lib/marketplace'
 import { usePersona } from '../../lib/personaContext'
-import { subjectIcon, toneFor } from '../../lib/visuals'
+import { subjectIcon } from '../../lib/visuals'
 import { Cover } from '../Cover'
 
 interface Props {
@@ -41,7 +41,7 @@ export function AgentCard({ agent, why, reasons, source, compact, hideForYou }: 
       }
     >
       <div className="card-head">
-        <Cover icon={subjectIcon(domain)} tone={toneFor(domain || agent.id)} size="tile" />
+        <Cover icon={subjectIcon(domain)} size="tile" />
         <div className="acard__top">
           <span className="acard__kicker">
             {domain}

@@ -1,18 +1,18 @@
 /* ============================================================================
    Covers: a thumbnail for anything in the hub. A real image where there is
-   one; otherwise a designed cover in the thing's own tone, with its icon.
+   one; otherwise a plain neutral surface with the thing's icon. One quiet
+   style in every pillar: no colour coding, no gradients, no effects.
    ========================================================================== */
 
 .cover {
   position: relative;
-  isolation: isolate;
   display: grid;
   flex: none;
   place-items: center;
   overflow: hidden;
   aspect-ratio: 16 / 9;
-  background: var(--cover-bg);
-  color: #fff;
+  background: var(--ink-100);
+  color: var(--ink-500);
 }
 
 .cover--compact {
@@ -20,81 +20,15 @@
   height: 104px;
 }
 
+/* A small square beside a card's title. */
 .cover--tile {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   aspect-ratio: auto;
+  border: 1px solid var(--line);
   border-radius: var(--r-md);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
-    0 2px 6px rgba(16, 24, 40, 0.14);
-}
-
-/* Light from the top left, a fine grid, and rings at the far corner: depth
-   without a picture. */
-.cover::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(120% 95% at 0% 0%, rgba(255, 255, 255, 0.3), transparent 55%),
-    radial-gradient(90% 80% at 100% 100%, rgba(0, 0, 0, 0.2), transparent 60%),
-    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 22px 22px,
-    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 22px 22px;
-}
-
-.cover::after {
-  content: '';
-  position: absolute;
-  right: -16%;
-  bottom: -40%;
-  z-index: -1;
-  width: 64%;
-  aspect-ratio: 1;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 18px rgba(255, 255, 255, 0.05),
-    0 0 0 40px rgba(255, 255, 255, 0.035);
-}
-
-.cover--tile::before {
-  background: radial-gradient(120% 95% at 0% 0%, rgba(255, 255, 255, 0.32), transparent 60%);
-}
-
-.cover--tile::after {
-  display: none;
-}
-
-.cover__art {
-  display: grid;
-  place-items: center;
-  width: 58px;
-  height: 58px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  transition: transform var(--out);
-}
-
-.cover--compact .cover__art {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-}
-
-.cover--tile .cover__art {
-  width: auto;
-  height: auto;
-  border: 0;
-  background: none;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  background: var(--ink-50);
+  color: var(--ink-700);
 }
 
 .cover__icon {
@@ -108,35 +42,24 @@
 }
 
 .cover--tile .cover__icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
-/* A badge (Microsoft Learn's own) sits on a white disc in the cover. */
+/* A badge (Microsoft Learn's own) sits on the plain surface at its own size. */
 .cover__badge {
-  width: 86%;
-  height: 86%;
+  max-width: 60%;
+  height: 66%;
   object-fit: contain;
-}
-
-.cover__art:has(.cover__badge) {
-  border-color: rgba(255, 255, 255, 0.85);
-  background: #fff;
 }
 
 .cover__img {
   position: absolute;
   inset: 0;
-  z-index: -1;
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform var(--out);
-}
-
-.cover--photo::before,
-.cover--photo::after {
-  display: none;
 }
 
 .cover__label {
@@ -145,18 +68,22 @@
   left: 10px;
   max-width: calc(100% - 20px);
   overflow: hidden;
-  padding: 3px 9px;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: var(--r-full);
-  background: rgba(13, 14, 17, 0.22);
-  color: #fff;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--ink-700);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.01em;
   text-overflow: ellipsis;
   white-space: nowrap;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+}
+
+/* On a photo the label needs its own ground to stay legible. */
+.cover--photo .cover__label {
+  border-color: transparent;
+  background: rgba(13, 14, 17, 0.72);
+  color: #fff;
 }
 
 .cover__play {
@@ -165,18 +92,13 @@
   top: 50%;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  margin: -22px 0 0 -22px;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
   border-radius: 50%;
-  background: rgba(13, 14, 17, 0.55);
+  background: rgba(13, 14, 17, 0.62);
   color: #fff;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  transition:
-    background var(--base),
-    transform var(--base);
+  transition: background var(--base);
 }
 
 .cover__time {
@@ -192,19 +114,16 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Any card holding a cover lifts its art a little on hover. */
-a:hover > .cover .cover__art,
+/* Hover: a photo moves a little and the play button darkens; nothing else. */
 a:hover > .cover .cover__img,
-button:hover > .cover .cover__art,
-:hover > .card-media > .cover .cover__art,
+button:hover > .cover .cover__img,
 :hover > .card-media > .cover .cover__img {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 a:hover > .cover .cover__play,
 :hover > .card-media > .cover .cover__play {
-  background: var(--red);
-  transform: scale(1.06);
+  background: rgba(13, 14, 17, 0.82);
 }
 
 /* A card's head with its tile: the tile, then the card's own top line. */
@@ -220,50 +139,7 @@ a:hover > .cover .cover__play,
   min-width: 0;
 }
 
-/* ---- tones ---- */
-
-.cover--navy {
-  --cover-bg: linear-gradient(135deg, #24476f 0%, #10223a 100%);
-}
-
-.cover--sky {
-  --cover-bg: linear-gradient(135deg, #2f86ec 0%, #1452b0 100%);
-}
-
-.cover--rose {
-  --cover-bg: linear-gradient(135deg, #ec4387 0%, #a3195a 100%);
-}
-
-.cover--indigo {
-  --cover-bg: linear-gradient(135deg, #5866e0 0%, #2d379a 100%);
-}
-
-.cover--violet {
-  --cover-bg: linear-gradient(135deg, #9466f2 0%, #5a31b6 100%);
-}
-
-.cover--crimson {
-  --cover-bg: linear-gradient(135deg, #ea3a40 0%, #a0151b 100%);
-}
-
-.cover--teal {
-  --cover-bg: linear-gradient(135deg, #1fb0ad 0%, #0b6b70 100%);
-}
-
-.cover--emerald {
-  --cover-bg: linear-gradient(135deg, #2bb07a 0%, #126c48 100%);
-}
-
-.cover--amber {
-  --cover-bg: linear-gradient(135deg, #f2ad45 0%, #c2690f 100%);
-}
-
-.cover--slate {
-  --cover-bg: linear-gradient(135deg, #5a6476 0%, #2a313c 100%);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .cover__art,
   .cover__img,
   .cover__play {
     transition: none;
