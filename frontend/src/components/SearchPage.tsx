@@ -39,8 +39,8 @@ function Part<T>({ answer, children }: { answer: Answer<T> | null; children: (va
 }
 
 /**
- * Search across AI Hub: one query, every pillar's answer. Agents and prompts
- * from the hub, learning from its catalog and live from Pluralsight and
+ * Search across Nexus: one query, every pillar's answer. Agents and prompts
+ * from Nexus, learning from its catalog and live from Pluralsight and
  * Microsoft Learn, and conversations from Community.
  */
 export function SearchPage() {
@@ -85,14 +85,14 @@ export function SearchPage() {
         <ChevronRight size={16} />
         <span>Search</span>
       </nav>
-      <PageBand compact kicker="Search across AI Hub" title={q ? `Results for “${q}”` : 'Search across AI Hub'}>
+      <PageBand compact kicker="Search across Nexus" title={q ? `Results for “${q}”` : 'Search across Nexus'}>
         <BandSearch
           value={draft}
           onChange={setDraft}
           onSearch={(value) => value.trim() && setParams({ q: value.trim() })}
           onClear={() => setDraft('')}
           placeholder="Agents, prompts, courses and conversations"
-          label="Search the AI Hub"
+          label="Search Nexus"
           action="Search"
         />
       </PageBand>
@@ -193,7 +193,7 @@ export function SearchPage() {
           <section aria-labelledby="hsearch-learning">
             <div className="hsearch__head">
               <h2 className="section-title" id="hsearch-learning">
-                Learning in the AI Hub catalog
+                Learning in the Nexus catalog
               </h2>
               <Link to={`/learning/catalog?q=${encoded}`} className="textlink">
                 {learning && 'value' in learning && learning.value.length > SHOWN ? `See all ${learning.value.length}` : 'Learning'}{' '}
@@ -209,7 +209,7 @@ export function SearchPage() {
                     ))}
                   </div>
                 ) : (
-                  <div className="state">Nothing in the hub's catalog matches “{q}”.</div>
+                  <div className="state">Nothing in Nexus's catalog matches “{q}”.</div>
                 )
               }
             </Part>

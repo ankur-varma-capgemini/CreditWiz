@@ -226,7 +226,7 @@ def _with_progress(items, persona_id):
 def _providers(items: list[ItemWithProgress]) -> list[ItemWithProgress]:
     """What each item's provider adds: Pluralsight's live details and the
     learner's progress when Pluralsight is connected, where Start opens, and
-    whether the item can be read in the hub. A provider that fails leaves the
+    whether the item can be read in Nexus. A provider that fails leaves the
     catalogue's own values, and the Integrations page says why."""
     courses = [i for i in items if i.source == "Pluralsight"]
     live: dict[str, dict] = {}
@@ -627,7 +627,7 @@ def _search_pluralsight(text: str) -> ProviderResults:
         return ProviderResults(
             provider="Pluralsight",
             state="sample",
-            note="Pluralsight isn't connected yet, so only its courses in the hub's catalogue were searched.",
+            note="Pluralsight isn't connected yet, so only its courses in Nexus's catalogue were searched.",
         )
     try:
         nodes = pluralsight.search(text) if text else []
@@ -670,7 +670,7 @@ def _search_microsoft_learn(text: str) -> ProviderResults:
 
 @router.get("/providers/search", response_model=list[ProviderResults])
 def provider_search(q: str = ""):
-    """The Learning search, beyond the hub's catalogue: Pluralsight's library
+    """The Learning search, beyond Nexus's catalogue: Pluralsight's library
     (once it is connected) and Microsoft Learn, searched together. One provider
     failing never hides the other's results."""
     text = q.strip()[:200]
@@ -687,9 +687,9 @@ def provider_search(q: str = ""):
 
 @router.get("/microsoft-learn/page", response_model=mslearn.LearnPage)
 def microsoft_learn_page(url: str):
-    """A Microsoft Learn module, path or unit, read in the hub."""
+    """A Microsoft Learn module, path or unit, read in Nexus."""
     if not mslearn.is_learn_url(url):
-        raise HTTPException(422, "Only Microsoft Learn pages can be read in the hub.")
+        raise HTTPException(422, "Only Microsoft Learn pages can be read in Nexus.")
     try:
         page = mslearn.page(url)
     except http.ExternalError as e:

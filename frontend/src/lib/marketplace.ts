@@ -37,7 +37,7 @@ export interface Agent {
   access: { type: AccessType; how: string; launch_url: string; request_url: string }
   documentation_url: string
   architecture_url: string
-  /** Its documents by type, linked where they live. The hub keeps no copies. */
+  /** Its documents by type, linked where they live. Nexus keeps no copies. */
   documents: AgentDocument[]
   tags: string[]
   featured: boolean

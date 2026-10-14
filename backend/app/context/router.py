@@ -46,7 +46,7 @@ def post_feedback(fb: FeedbackIn) -> Ack:
 
 @router.get("/me", response_model=UserContext)
 def me() -> UserContext:
-    """Who the person is, as the hub understands them: profile, role, function,
+    """Who the person is, as Nexus understands them: profile, role, function,
     interests, inferred maturity and entitlements. Built in user.py.
 
     Interests come from footprints across every pillar. The MVP does not rank on

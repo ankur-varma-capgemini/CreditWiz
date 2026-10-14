@@ -25,7 +25,7 @@ interface Filters {
   relation: Relation | ''
 }
 
-/** Search, in the browser, with the hub's word-start matching: a prompt needs
+/** Search, in the browser, with Nexus's word-start matching: a prompt needs
  *  half of the request's words; a word in its title counts twice. */
 function filterPrompts(list: PromptCard[], { q, sort, category, relation }: Filters): PromptCard[] {
   let out = list.filter(

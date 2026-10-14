@@ -1,4 +1,4 @@
-"""Shared user-context models for the whole AI Hub.
+"""Shared user-context models for the whole Nexus.
 
 This layer is horizontal: every pillar writes the same event and feedback shapes
 here. No pillar owns it. Swim Lane 1 is only one producer among nine.
@@ -8,7 +8,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
-# The nine pillars, plus the hub shell itself.
+# The nine pillars, plus Nexus shell itself.
 Pillar = Literal[
     "marketplace",
     "prompts",
@@ -83,7 +83,7 @@ Maturity = Literal["beginner", "developing", "experienced"]
 
 
 class UserContext(BaseModel):
-    """Who the person is, as the hub understands them: stable across a session.
+    """Who the person is, as Nexus understands them: stable across a session.
 
     Role (the persona), function, interests, an inferred maturity and the
     entitlements that decide what they may see. A profile, not a memory: what

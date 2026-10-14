@@ -1,6 +1,6 @@
 # Agent Metadata Template
 
-The canonical model every agent in the MUFG AI Hub is described with. It is what the marketplace displays, searches and curates on. The machine-readable version is `backend/data/agent-metadata-template.json`.
+The canonical model every agent in Nexus is described with. It is what the marketplace displays, searches and curates on. The machine-readable version is `backend/data/agent-metadata-template.json`.
 
 ## Structure
 
@@ -52,7 +52,7 @@ Only three things to start: **name**, **brief description**, and **whatever meta
 
 ## Simple intake format (accepted as-is)
 
-Owners who prefer a flat file can send this shape. The hub normalises it into the canonical model on load, so no conversion step is needed:
+Owners who prefer a flat file can send this shape. Nexus normalises it into the canonical model on load, so no conversion step is needed:
 
 ```json
 [

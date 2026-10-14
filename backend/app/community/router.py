@@ -1,4 +1,4 @@
-"""The Community pillar's API. The hub owns the page; Viva Engage owns the conversations.
+"""The Community pillar's API. Nexus owns the page; Viva Engage owns the conversations.
 
     GET  /api/community                          communities, yours, suggestions, experts
     GET  /api/community/feed                     posts, newest first (?community, ?kind, ?q)
@@ -111,7 +111,7 @@ def reply(thread_id: str, body: ReplyIn, persona: str | None = None) -> Reply:
     text = body.body.strip()
     if not text:
         raise HTTPException(422, "Write a reply first.")
-    # The community's own rule: no client data in posts. The hub's guardrails
+    # The community's own rule: no client data in posts. Nexus's guardrails
     # find client and deal names, account numbers and email addresses.
     guard = guardrails.check(text, None)
     if guard.names or guard.identifiers:

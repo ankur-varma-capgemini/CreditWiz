@@ -38,8 +38,8 @@ _LEARNING_TYPE = {
     "documentation": "Documentation",
     "confluence": "Confluence page",
 }
-# Feedback is recorded by the hub today; nothing routes it to owners yet.
-_FEEDBACK = "Recorded by the AI Hub. Routing to the owning team is to be confirmed."
+# Feedback is recorded by Nexus today; nothing routes it to owners yet.
+_FEEDBACK = "Recorded by Nexus. Routing to the owning team is to be confirmed."
 
 
 def _first_sentence(text: str, limit: int = 160) -> str:
@@ -108,7 +108,7 @@ class CardBuilder:
     """Resolves refs to cards for the signed-in user.
 
     Built once per request: it reads the learning catalogue once, and every
-    record passes the same visibility rule the rest of the hub applies. A ref
+    record passes the same visibility rule the rest of Nexus applies. A ref
     the user may not see is left out, not shown locked.
     """
 

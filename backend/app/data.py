@@ -283,7 +283,7 @@ PILLARS = [
             Section(
                 title="Announcements",
                 href="/community/announcements",
-                blurb="What changed in the hub this month.",
+                blurb="What changed in Nexus this month.",
             ),
             Section(
                 title="Success stories",
@@ -328,7 +328,7 @@ PILLARS = [
     Pillar(
         id="platform",
         number=9,
-        title="AI Hub Platform Enablement",
+        title="Nexus Platform Enablement",
         short_title="Platform",
         description="Access platform support and services.",
         icon="settings",

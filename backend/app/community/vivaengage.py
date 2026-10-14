@@ -12,7 +12,7 @@ stand in tokens through the environment instead:
     VIVA_ENGAGE_GRAPH_TOKEN   Graph token with Community.Read.All
     VIVA_ENGAGE_TOKEN         Entra token for https://www.yammer.com/.default
 
-Until one or the other is there, the hub shows its sample community.
+Until one or the other is there, Nexus shows its sample community.
 """
 
 from __future__ import annotations

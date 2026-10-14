@@ -26,7 +26,7 @@ class Access(BaseModel):
 class AgentDocument(BaseModel):
     """A link to one of the agent's documents, where the owning team keeps it.
 
-    The hub links to documents and keeps no copies (Swim Lane 1: the types of
+    Nexus links to documents and keeps no copies (Swim Lane 1: the types of
     document and where each lives, not the documents themselves)."""
 
     # A document type from data/knowledge-sources.json: brd, asd, hld, lld.

@@ -13,7 +13,7 @@ contribution is read from the table on every search, never from an index:
     anyone else    once approved, within the audience fixed at submission
                    team        the author's desk
                    department  the author's department
-                   everyone    everyone signed in to the hub
+                   everyone    everyone signed in to Nexus
 
 A prompt's audience is the scope its author chose, except that High risk
 keeps it to their desk: the library's own rule for High. Returned work leaves

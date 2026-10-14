@@ -1,11 +1,11 @@
-"""The systems and document types that will feed the AI Hub.
+"""The systems and document types that will feed Nexus.
 
     systems          where content lives: wikis, document sites, work tracking
     document types   what the content is: requirements, designs
     link groups      how the team groups its links today
 
-The listing is the MUFG team's own (Swim Lane 1). `feeds` is the hub's
-proposal for what each would become in the hub, not an agreed integration.
+The listing is the MUFG team's own (Swim Lane 1). `feeds` is Nexus's
+proposal for what each would become in Nexus, not an agreed integration.
 Nothing is connected in the prototype, and a value the owning team has not
 confirmed is left blank rather than guessed.
 """
@@ -24,7 +24,7 @@ class SourceSystem(BaseModel):
     id: str = Field(pattern=_ID)
     name: str
     kind: SystemKind
-    # What it would feed in the hub: a proposal.
+    # What it would feed in Nexus: a proposal.
     feeds: str
     # Blank until the owning team confirms them.
     owner: str = ""

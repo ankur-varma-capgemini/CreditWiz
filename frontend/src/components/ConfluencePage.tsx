@@ -68,7 +68,7 @@ export function ConfluencePage(p: Props) {
             </span>
             <div className="cf-space__meta">
               <p className="cf-space__name">{p.space}</p>
-              <p className="cf-space__kind">MUFG AI Hub space</p>
+              <p className="cf-space__kind">Nexus space</p>
             </div>
             <button
               type="button"

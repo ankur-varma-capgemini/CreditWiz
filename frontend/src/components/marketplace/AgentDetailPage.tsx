@@ -304,7 +304,7 @@ export function AgentDetailPage() {
           </section>
         </div>
 
-        {/* Documents stay where the owning team keeps them: the hub lists each
+        {/* Documents stay where the owning team keeps them: Nexus lists each
             with what it covers and a link to open it there, and holds no copy. */}
         <section className="panel" id="documents">
           <h2 className="panel__title">

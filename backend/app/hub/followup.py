@@ -108,7 +108,7 @@ def topic(request: str) -> str:
 
 @dataclass(frozen=True)
 class Reading:
-    # What the hub works from: the request, with the earlier topic when it
+    # What Nexus works from: the request, with the earlier topic when it
     # continues the conversation and names none of its own.
     text: str
     # The topic carried over, as typed; blank when none was.

@@ -62,7 +62,7 @@ def enabled() -> bool:
 
 
 def tokens(text: str) -> list[str]:
-    """Terms for BM25, with the hub's own stop words and stemmer."""
+    """Terms for BM25, with Nexus's own stop words and stemmer."""
     return [stem(w) for w in re.findall(r"[a-z0-9]+", text.lower()) if len(w) > 1 and w not in STOP_WORDS]
 
 

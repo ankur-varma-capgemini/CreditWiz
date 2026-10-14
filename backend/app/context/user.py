@@ -1,4 +1,4 @@
-"""UserContext: who the person is, as the hub understands them.
+"""UserContext: who the person is, as Nexus understands them.
 
 Stable across a session: role (the persona), function, interests, an inferred
 maturity and entitlements. It is a profile, not a memory. What someone is doing

@@ -1,4 +1,4 @@
-"""Sign in with Microsoft Entra ID, and the tokens the hub calls Microsoft with.
+"""Sign in with Microsoft Entra ID, and the tokens Nexus calls Microsoft with.
 
 The authorization code flow with PKCE, run on the server: the browser never
 sees a token. Configure from MUFG's app registration:
@@ -13,7 +13,7 @@ The registration needs these delegated permissions, consented for the tenant:
 Microsoft Graph User.Read and Community.Read.All, and Viva Engage (Yammer)
 user_impersonation.
 
-Tokens are held in this process's memory against the hub user: never in the
+Tokens are held in this process's memory against Nexus user: never in the
 database, a log or the browser. A restart means signing in again.
 """
 
@@ -126,7 +126,7 @@ def claims(id_token: str, nonce: str) -> dict:
     """The ID token's claims, checked.
 
     The token came straight from the token endpoint over TLS, in exchange for
-    the client's secret, so OpenID Connect lets the hub rely on TLS for who
+    the client's secret, so OpenID Connect lets Nexus rely on TLS for who
     issued it (OpenID Connect Core 3.1.3.7). Audience, tenant, nonce and expiry
     are checked here.
     """
@@ -150,7 +150,7 @@ def claims(id_token: str, nonce: str) -> dict:
 
 
 def upsert_user(found: dict, me: dict) -> str:
-    """The hub account for this Microsoft identity, created or brought up to date
+    """Nexus account for this Microsoft identity, created or brought up to date
     from the directory. Its persona follows from the job title and department."""
     uid = f"entra-{found['oid']}"
     name = me.get("displayName") or found.get("name") or "MUFG colleague"
@@ -225,10 +225,10 @@ def callback(request: Request, code: str = "", state: str = "", error: str = "",
         pending = _pending.pop(state, None) if state else None
     cookie = request.cookies.get(STATE_COOKIE, "")
     if not pending or not code or not hmac.compare_digest(state, cookie):
-        return fail("The sign-in could not be verified. Start it again from the hub.")
+        return fail("The sign-in could not be verified. Start it again from Nexus.")
     verifier, nonce, target, created = pending
     if time.time() - created > PENDING_SECONDS:
-        return fail("The sign-in took too long. Start it again from the hub.")
+        return fail("The sign-in took too long. Start it again from Nexus.")
     try:
         tokens = _redeem(
             {

@@ -7,7 +7,7 @@ model, no search, no vector retrieval. It reads the request as a person would:
     "how r u", "i'm good", "lol", "test"         small talk   answered here
     "thx", "ty", "thank you so much"             thanks       answered here
     "bye", "cya", "that's all"                   goodbye      answered here
-    "What can you do?", "who are you"            help         the hub's five capabilities
+    "What can you do?", "who are you"            help         Nexus's five capabilities
     "Hi, can you find me a KYC agent?"           task         "find me a KYC agent?" goes on
 
 People greet the way they type: "hy", "hiii", "heyyy there", "helo". The
@@ -205,7 +205,7 @@ def read(query: str) -> Gate:
     core = _core(text)
     if not core:
         # Nothing but pleasantries. A goodbye outranks thanks, thanks a greeting;
-        # a message of nothing at all is taken as asking what the hub does.
+        # a message of nothing at all is taken as asking what Nexus does.
         for kind in ("goodbye", "thanks", "greeting"):
             if kind in kinds:
                 return Gate(kind, opening, "", small)  # type: ignore[arg-type]
@@ -226,7 +226,7 @@ def read(query: str) -> Gate:
 
 # ------------------------------------------------------------------ answers
 
-# The order the hub's capabilities are introduced in.
+# The order Nexus's capabilities are introduced in.
 _ORDER: tuple[Intent, ...] = ("learn", "find", "improve", "ask", "contribute")
 _LABEL: dict[Intent, str] = {
     "learn": "Learn",
@@ -252,8 +252,8 @@ _EXAMPLE: dict[Intent, str] = {
 }
 _SUGGESTED = 4
 
-# When nothing in the hub matched a request that named no task.
-NOT_FOUND = "I didn't find anything in the hub for that. Describe the task you're working on, or try one of these."
+# When nothing in Nexus matched a request that named no task.
+NOT_FOUND = "I didn't find anything in Nexus for that. Describe the task you're working on, or try one of these."
 
 # What the model is told about the moment, for each kind of conversation.
 SITUATION: dict[str, str] = {
@@ -262,12 +262,12 @@ SITUATION: dict[str, str] = {
     "thanks": "They thanked you.",
     "goodbye": "They said goodbye.",
     "help": (
-        "They asked who you are or what you can do. Cards listing the hub's five capabilities, "
+        "They asked who you are or what you can do. Cards listing Nexus's five capabilities, "
         "each with an example request, appear under your reply: introduce them in one sentence "
         "without listing them."
     ),
     "not_found": (
-        "Their message matched nothing in the hub's catalogue. Cards listing what the hub can do "
+        "Their message matched nothing in Nexus's catalogue. Cards listing what Nexus can do "
         "appear under your reply."
     ),
 }
@@ -303,7 +303,7 @@ def natural(
 
 
 def capabilities(examples: list[str]) -> list[Capability]:
-    """The five things the hub does, each with a request to try: the persona's
+    """The five things Nexus does, each with a request to try: the persona's
     own example for that intent where there is one."""
     return [
         Capability(
@@ -326,7 +326,7 @@ def answer(gate: Gate, first_name: str, examples: list[str]) -> tuple[str, list[
     ]
     if gate.kind == "help":
         return (
-            "I'm the AI Hub assistant, and I can help with five kinds of things across the hub. "
+            "I'm the Nexus assistant, and I can help with five kinds of things across Nexus. "
             "Describe the task in your own words, or try one of these.",
             [],
             capabilities(examples),

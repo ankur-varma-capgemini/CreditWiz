@@ -24,7 +24,7 @@ def test_home_says_it_is_sample_content_and_lists_the_persona_s_communities():
     assert home["connection"] == {
         "source": "sample",
         "connected": False,
-        "notice": "Sample content. Viva Engage isn't connected here, so replies and likes stay in the hub.",
+        "notice": "Sample content. Viva Engage isn't connected here, so replies and likes stay in Nexus.",
     }
     ids = {c["id"] for c in home["communities"]}
     # u-1001 is a Compliance Analyst: their private community, not the RMs'.
@@ -64,7 +64,7 @@ def test_a_reply_is_kept_in_the_hub_marked_local_and_counted():
     assert made.status_code == 201
     reply = made.json()
     assert reply["local"] is True and reply["author"]["name"] == "Sai Vivek"
-    assert not reply["author"]["id"].startswith("u-")  # the hub's own user id is never shown
+    assert not reply["author"]["id"].startswith("u-")  # Nexus's own user id is never shown
 
     thread = client.get("/api/community/threads/t-101").json()
     assert thread["replies"][-1]["body"] == "Following this one."

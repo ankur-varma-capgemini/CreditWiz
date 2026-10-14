@@ -45,7 +45,7 @@ export function CourseCard({ item, onOpen }: { item: Item; onOpen: (id: string) 
           )}
           {item.read_in_hub && (
             <span>
-              <BookOpen size={13} strokeWidth={2.2} /> Reads in the hub
+              <BookOpen size={13} strokeWidth={2.2} /> Reads in Nexus
             </span>
           )}
         </span>

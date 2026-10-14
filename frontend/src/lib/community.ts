@@ -1,6 +1,6 @@
 import { getJson, postJson, requestJson } from './api'
 
-/** Community as the hub shows it. Viva Engage when connected; the hub's sample content until then. */
+/** Community as Nexus shows it. Viva Engage when connected; Nexus's sample content until then. */
 export type PostKind = 'discussion' | 'question' | 'announcement' | 'praise'
 
 export interface Person {

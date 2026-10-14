@@ -1,5 +1,5 @@
 """Sample community: data/community.json, plus the replies and likes people make
-in the hub while Viva Engage is not connected.
+in Nexus while Viva Engage is not connected.
 
 Those replies and likes are kept in this hub's own database and go nowhere
 else. Each one is marked, so the page can say so.
@@ -33,7 +33,7 @@ from .models import (
 CONNECTION = Connection(
     source="sample",
     connected=False,
-    notice="Sample content. Viva Engage isn't connected here, so replies and likes stay in the hub.",
+    notice="Sample content. Viva Engage isn't connected here, so replies and likes stay in Nexus.",
 )
 SUGGESTED = 3
 
@@ -80,10 +80,10 @@ def _when(value: str) -> datetime:
 
 
 def _hub_person(user_id: str, profile: dict) -> Person:
-    # Never the hub's own user id: other people see this author.
+    # Never Nexus's own user id: other people see this author.
     return Person(
         id="hub-" + hashlib.sha256(user_id.encode()).hexdigest()[:12],
-        name=profile.get("name", "AI Hub user"),
+        name=profile.get("name", "Nexus user"),
         title=profile.get("job_title", ""),
     )
 

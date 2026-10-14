@@ -1,6 +1,6 @@
 # API reference
 
-Every endpoint in the hub. Overview and screenshots are in the [README](../README.md).
+Every endpoint in Nexus. Overview and screenshots are in the [README](../README.md).
 
 ## Session and mutation rules
 
@@ -46,7 +46,7 @@ Learning item filters: `path`, `type` (or `docs` for documentation/guide/Conflue
 | `GET /api/learning/for-agent/{id}?persona=` | Content that teaches an agent, persona-ordered (Learning-owned) |
 | `GET /api/learning/curation` | Per-component learning curation score (explainable) |
 | `GET /api/marketplace/metadata-template` | The agent metadata template to hand to agent owners |
-| `GET /api/knowledge/sources` | The document types and systems that feed the hub; an agent's `documents` link to its documents by these types |
+| `GET /api/knowledge/sources` | The document types and systems that feed Nexus; an agent's `documents` link to its documents by these types |
 | `GET /api/marketplace/agents/{id}/learning` | Recommended videos for the agent |
 | `GET /api/learning?persona=` | Role-based learning landing sections |
 | `GET /api/learning/items` | Learning items of any type, filterable |

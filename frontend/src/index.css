@@ -1,11 +1,11 @@
 /* ============================================================================
-   MUFG AI Hub — design system
+   Nexus — design system
    Swiss-minimal: high contrast, generous whitespace, one accent with intent.
    Brand red is reserved for action and identity; ink carries the structure.
    ============================================================================ */
 
 :root {
-  /* brand: MUFG red and pink, from the client's AI Hub design reference */
+  /* brand: MUFG red and pink, from the client's Nexus design reference */
   --red: #da2127;
   --red-600: #c41c22;
   --red-700: #b31a1f;

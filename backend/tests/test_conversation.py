@@ -181,7 +181,7 @@ def test_the_reply_matches_the_greeting():
     assert "jokes to your colleagues" in _ask("tell me a joke")["reply"]
     assert _ask("test")["reply"].startswith("I'm here and working")
     assert _ask("lol")["reply"].startswith("Anything else I can help with")
-    assert _ask("who are you")["reply"].startswith("I'm the AI Hub assistant")
+    assert _ask("who are you")["reply"].startswith("I'm the Nexus assistant")
 
 
 def test_small_talk_costs_nothing_either(spies):
@@ -196,7 +196,7 @@ def test_small_talk_costs_nothing_either(spies):
 def test_something_the_hub_has_nothing_for_gets_what_it_can_do(spies):
     body = _ask("xyzzy plugh")
     assert body["kind"] == "task"
-    assert body["reply"].startswith("I didn't find anything in the hub for that")
+    assert body["reply"].startswith("I didn't find anything in Nexus for that")
     assert [c["intent"] for c in body["capabilities"]] == ["learn", "find", "improve", "ask", "contribute"]
     # A task, so the model was asked to read it; it returned nothing here.
     assert "model" in spies

@@ -19,7 +19,7 @@ import {
  * A course's details in a side panel, so browsing never leaves the page.
  *
  * Pluralsight plays its videos only on its own site, so Start opens Pluralsight
- * in a new tab. Microsoft Learn reads inside the hub, and its units and
+ * in a new tab. Microsoft Learn reads inside Nexus, and its units and
  * objectives come live from Microsoft Learn.
  */
 export function CourseDrawer({ itemId, onClose }: { itemId: string | null; onClose: () => void }) {
@@ -161,7 +161,7 @@ export function CourseDrawer({ itemId, onClose }: { itemId: string | null; onClo
               {learnItem ? (
                 <>
                   <Link className="btn btn--inline" to={readerHref(item.url, item.id)} onClick={() => !started && void mark('in_progress')}>
-                    <BookOpen size={16} strokeWidth={2.2} /> {started ? 'Continue reading' : 'Read in the hub'}
+                    <BookOpen size={16} strokeWidth={2.2} /> {started ? 'Continue reading' : 'Read in Nexus'}
                   </Link>
                   <a className="btn-outline" href={item.url} target="_blank" rel="noreferrer">
                     Open on Microsoft Learn <ExternalLink size={14} strokeWidth={2.2} />

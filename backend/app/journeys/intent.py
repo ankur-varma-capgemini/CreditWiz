@@ -1,7 +1,7 @@
-"""Why someone came to the hub, and which of their jobs they are doing.
+"""Why someone came to Nexus, and which of their jobs they are doing.
 
 Rules, not a model, for now: they answer instantly, can be tested, and say
-exactly which words decided. This is the seam the hub's router agent replaces
+exactly which words decided. This is the seam Nexus's router agent replaces
 later; the response shape stays the same.
 """
 

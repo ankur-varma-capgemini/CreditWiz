@@ -13,8 +13,8 @@ function moduleOf(url: string) {
 }
 
 /**
- * A Microsoft Learn page, read in the hub through Microsoft's Learn MCP server.
- * Links to other Learn pages stay in the hub; everything else opens in a new tab.
+ * A Microsoft Learn page, read in Nexus through Microsoft's Learn MCP server.
+ * Links to other Learn pages stay in Nexus; everything else opens in a new tab.
  */
 export function LearnReaderPage() {
   const [params] = useSearchParams()

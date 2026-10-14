@@ -66,7 +66,7 @@ async def lifespan(app):
 
 
 app = FastAPI(
-    title="MUFG AI Hub API", version="0.2.0", lifespan=lifespan
+    title="Nexus API", version="0.2.0", lifespan=lifespan
 )
 app.include_router(auth.router)
 app.include_router(entra.router)
@@ -148,7 +148,7 @@ async def session_boundary(request: Request, call_next):
     )
     uid = auth.resolve_session(request.cookies.get(auth.COOKIE))
     if not public and not uid:
-        return JSONResponse({"detail": "Sign in to the MUFG AI Hub"}, status_code=401)
+        return JSONResponse({"detail": "Sign in to Nexus"}, status_code=401)
     token = auth.current_id.set(uid)
     profile_token = identity.reset_profile_cache()
     try:

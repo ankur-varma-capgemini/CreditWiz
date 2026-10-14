@@ -347,7 +347,7 @@ def metadata_template() -> dict:
 # ---------------------------------------------------------------- learning
 #
 # No documentation or architecture pages are served: an agent's documents are
-# links to where each lives (Agent.documents), and the hub keeps no copies.
+# links to where each lives (Agent.documents), and Nexus keeps no copies.
 
 from ..learning.models import ItemWithProgress
 from ..learning.router import for_agent as learning_for_agent

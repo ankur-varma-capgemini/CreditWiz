@@ -1,4 +1,4 @@
-"""The home assistant: one request, answered across the hub's pillars.
+"""The home assistant: one request, answered across Nexus's pillars.
 
     START -> user_context -> conversation
                                |-- small talk or help -> respond -> END

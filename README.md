@@ -1,4 +1,4 @@
-# MUFG — Enterprise AI Hub
+# MUFG — Enterprise Nexus
 
 Implemented MVP: **AI Marketplace & Discovery**, **Learning**, and shared accounts, permissions and SQLite persistence.
 
@@ -17,7 +17,7 @@ a single container.
 | --- | --- |
 | **Client requirement** | Persona-based discovery now. Relevant, authorised learning for the role, with progress measured. Behavioural, cross-pillar personalisation later. |
 | **Our implementation design** | The metadata template, the curation weights, the landing sections, the storage split, and the `/api/context/*` seam. Ours to change, not things that were asked for. |
-| **Deliberately not decided by us** | **Proficiency.** The hub displays learning progress and topic coverage. Proficiency remains a separate capability until the agreed enterprise measure is defined. |
+| **Deliberately not decided by us** | **Proficiency.** Nexus displays learning progress and topic coverage. Proficiency remains a separate capability until the agreed enterprise measure is defined. |
 
 For the MVP the metadata source is a **static JSON file**. That keeps the prototype focused on proving discovery, search, curation and the agent-detail experience without integration dependencies. The source can later be replaced by enterprise registries without changing the user experience.
 
@@ -107,7 +107,7 @@ No key configured? A local concept lexicon does the same job, and a semantic ind
 
 One page answers what it is, why it exists, what to ask it, who owns it, what it runs on, and how to get access. The primary action follows the agent's declared access type: open agents open, request-based agents show the request form, restricted agents route to the owner. Documentation and architecture are one click away. Confirmed enterprise listings also use their configured launch/access URLs and owner email; sample listings explicitly label unavailable live destinations. Related learning is consumed from the Learning pillar.
 
-### 5. Documentation lives in the hub
+### 5. Documentation lives in Nexus
 
 ![Agent documentation](docs/screenshots/07-agent-docs.png)
 
@@ -218,10 +218,10 @@ Marketplace Learning  Community    Prompts    Skills    other pillars…
                               ▼
                      Curation / Ranking
                               ▼
-                Personalised AI Hub Experience
+                Personalised Nexus Experience
 ```
 
-Each pillar owns its experience. The hub owns shared user context, interaction data and, eventually, cross-pillar personalisation. Nothing about footprints lives inside a pillar. See [docs/shared-user-context.md](docs/shared-user-context.md).
+Each pillar owns its experience. Nexus owns shared user context, interaction data and, eventually, cross-pillar personalisation. Nothing about footprints lives inside a pillar. See [docs/shared-user-context.md](docs/shared-user-context.md).
 
 **Persona is derived, never stored:**
 

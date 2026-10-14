@@ -341,7 +341,7 @@ function WhyThis({ user, task, plan }: { user: UserContext; task: TaskContext; p
           </dl>
         </section>
         <section className="why__flow">
-          <h4 className="why__title">How the hub worked</h4>
+          <h4 className="why__title">How Nexus worked</h4>
           <ol className="why__steps">
             <li>
               <b>Conversation</b>
@@ -516,10 +516,10 @@ function LiveAnswer({ live }: { live: Live }) {
   )
 }
 
-/** What the hub can do, each with a request to try. */
+/** What Nexus can do, each with a request to try. */
 function Capabilities({ caps, onAsk }: { caps: AskResponse['capabilities']; onAsk: (q: string) => void }) {
   return (
-    <ul className="caps" aria-label="What the AI Hub can do">
+    <ul className="caps" aria-label="What Nexus can do">
       {caps.map((c) => (
         <li key={c.intent} className="cap">
           <span className="intent">{c.label}</span>
@@ -584,13 +584,13 @@ export function AssistantAnswer({
       <LiveAnswer live={turn.live} />
     ) : (
       <p className="answer__loading">
-        <Loader2 className="spin" size={16} aria-hidden="true" /> Looking across the hub
+        <Loader2 className="spin" size={16} aria-hidden="true" /> Looking across Nexus
       </p>
     )
   if (turn.status === 'error' || !turn.ask)
     return (
       <div className="answer__error" role="alert">
-        <p>{turn.error ?? 'The hub could not answer just now.'}</p>
+        <p>{turn.error ?? 'Nexus could not answer just now.'}</p>
         <button type="button" className="suggest suggest--chip" onClick={() => onAsk(turn.q)}>
           Try again
         </button>
@@ -613,7 +613,7 @@ export function AssistantAnswer({
   const matched = plan.follows_on ? `${turn.q} ${plan.follows_on}` : turn.q
   const pages = activity ? [] : matchSections(asked, matched, SHOWN).filter((h) => !listed.has(h.section.href))
   const nothing = !activity && !groups.length && !pages.length
-  // Nothing matched a request that named no task: the hub says what it can do instead.
+  // Nothing matched a request that named no task: Nexus says what it can do instead.
   const offerCapabilities = a.capabilities.length > 0
   const canDraft =
     !draft && !offerCapabilities && task.sensitivity !== 'confidential' && (nothing || task.intents.includes('contribute'))
@@ -681,7 +681,7 @@ export function AssistantAnswer({
       ))}
 
       {pages.length > 0 && (
-        <Group icon={Layers} title="Across the hub" count={pages.length}>
+        <Group icon={Layers} title="Across Nexus" count={pages.length}>
           <ul className="airows">
             {pages.map(({ pillar, section }) => (
               <HitRow
@@ -753,7 +753,7 @@ export function AssistantAnswer({
 
       {!nothing && (
         <p className="answer__foot">
-          <ShieldCheck size={14} strokeWidth={2.2} aria-hidden="true" /> Everything here comes from the hub&rsquo;s
+          <ShieldCheck size={14} strokeWidth={2.2} aria-hidden="true" /> Everything here comes from Nexus&rsquo;s
           catalogue. Anything its owner has not confirmed says so.
         </p>
       )}

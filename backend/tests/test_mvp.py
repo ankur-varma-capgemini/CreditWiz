@@ -428,14 +428,14 @@ def test_single_origin_deployment_serves_the_spa_and_keeps_api_404s_json(
     """
     build = tmp_path / "dist"
     (build / "assets").mkdir(parents=True)
-    (build / "index.html").write_text("<!doctype html><title>MUFG AI Hub</title>")
+    (build / "index.html").write_text("<!doctype html><title>Nexus</title>")
     (build / "assets" / "app-abc123.js").write_text("console.log(1)")
     (tmp_path / "secret.txt").write_text("must not be served")
     monkeypatch.setenv("CREDITWIZ_STATIC_DIR", str(build))
 
     # A client-side route falls back to index.html rather than 404ing.
     page = client.get("/learning/me")
-    assert page.status_code == 200 and "MUFG AI Hub" in page.text
+    assert page.status_code == 200 and "Nexus" in page.text
     assert page.headers["cache-control"] == "no-cache"
 
     # Fingerprinted assets are safe to cache forever.

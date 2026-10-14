@@ -1,4 +1,4 @@
-"""Knowledge sources: what will feed the hub, as the team listed it."""
+"""Knowledge sources: what will feed Nexus, as the team listed it."""
 
 import pytest
 from fastapi.testclient import TestClient

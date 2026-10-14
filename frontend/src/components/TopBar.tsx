@@ -78,7 +78,7 @@ export function TopBar({ user, onMenu }: Props) {
     navigate(href)
   }
 
-  // The suggestions come from the hub's own catalogs, as fast as typing. The
+  // The suggestions come from Nexus's own catalogs, as fast as typing. The
   // last row searches everywhere: Pluralsight, Microsoft Learn and Community
   // too, which are too slow, and too rate-limited, to ask on every keystroke.
   function searchEverywhere() {
@@ -175,7 +175,7 @@ export function TopBar({ user, onMenu }: Props) {
         <input
           className="search__input"
           type="search"
-          placeholder="Search across AI Hub"
+          placeholder="Search across Nexus"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value)
@@ -185,7 +185,7 @@ export function TopBar({ user, onMenu }: Props) {
           }}
           onFocus={() => setSearchOpen(true)}
           onKeyDown={onSearchKey}
-          aria-label="Search the AI Hub"
+          aria-label="Search Nexus"
           aria-expanded={showResults}
           aria-controls="hub-search-results"
           autoComplete="off"

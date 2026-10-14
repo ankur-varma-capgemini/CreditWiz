@@ -1,7 +1,7 @@
 import type { Pillar, Section } from './types'
 
 // Words that carry no subject. "How do I get an agent approved" is about
-// approval; the rest would match every section on the hub, "agent" included,
+// approval; the rest would match every section on Nexus, "agent" included,
 // since nearly everything here mentions one. Mirrors the backend's list in
 // app/text.py, which matches learning items and journeys the same way.
 const STOP = new Set(

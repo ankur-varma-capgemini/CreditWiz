@@ -1,6 +1,6 @@
-"""Community as the hub shows it: one shape, whichever system it came from.
+"""Community as Nexus shows it: one shape, whichever system it came from.
 
-Viva Engage is the system of record once it is connected. Until then the hub
+Viva Engage is the system of record once it is connected. Until then Nexus
 shows sample content from data/community.json and says so on every page.
 """
 

@@ -375,8 +375,8 @@ def synthesize(state: HubState) -> dict:
     capabilities: list[Capability] = []
     if not state["toolkit"] and not any(gr.hits for gr in groups) and not plan.cue and g.journey is None:
         # Nothing matched, and the words named no intent or job: whatever it
-        # was, say what the hub can do rather than leave a dead end.
-        why = "Nothing in the hub matched and the request named no task, so the reply says what the hub can do."
+        # was, say what Nexus can do rather than leave a dead end.
+        why = "Nothing in Nexus matched and the request named no task, so the reply says what Nexus can do."
         capabilities = conversation.capabilities(state["examples"])
         text, source = conversation.NOT_FOUND, "rules"
         if g.reply_view is not None:

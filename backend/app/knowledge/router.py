@@ -1,6 +1,6 @@
 """Knowledge pillar API.
 
-    GET /api/knowledge/sources   the systems and document types that will feed the hub
+    GET /api/knowledge/sources   the systems and document types that will feed Nexus
 """
 
 from fastapi import APIRouter

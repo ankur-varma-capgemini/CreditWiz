@@ -116,7 +116,7 @@ export function PillarPage() {
               )}
             </div>
             <div className="panel home-card">
-              <h2 className="home-card__title">Across the hub</h2>
+              <h2 className="home-card__title">Across Nexus</h2>
               {hubHits === null ? (
                 <div className="skeleton" style={{ height: 96 }} />
               ) : hubHits.length ? (

@@ -54,7 +54,7 @@ export function KnowledgeSourcesPage() {
         kicker="Knowledge"
         title="Knowledge sources"
         compact
-        lead="The systems and document types that will feed the AI Hub, as the team listed them for Swim Lane 1. Nothing is connected yet: the hub links to these documents rather than reading them."
+        lead="The systems and document types that will feed Nexus, as the team listed them for Swim Lane 1. Nothing is connected yet: Nexus links to these documents rather than reading them."
       />
       {error && (
         <p className="state state--error" role="alert">
@@ -79,7 +79,7 @@ export function KnowledgeSourcesPage() {
                     </div>
                   </div>
                   <p className="ks-feeds">
-                    <span className="ks-label">Proposed use in the hub</span>
+                    <span className="ks-label">Proposed use in Nexus</span>
                     {s.feeds}
                   </p>
                   <dl className="ks-facts">
@@ -110,7 +110,7 @@ export function KnowledgeSourcesPage() {
                 <tr>
                   <th scope="col">Type</th>
                   <th scope="col">What it is</th>
-                  <th scope="col">Proposed use in the hub</th>
+                  <th scope="col">Proposed use in Nexus</th>
                   <th scope="col">Kept in</th>
                   <th scope="col">Owner</th>
                 </tr>
@@ -127,7 +127,7 @@ export function KnowledgeSourcesPage() {
                     <td data-label="What it is">
                       <Confirmed value={d.about} />
                     </td>
-                    <td data-label="Proposed use in the hub">
+                    <td data-label="Proposed use in Nexus">
                       <Confirmed value={d.feeds} />
                     </td>
                     <td data-label="Kept in">
@@ -156,7 +156,7 @@ export function KnowledgeSourcesPage() {
             ))}
           </div>
           <p className="ks-note">
-            Listed from the team&apos;s Swim Lane 1 note. What each would feed in the hub is a proposal to agree with
+            Listed from the team&apos;s Swim Lane 1 note. What each would feed in Nexus is a proposal to agree with
             the owning teams; anything they have not confirmed says so.
           </p>
         </>

@@ -1,6 +1,6 @@
 """Pluralsight, through its GraphQL API.
 
-The hub's catalogue holds what MUFG curated: which courses, for whom, on which
+Nexus's catalogue holds what MUFG curated: which courses, for whom, on which
 path. Pluralsight supplies what it knows about each of those courses and each
 learner's progress. Configure from MUFG's Pluralsight plan:
 

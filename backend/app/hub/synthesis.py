@@ -40,7 +40,7 @@ def catalogue_reply(
     if journey is not None:
         return templates.compose(intent, journey, toolkit, has_journeys=True)
     if not searched:
-        return "Nothing in the hub covers that yet, which is worth knowing."
+        return "Nothing in Nexus covers that yet, which is worth knowing."
     where = _join([LABEL[p] for p in searched])
     found = [g for g in groups if g.hits]
     if not found:
@@ -114,7 +114,7 @@ def reply(
     if model_view is None:
         return fallback, "rules", "Written from the catalogue: the data policy allows no model call for this request."
     if not llm.available():
-        return fallback, "rules", "Written from the catalogue: no model is configured for the hub."
+        return fallback, "rules", "Written from the catalogue: no model is configured for Nexus."
 
     titles = [t for _, t, _, _ in items]
     stream = _Restore(restore, on_delta) if on_delta else None

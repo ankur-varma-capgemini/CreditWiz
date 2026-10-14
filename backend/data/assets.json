@@ -70,7 +70,7 @@
       "who_can_use": "Relationship managers",
       "how_to_access": "Open it in Prompts & Skills.",
       "guardrails": ["Check every draft before it is used.", "Use only data you are allowed to see in the source system."],
-      "feedback": "Recorded by the AI Hub. Routing to the owning team is to be confirmed."
+      "feedback": "Recorded by Nexus. Routing to the owning team is to be confirmed."
     }
   },
   {
@@ -86,7 +86,7 @@
       "who_can_use": "Relationship managers",
       "how_to_access": "Open it in Prompts & Skills.",
       "guardrails": ["Estimates are a starting point, not a figure to quote to a client.", "Use only data you are allowed to see in the source system."],
-      "feedback": "Recorded by the AI Hub. Routing to the owning team is to be confirmed."
+      "feedback": "Recorded by Nexus. Routing to the owning team is to be confirmed."
     }
   },
   {
@@ -102,7 +102,7 @@
       "who_can_use": "Relationship managers",
       "how_to_access": "Open it in Prompts & Skills.",
       "guardrails": ["Check every draft before it reaches a client.", "Use only data you are allowed to see in the source system."],
-      "feedback": "Recorded by the AI Hub. Routing to the owning team is to be confirmed."
+      "feedback": "Recorded by Nexus. Routing to the owning team is to be confirmed."
     }
   },
   {
@@ -118,7 +118,7 @@
       "who_can_use": "Relationship managers",
       "how_to_access": "Open it in Prompts & Skills.",
       "guardrails": ["Terms and pricing come from the product and credit teams, not the draft.", "Check every draft before it reaches a client."],
-      "feedback": "Recorded by the AI Hub. Routing to the owning team is to be confirmed."
+      "feedback": "Recorded by Nexus. Routing to the owning team is to be confirmed."
     }
   },
   {
@@ -134,7 +134,7 @@
       "who_can_use": "Relationship managers",
       "how_to_access": "Open it in Prompts & Skills.",
       "guardrails": ["It does not recommend or make credit decisions.", "Check every figure against the credit system."],
-      "feedback": "Recorded by the AI Hub. Routing to the owning team is to be confirmed."
+      "feedback": "Recorded by Nexus. Routing to the owning team is to be confirmed."
     }
   },
   {
@@ -150,7 +150,7 @@
       "who_can_use": "Relationship managers",
       "how_to_access": "Open it in Prompts & Skills.",
       "guardrails": ["Check every suggestion against product suitability rules before raising it.", "Use only data you are allowed to see in the source system."],
-      "feedback": "Recorded by the AI Hub. Routing to the owning team is to be confirmed."
+      "feedback": "Recorded by Nexus. Routing to the owning team is to be confirmed."
     }
   },
   {
@@ -166,7 +166,7 @@
       "who_can_use": "Relationship managers",
       "how_to_access": "Open it in Prompts & Skills.",
       "guardrails": ["Check every figure against the source system.", "Use only data you are allowed to see in the source system."],
-      "feedback": "Recorded by the AI Hub. Routing to the owning team is to be confirmed."
+      "feedback": "Recorded by Nexus. Routing to the owning team is to be confirmed."
     }
   },
   {

@@ -1,5 +1,5 @@
 {
-  "_about": "What will feed the AI Hub, as the MUFG team listed it for Swim Lane 1: the collaboration systems and the document types, and how the team groups its links today. The listing is the team's own; `feeds` is the hub's proposal for what each would become in the hub. Nothing is connected in this prototype. Blank values have not been confirmed by the owning team and show as 'To be confirmed'.",
+  "_about": "What will feed Nexus, as the MUFG team listed it for Swim Lane 1: the collaboration systems and the document types, and how the team groups its links today. The listing is the team's own; `feeds` is Nexus's proposal for what each would become in Nexus. Nothing is connected in this prototype. Blank values have not been confirmed by the owning team and show as 'To be confirmed'.",
   "systems": [
     {
       "id": "confluence",

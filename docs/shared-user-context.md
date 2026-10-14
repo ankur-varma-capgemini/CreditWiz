@@ -1,6 +1,6 @@
-# Shared User Context — a horizontal AI Hub capability
+# Shared User Context — a horizontal Nexus capability
 
-Each pillar owns its experience. The AI Hub owns shared user context, interaction data, and eventually cross-pillar personalisation. Personalisation is **not** built inside Swim Lane 1.
+Each pillar owns its experience. Nexus owns shared user context, interaction data, and eventually cross-pillar personalisation. Personalisation is **not** built inside Swim Lane 1.
 
 ## The layer
 
@@ -30,7 +30,7 @@ Marketplace Learning  Community    Prompts    Skills    other pillars…
                               ▼
                      Curation / Ranking
                               ▼
-                Personalised AI Hub Experience
+                Personalised Nexus Experience
 ```
 
 ## What exists today

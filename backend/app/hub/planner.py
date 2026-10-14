@@ -176,7 +176,7 @@ def plan(
     if model_view is None:
         return replace(rules, reason="Rules only: the data policy allows no model call for this request.")
     if not llm.available():
-        return replace(rules, reason="Rules: no model is configured for the hub.")
+        return replace(rules, reason="Rules: no model is configured for Nexus.")
 
     # The model hears about the last job, and the earlier requests, only when
     # this request follows them up.

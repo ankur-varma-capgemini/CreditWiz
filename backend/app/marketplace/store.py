@@ -93,7 +93,7 @@ def _as_list(value) -> list[str]:
 
 
 def _persona_id(value: str) -> str:
-    """Delegates to the hub persona module; personas are not marketplace-owned."""
+    """Delegates to Nexus persona module; personas are not marketplace-owned."""
     return hub_personas.persona_id(value)
 
 

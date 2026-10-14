@@ -150,7 +150,7 @@ def gate(
 
     if withheld_prompts and "prompts" in pillars:
         notes.append("High-risk prompts are shown only to their own desk.")
-    notes.append("Every result passed the hub's access rules for your directory groups.")
+    notes.append("Every result passed Nexus's access rules for your directory groups.")
     pending = "" if guard.policy_confirmed else ", a prototype default to be confirmed by MUFG's data policy"
     kind = _CLASS[sensitivity]
     if reply_access == "none":

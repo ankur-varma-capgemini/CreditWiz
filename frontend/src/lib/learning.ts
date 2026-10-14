@@ -57,7 +57,7 @@ export interface Item {
   my_rating: number | null
   /** Where Start opens: Pluralsight (single sign-on, or a search until connected) or the Microsoft Learn page. */
   launch_url?: string
-  /** True when the content reads inside the hub (Microsoft Learn). */
+  /** True when the content reads inside Nexus (Microsoft Learn). */
   read_in_hub?: boolean
   /** True when the provider's own API supplied the details just now. */
   live?: boolean
@@ -86,10 +86,10 @@ export interface LearnPage {
   markdown: string
 }
 
-/** A result from a provider's own library, beyond the hub's catalogue. */
+/** A result from a provider's own library, beyond Nexus's catalogue. */
 export interface ProviderResult {
   title: string
-  /** A Microsoft Learn page (reads in the hub), or where the course opens on Pluralsight. */
+  /** A Microsoft Learn page (reads in Nexus), or where the course opens on Pluralsight. */
   url: string
   excerpt: string
   level: string
@@ -112,7 +112,7 @@ export const fetchLearnPage = (url: string, signal?: AbortSignal) =>
 export const searchProviders = (q: string, signal?: AbortSignal) =>
   getJson<ProviderResults[]>(`/api/learning/providers/search?q=${encodeURIComponent(q)}`, signal)
 
-/** The hub's reader for a Microsoft Learn page. */
+/** Nexus's reader for a Microsoft Learn page. */
 export function readerHref(url: string, itemId?: string) {
   return `/learning/read?url=${encodeURIComponent(url)}${itemId ? `&item=${encodeURIComponent(itemId)}` : ''}`
 }

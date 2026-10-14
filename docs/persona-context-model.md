@@ -1,6 +1,6 @@
 # Persona and context model
 
-What the AI Hub needs to know to put the right trusted asset in front of someone, and how it shows that the asset was worth it:
+What Nexus needs to know to put the right trusted asset in front of someone, and how it shows that the asset was worth it:
 
 > **Who is the user → what are they trying to do now → what should the portal recommend → how do we establish trust → how do we measure adoption.**
 
@@ -30,7 +30,7 @@ Measure adoption             Discovery · Reuse · Value · Adoption
 
 ## 1. Recognize me
 
-Who the person is. This is stable across a session, and it comes from the directory and the hub's own records, never from what the person typed.
+Who the person is. This is stable across a session, and it comes from the directory and Nexus's own records, never from what the person typed.
 
 | Element | What it means | How the portal knows it | Status |
 | --- | --- | --- | --- |

@@ -58,7 +58,7 @@ store = LibraryStore()
 def search(query: str, prompts: list[Prompt]) -> list[tuple[int, Prompt]]:
     """Prompts carrying at least half of the request's subject words, best first.
 
-    The same word-start matching as the hub search, so "stress testing" finds a
+    The same word-start matching as Nexus search, so "stress testing" finds a
     stress tester. A word in the title counts twice: it names the job the prompt
     does, where the description only mentions it.
     """

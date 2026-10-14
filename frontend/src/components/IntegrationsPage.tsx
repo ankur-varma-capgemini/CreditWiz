@@ -25,7 +25,7 @@ function request(list: Integration[]) {
 
 /**
  * Which connected systems are live for you, and exactly what blocks the rest.
- * The hub works on sample content meanwhile; this page is where it says why.
+ * Nexus works on sample content meanwhile; this page is where it says why.
  */
 export function IntegrationsPage() {
   const [params] = useSearchParams()
@@ -68,7 +68,7 @@ export function IntegrationsPage() {
         compact
         kicker="Platform"
         title="Integrations"
-        lead="Which connected systems are live for you, and what is blocking the rest. Until a system is live, the hub shows sample content and says so."
+        lead="Which connected systems are live for you, and what is blocking the rest. Until a system is live, Nexus shows sample content and says so."
       />
 
       {outcome === 'failed' && (
@@ -140,7 +140,7 @@ export function IntegrationsPage() {
                 </ul>
               </div>
               <div>
-                <h3 className="integ__h">What the hub calls</h3>
+                <h3 className="integ__h">What Nexus calls</h3>
                 <ul className="integ__calls">
                   {i.calls.map((c) => (
                     <li key={c}>

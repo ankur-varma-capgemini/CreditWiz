@@ -1,4 +1,4 @@
-/** The hub's own mark: beside the Super Agent's answers, and wherever it is offered. */
+/** Nexus's own mark: beside the Super Agent's answers, and wherever it is offered. */
 export function HubMark({ size = 16 }: { size?: number }) {
   return (
     <svg viewBox="0 0 40 40" width={size} height={size} aria-hidden="true">

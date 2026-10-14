@@ -1,5 +1,5 @@
 {
-  "$comment": "MUFG AI Hub - canonical Agent Metadata Template (one object per agent). Fill what you know; fields marked optional can stay empty. Agent owners may instead supply the simpler intake format shown in docs/agent-metadata-template.md; the hub normalises both.",
+  "$comment": "Nexus - canonical Agent Metadata Template (one object per agent). Fill what you know; fields marked optional can stay empty. Agent owners may instead supply the simpler intake format shown in docs/agent-metadata-template.md; Nexus normalises both.",
   "_IDENTITY": "----------------------------------------------------------------",
   "id": "required. Stable slug: lowercase, hyphens. Example: kyc-verification-agent",
   "name": "required. Display name. Example: KYC Verification Agent",
@@ -60,7 +60,7 @@
     {
       "type": "optional. A document type from data/knowledge-sources.json: brd, asd, hld or lld",
       "system": "optional. Where it lives, from the same file: confluence, sharepoint, jira, servicenow or documents",
-      "url": "optional. A link to the document where it lives. The hub links to it and keeps no copy",
+      "url": "optional. A link to the document where it lives. Nexus links to it and keeps no copy",
       "description": "optional. What this document covers, so a reader knows what they will open. Up to 300 characters"
     }
   ],

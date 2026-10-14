@@ -6,7 +6,7 @@
 | --- | --- |
 | **Client requirement** | Provide relevant, authorised learning for the employee's role, and measure progress and proficiency. |
 | **Our implementation design** | The content model, the seven landing sections, the curation weights, and the progress store. These are our choices. |
-| **Deliberately not decided by us** | **Proficiency.** For the MVP the hub displays learning progress and topic coverage. Proficiency will remain a separate capability until the agreed enterprise measure of proficiency is defined. |
+| **Deliberately not decided by us** | **Proficiency.** For the MVP Nexus displays learning progress and topic coverage. Proficiency will remain a separate capability until the agreed enterprise measure of proficiency is defined. |
 
 Marketplace asks *which agent should I use?* Learning asks *what should I learn next, and where am I with it?* Same curation architecture, different output: agents versus content plus progress.
 
@@ -54,7 +54,7 @@ One `items` collection, many types. `backend/data/learning.json`.
   "path": "compliance",
   "duration_seconds": 240,
   "url": "",
-  "body": "# markdown rendered in the hub"
+  "body": "# markdown rendered in Nexus"
 }
 ```
 
@@ -150,7 +150,7 @@ Learning behaviour
       +
 Marketplace behaviour
       +
-Other AI Hub footprints
+Other Nexus footprints
         ↓
 Adaptive curation
 ```

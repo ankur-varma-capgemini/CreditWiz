@@ -18,7 +18,7 @@ interface Props {
 }
 
 /**
- * A thumbnail for anything in the hub: the real image its record carries, and
+ * A thumbnail for anything in Nexus: the real image its record carries, and
  * otherwise a plain neutral surface with the thing's icon. Every pillar uses
  * the same quiet style, so nothing is colour-coded and real images stand out.
  */

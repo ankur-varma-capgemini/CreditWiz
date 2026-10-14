@@ -112,7 +112,7 @@ export function JourneyPage() {
             <p className="journey__note">
               <strong>How contributions are reviewed</strong>
               Share a prompt, a use case or a correction. It is reviewed through MUFG&rsquo;s existing workflow tool, not
-              inside the AI Hub. Which tool is to be confirmed.
+              inside Nexus. Which tool is to be confirmed.
             </p>
           )}
         </div>
@@ -136,7 +136,7 @@ export function JourneyPage() {
             <h2 className="panel__title">Who does what</h2>
             <div className="roles">
               <div>
-                <h3>The AI Hub</h3>
+                <h3>Nexus</h3>
                 <p>
                   Finds what fits the job, shows whether you can trust it, opens it in the right place and learns from your
                   feedback. It holds no client data.

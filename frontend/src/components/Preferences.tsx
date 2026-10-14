@@ -68,7 +68,7 @@ export function Preferences() {
                 checked={value.show_learning_reminders}
                 onChange={(e) => setValue({ ...value, show_learning_reminders: e.target.checked })}
               />{' '}
-              Show learning announcements in the hub
+              Show learning announcements in Nexus
             </label>
             <button className="btn btn--inline" disabled={busy}>
               {busy ? 'Saving…' : 'Save preferences'}

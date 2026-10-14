@@ -119,7 +119,7 @@ class ItemWithProgress(Item):
     # Where Start opens: a Pluralsight single-sign-on link (or a search while
     # Pluralsight is not connected), or the Microsoft Learn page.
     launch_url: str = ""
-    # True when the content can be read inside the hub (Microsoft Learn).
+    # True when the content can be read inside Nexus (Microsoft Learn).
     read_in_hub: bool = False
     # True when the provider's own API supplied the details just now.
     live: bool = False
@@ -150,10 +150,10 @@ class LearningHome(BaseModel):
 
 
 class ProviderResult(BaseModel):
-    """A search result from a provider's own library, beyond the hub's catalogue."""
+    """A search result from a provider's own library, beyond Nexus's catalogue."""
 
     title: str
-    # Where it opens: a Microsoft Learn page (read in the hub), or Pluralsight.
+    # Where it opens: a Microsoft Learn page (read in Nexus), or Pluralsight.
     url: str
     excerpt: str = ""
     level: str = ""
@@ -163,7 +163,7 @@ class ProviderResult(BaseModel):
 
 class ProviderResults(BaseModel):
     provider: Literal["Pluralsight", "Microsoft Learn"]
-    # live: searched just now. sample: not connected, so only the hub's catalogue
+    # live: searched just now. sample: not connected, so only Nexus's catalogue
     # was searched. blocked: the provider refused or did not answer.
     state: Literal["live", "sample", "blocked"]
     note: str = ""

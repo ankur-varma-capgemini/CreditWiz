@@ -15,7 +15,7 @@ from ..context.models import Maturity
 from .models import Intent, Sensitivity, Subject
 from .store import store
 
-# Capitalised words that are never a client: the hub's own vocabulary, and the
+# Capitalised words that are never a client: Nexus's own vocabulary, and the
 # finance acronyms a banker types. A client that is itself an acronym is still
 # masked unless it is on this list, which is the safe way to be wrong.
 _ACRONYMS = {

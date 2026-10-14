@@ -51,7 +51,7 @@ export function ProviderSearch({ q, source, catalog }: { q: string; source: stri
       <h2 className="section-title" id="psearch-title">
         {source ? `From ${source}` : 'From Pluralsight and Microsoft Learn'}
       </h2>
-      <p className="section-sub">Searched live in each provider's own library, beyond the courses curated in the hub.</p>
+      <p className="section-sub">Searched live in each provider's own library, beyond the courses curated in Nexus.</p>
       {error ? (
         <p className="muted" role="alert">
           {error}
@@ -86,7 +86,7 @@ export function ProviderSearch({ q, source, catalog }: { q: string; source: stri
                             <span className="psearch__title">{r.title}</span>
                             {r.excerpt && <span className="psearch__excerpt">{r.excerpt}</span>}
                             <span className="psearch__meta">
-                              <BookOpen size={13} strokeWidth={2.2} /> Read in the hub
+                              <BookOpen size={13} strokeWidth={2.2} /> Read in Nexus
                             </span>
                           </Link>
                         ) : (

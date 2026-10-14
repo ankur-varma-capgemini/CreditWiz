@@ -204,7 +204,7 @@ function PostCard({
                       <span className="reply__time"> · {timeAgo(r.created_at)}</span>
                     </span>
                     <span className="reply__body">{r.body}</span>
-                    {r.local && <span className="reply__local">Saved in the hub only</span>}
+                    {r.local && <span className="reply__local">Saved in Nexus only</span>}
                   </div>
                 </li>
               ))}

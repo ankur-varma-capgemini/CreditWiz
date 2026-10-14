@@ -1,4 +1,4 @@
-"""Calls to the systems the hub reads from, in one place.
+"""Calls to the systems Nexus reads from, in one place.
 
 Standard library only, so the adapters add no dependency. Every call has a
 timeout, and a failure becomes ExternalError naming the service and, when the

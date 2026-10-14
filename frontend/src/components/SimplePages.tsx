@@ -54,7 +54,7 @@ export function SettingsPage() {
       <PageBand
         kicker={user.job_title}
         title={user.display_name}
-        lead="Your directory profile, the persona the hub derives from it, and your preferences."
+        lead="Your directory profile, the persona Nexus derives from it, and your preferences."
         aside={<span className="band__count">{user.persona.label}</span>}
         compact
       />
@@ -74,7 +74,7 @@ export function SettingsPage() {
           <dd>{user.location}</dd>
           <dt>Manager</dt>
           <dd>{user.manager}</dd>
-          <dt>Hub access</dt>
+          <dt>Nexus access</dt>
           <dd>{user.is_admin ? 'Hub administrator' : 'Employee'}</dd>
           <dt>Employee ID</dt>
           <dd>{user.id}</dd>
@@ -84,7 +84,7 @@ export function SettingsPage() {
       <section className="panel">
         <h2 className="panel__title">Persona</h2>
         <p className="panel__text">
-          <strong>{user.persona.label}</strong>. Derived by the hub from your directory profile ({user.persona.rule}); it is not stored on
+          <strong>{user.persona.label}</strong>. Derived by Nexus from your directory profile ({user.persona.rule}); it is not stored on
           your profile. It shapes which agents and learning are recommended to you.
         </p>
       </section>

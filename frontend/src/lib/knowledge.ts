@@ -7,7 +7,7 @@ export interface SourceSystem {
   id: string
   name: string
   kind: SystemKind
-  /** What it would feed in the hub: a proposal, not an agreed integration. */
+  /** What it would feed in Nexus: a proposal, not an agreed integration. */
   feeds: string
   owner: string
   location: string

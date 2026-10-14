@@ -2,7 +2,7 @@
 
 Two of its tools: microsoft_docs_search finds Learn content, and
 microsoft_docs_fetch reads a page as markdown, so a Learn module and its units
-can be read inside the hub. Microsoft notes the tool list can change; a tool
+can be read inside Nexus. Microsoft notes the tool list can change; a tool
 that disappears shows up as a failed call and on the Integrations page.
 
 Queries leave the bank, so client names are taken out before a search is sent.

@@ -36,9 +36,9 @@ export function SignIn({ onSignIn }: { onSignIn: () => void }) {
   return (
     <main className="signin">
       <div className="signin__brand">
-        MUFG <span>AI Hub</span>
+        MUFG <span>Nexus</span>
       </div>
-      <h1>Welcome to the MUFG AI Hub</h1>
+      <h1>Welcome to Nexus</h1>
       <p>Discover agents and follow learning paths for your role.</p>
       {options && (
         <div className="signin__microsoft">
@@ -47,7 +47,7 @@ export function SignIn({ onSignIn }: { onSignIn: () => void }) {
           </button>
           <p className="muted">
             {options.microsoft
-              ? 'Your MUFG account. The hub then shows Viva Engage with your own permissions.'
+              ? 'Your MUFG account. Nexus then shows Viva Engage with your own permissions.'
               : "Needs MUFG's app registration in Microsoft Entra ID. Until then, use a demo account."}
           </p>
           {failed && (

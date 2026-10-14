@@ -285,7 +285,7 @@ Personalized Marketplace
         ↓
 Personalized Learning
         ↓
-Eventually broader AI Hub / Super Agent
+Eventually broader Nexus / Super Agent
 ```
 
 The transition would become:

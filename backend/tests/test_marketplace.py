@@ -302,7 +302,7 @@ def test_event_types_follow_agreed_names():
 
 
 def test_documents_are_links_to_where_they_live_not_copies():
-    # The hub serves no documentation or architecture pages of its own.
+    # Nexus serves no documentation or architecture pages of its own.
     assert client.get("/api/marketplace/agents/contract-analyzer/docs").status_code == 404
     assert client.get("/api/marketplace/agents/contract-analyzer/architecture").status_code == 404
     agent = client.get("/api/marketplace/agents/contract-analyzer").json()

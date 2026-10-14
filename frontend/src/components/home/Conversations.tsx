@@ -29,7 +29,7 @@ function questions(n: number) {
   return `${n} ${n === 1 ? 'question' : 'questions'}`
 }
 
-// Each place the hub searches, as the answers name it.
+// Each place Nexus searches, as the answers name it.
 const PLACE_ICON: Record<string, LucideIcon> = {
   Prompts: Sparkles,
   Agents: Bot,

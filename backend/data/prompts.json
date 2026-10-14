@@ -1,5 +1,5 @@
 {
-  "$comment": "Prompt library. Demo data from the MUFG AI Hub design reference; every record is a sample (source_kind). Desks decide whose prompts show first: a person is on the desk whose job_titles holds their directory job title.",
+  "$comment": "Prompt library. Demo data from Nexus design reference; every record is a sample (source_kind). Desks decide whose prompts show first: a person is on the desk whose job_titles holds their directory job title.",
   "categories": [
     "Corporate Banking",
     "Investment Banking & Capital Markets",

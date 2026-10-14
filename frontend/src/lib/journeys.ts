@@ -2,7 +2,7 @@ import { ApiError, getJson, postJson } from './api'
 import type { UserContext } from './context'
 import type { Draft } from './prompts'
 
-/** Why someone came to the hub. Decided by the backend from what they typed. */
+/** Why someone came to Nexus. Decided by the backend from what they typed. */
 export type Intent = 'find' | 'learn' | 'improve' | 'ask' | 'contribute'
 
 export const INTENTS: Intent[] = ['find', 'learn', 'improve', 'ask', 'contribute']
@@ -196,7 +196,7 @@ export interface Plan {
 /** What the conversation gate made of a request. Only a task is planned and searched. */
 export type ConversationKind = 'greeting' | 'small_talk' | 'thanks' | 'goodbye' | 'help' | 'task'
 
-/** One of the hub's five capabilities, with a request to try. */
+/** One of Nexus's five capabilities, with a request to try. */
 export interface Capability {
   intent: Intent
   label: string
@@ -218,7 +218,7 @@ export interface AskResponse {
   recommended: AssetCard[]
   pillars: PillarGroup[]
   draft: Draft | null
-  /** For help, and for a request nothing in the hub matched. */
+  /** For help, and for a request nothing in Nexus matched. */
   capabilities: Capability[]
   reply: string
   /** Who wrote the reply: the model, or a fixed line from the catalogue or the conversation gate. */
@@ -251,7 +251,7 @@ export interface AskContext {
   history?: string[]
 }
 
-/** What the hub sends while it answers, in the order it happens. */
+/** What Nexus sends while it answers, in the order it happens. */
 export type HubEvent =
   | { type: 'accepted'; session_id: string }
   /** `provisional`: the rules' first reading, sent while the model plans. */
@@ -384,7 +384,7 @@ export async function askHubStream(
       onEvent(event)
     }
   }
-  if (!answer) throw new Error('The hub stopped before it finished answering. Try again.')
+  if (!answer) throw new Error('Nexus stopped before it finished answering. Try again.')
   return answer
 }
 

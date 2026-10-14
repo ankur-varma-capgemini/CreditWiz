@@ -272,7 +272,7 @@ export function LearningPage() {
                   shown on each item.
                 </p>
               )}
-              {q && !pathId && <h2 className="section-title">In the AI Hub catalog</h2>}
+              {q && !pathId && <h2 className="section-title">In the Nexus catalog</h2>}
               {current.items.length ? (
                 <div className="item-grid">
                   {current.items.map((i) => (
@@ -280,7 +280,7 @@ export function LearningPage() {
                   ))}
                 </div>
               ) : (
-                <div className="state">{q ? `Nothing in the hub's catalog matches “${q}”.` : 'No learning matches these filters.'}</div>
+                <div className="state">{q ? `Nothing in Nexus's catalog matches “${q}”.` : 'No learning matches these filters.'}</div>
               )}
               {/* One search bar for all: the same words, in Pluralsight's and Microsoft Learn's own libraries. */}
               {q && !pathId && <ProviderSearch q={q} source={source} catalog={current.items} />}

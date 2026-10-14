@@ -5,8 +5,8 @@ import type { AskResponse } from './journeys'
 /**
  * Home's conversations, to come back to as in Claude or ChatGPT.
  *
- * Kept in this browser, per account, and never sent to the hub to keep: a
- * question can name a client, and the hub's servers hold ids only (see
+ * Kept in this browser, per account, and never sent to Nexus to keep: a
+ * question can name a client, and Nexus's servers hold ids only (see
  * hub/telemetry.py). A question still being answered lives in memory, so an
  * answer keeps arriving in its own conversation while another one is open.
  */
@@ -16,7 +16,7 @@ export interface Chat {
   title: string | null
   created_at: string
   updated_at: string
-  /** The hub's id for the conversation, which ties its turns together in telemetry. */
+  /** Nexus's id for the conversation, which ties its turns together in telemetry. */
   session_id: string
   turns: Turn[]
 }
@@ -205,7 +205,7 @@ export function updateTurn(user: string, chatId: string, turnId: number, fn: (tu
   onTurn(user, chatId, turnId, fn, false)
 }
 
-/** The whole answer: saved, with the hub's id for the conversation. */
+/** The whole answer: saved, with Nexus's id for the conversation. */
 export function finishTurn(user: string, chatId: string, turnId: number, ask: AskResponse) {
   const done = (t: Turn): Turn => ({ ...t, status: 'done', ask, live: undefined })
   change(

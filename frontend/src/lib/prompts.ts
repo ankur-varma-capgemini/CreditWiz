@@ -148,7 +148,7 @@ export type Audience = 'team' | 'department' | 'everyone'
 export const AUDIENCE_LABEL: Record<Audience, string> = {
   team: 'your desk',
   department: 'your department',
-  everyone: 'everyone on the hub',
+  everyone: 'everyone on Nexus',
 }
 
 export const RELATION_LABEL: Record<Relation, string> = {

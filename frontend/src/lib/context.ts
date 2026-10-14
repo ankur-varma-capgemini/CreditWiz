@@ -1,11 +1,11 @@
 import { getJson, postJson } from './api'
 /**
- * Shared AI Hub user-context client.
+ * Shared Nexus user-context client.
  *
  *   ALL PILLARS -> track()/sendFeedback() -> /api/context/*  -> shared footprint store
  *
  * No pillar owns this. Marketplace, Learning and every future pillar call the
- * same functions so one user context is assembled across the hub.
+ * same functions so one user context is assembled across Nexus.
  */
 
 export type Pillar =
@@ -34,7 +34,7 @@ export interface InterestSignal {
 
 export type Maturity = 'beginner' | 'developing' | 'experienced'
 
-/** Who the person is, as the hub understands them. A profile, not a memory. */
+/** Who the person is, as Nexus understands them. A profile, not a memory. */
 export interface UserContext {
   user_id: string
   display_name: string

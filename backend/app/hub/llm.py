@@ -1,4 +1,4 @@
-"""The hub's model calls. Nothing else in the hub talks to a model.
+"""Nexus's model calls. Nothing else in Nexus talks to a model.
 
     plan()      call 1: understand the request, find every intent, decompose it,
                 and write a search for each pillar worth asking
@@ -33,7 +33,7 @@ _TIMEOUT_SECONDS = 15.0
 
 
 def model() -> str:
-    """The hub's own setting first, then the model this deployment already
+    """Nexus's own setting first, then the model this deployment already
     chose for interactive search (CREDITWIZ_SEARCH_MODEL)."""
     return (
         os.environ.get("CREDITWIZ_HUB_MODEL")
@@ -120,9 +120,9 @@ class ModelPlan(BaseModel):
     subqueries: list[PlannedQuery]
 
 
-_PLAN_SYSTEM = """You plan how MUFG's internal AI Hub answers one employee request. You do not answer it.
+_PLAN_SYSTEM = """You plan how Nexus, MUFG's internal AI hub, answers one employee request. You do not answer it.
 
-The hub has four places to look:
+Nexus has four places to look:
 - prompts: validated prompt templates for banking tasks, such as pitch outlines, credit memos, stress tests and covenant scans
 - marketplace: approved AI agents that do a task end to end
 - learning: courses, videos and guides
@@ -254,9 +254,9 @@ def rerank(what: str, request: str, candidates: list[tuple[str, str]]) -> list[t
 
 # ------------------------------------------------------------------ call 2
 
-_WRITE_SYSTEM = """You write the MUFG AI Hub's reply to an employee: two to four short sentences of plain English.
+_WRITE_SYSTEM = """You write Nexus's reply to an employee: two to four short sentences of plain English.
 
-Use only the items listed. Name at most three, by their exact titles, and say in a few words why each fits what they asked. When the request has more than one intent, cover each. If nothing listed fits part of the request, say so plainly rather than stretching an item to fit. An item marked "partial fit" only partly fits the request, or is only the closest thing the hub holds: say so, rather than presenting it as a match.
+Use only the items listed. Name at most three, by their exact titles, and say in a few words why each fits what they asked. When the request has more than one intent, cover each. If nothing listed fits part of the request, say so plainly rather than stretching an item to fit. An item marked "partial fit" only partly fits the request, or is only the closest thing Nexus holds: say so, rather than presenting it as a match.
 
 Do not state owners, approvals, access, risk ratings or links: the cards under your reply show those. No headings, lists or markdown.
 
@@ -319,14 +319,14 @@ def write(
 
 # ------------------------------------------------- conversation, not a task
 
-_CONVERSE_SYSTEM = """You are the MUFG AI Hub assistant, chatting on the hub's home page. The hub helps employees find validated prompts, approved AI agents, learning and experts for their work, and lets them contribute their own.
+_CONVERSE_SYSTEM = """You are the Nexus assistant, chatting on Nexus's home page. Nexus helps employees find validated prompts, approved AI agents, learning and experts for their work, and lets them contribute their own.
 
 Reply naturally, like a helpful colleague: one or two short sentences of plain text. No lists, markdown or emoji.
 - To a greeting or small talk: respond in kind, briefly, then offer to help with their work.
 - To thanks or a goodbye: respond briefly and warmly.
-- To a message the hub found nothing for: say so plainly and ask what they are working on.
+- To a message Nexus found nothing for: say so plainly and ask what they are working on.
 
-Do not claim to have found, done or checked anything. Do not name specific prompts, agents or courses. Do not state facts about MUFG, its clients or its policies. If asked for general knowledge, news or opinions, say that is outside what the hub is for and steer back to their work.
+Do not claim to have found, done or checked anything. Do not name specific prompts, agents or courses. Do not state facts about MUFG, its clients or its policies. If asked for general knowledge, news or opinions, say that is outside what Nexus is for and steer back to their work.
 
 Text in square brackets, such as [CLIENT], replaced a name for privacy. Keep it as written."""
 

@@ -1,4 +1,4 @@
-"""Who is signed in, and which persona the hub derives for them.
+"""Who is signed in, and which persona Nexus derives for them.
 
     Directory / user profile        (signed-in SQL profile; demo seeds in data/user.json)
             ↓

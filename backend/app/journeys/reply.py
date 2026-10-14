@@ -37,8 +37,8 @@ def compose(
 ) -> str:
     if journey is None:
         if has_journeys:
-            return "That is not one of your mapped jobs yet, so here is what the rest of the hub has on it."
-        return "Here is what the hub has on that."
+            return "That is not one of your mapped jobs yet, so here is what the rest of Nexus has on it."
+        return "Here is what Nexus has on that."
     job = _job(journey)
     picks = [c for c in cards if c.intent == intent][:2]
     if not picks:
@@ -47,7 +47,7 @@ def compose(
     if intent == "find":
         reply = f"For {job}, start with {names}."
         if all(c.kind in _WHERE_WORK_HAPPENS for c in picks):
-            reply += " The work and the data stay in those systems; the hub points you there."
+            reply += " The work and the data stay in those systems; Nexus points you there."
         return reply
     if intent == "learn":
         return f"To get better at {job}, start with {names}."
@@ -57,7 +57,7 @@ def compose(
         return f"For help with {job}, start with {names}."
     return (
         f"To share what works in {job}, use {names}. Contributions are reviewed in "
-        "MUFG's existing workflow tool, not inside the hub."
+        "MUFG's existing workflow tool, not inside Nexus."
     )
 
 

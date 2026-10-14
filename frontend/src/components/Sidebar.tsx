@@ -53,12 +53,12 @@ export function Sidebar({ pillars, open = false, onClose }: Props) {
     <>
       {open && <button type="button" className="scrim" aria-label="Close menu" onClick={onClose} />}
       <aside className={`sidebar${open ? ' sidebar--open' : ''}`} aria-label="Primary">
-      <NavLink to="/" className="brand" aria-label="MUFG AI Hub home">
+      <NavLink to="/" className="brand" aria-label="Nexus home">
         <div className="brand__logo">
           <MufgLogo />
         </div>
         <div className="brand__product">
-          <div className="brand__wordmark">MUFG AI Hub</div>
+          <div className="brand__wordmark">Nexus</div>
           <div className="brand__tagline">Enterprise · Americas</div>
         </div>
       </NavLink>

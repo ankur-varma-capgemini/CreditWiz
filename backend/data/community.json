@@ -1,7 +1,7 @@
 {
-  "_about": "Sample community content for the local proof of concept. It is not Viva Engage data and every person in it is fictional. The hub shows it only while Viva Engage is not connected, and says so on the page.",
+  "_about": "Sample community content for the local proof of concept. It is not Viva Engage data and every person in it is fictional. Nexus shows it only while Viva Engage is not connected, and says so on the page.",
   "people": [
-    { "id": "p-ana-ortega", "name": "Ana Ortega", "title": "AI Hub product owner" },
+    { "id": "p-ana-ortega", "name": "Ana Ortega", "title": "Nexus product owner" },
     { "id": "p-daniel-price", "name": "Daniel Price", "title": "Developer, AI platform" },
     { "id": "p-mei-lin", "name": "Mei Lin", "title": "Responsible AI lead" },
     { "id": "p-samuel-adeyemi", "name": "Samuel Adeyemi", "title": "Relationship manager" },
@@ -15,11 +15,11 @@
   "communities": [
     {
       "id": "ai-hub",
-      "name": "AI Hub Community",
-      "description": "News, questions and ideas about the MUFG AI Hub.",
+      "name": "Nexus Community",
+      "description": "News, questions and ideas about Nexus.",
       "privacy": "public",
       "member_count": 1860,
-      "topics": ["AI Hub", "Announcements"],
+      "topics": ["Nexus", "Announcements"],
       "personas": []
     },
     {
@@ -100,12 +100,12 @@
       "created_at": "2026-10-01T15:00:00Z",
       "kind": "announcement",
       "title": "Pluralsight and Microsoft Learn now sit side by side in Learning",
-      "body": "You can browse both catalogs in the AI Hub, open any course's details without leaving the page, and read Microsoft Learn modules right here. Pluralsight videos still play on Pluralsight's own site.",
-      "topics": ["Learning", "AI Hub"],
+      "body": "You can browse both catalogs in Nexus, open any course's details without leaving the page, and read Microsoft Learn modules right here. Pluralsight videos still play on Pluralsight's own site.",
+      "topics": ["Learning", "Nexus"],
       "likes": 34,
       "replies": [
         { "id": "r-102-1", "author": "p-grace-kim", "created_at": "2026-10-01T15:42:00Z", "body": "The role-based recommendations now draw on both catalogs, so check For You again.", "likes": 9 },
-        { "id": "r-102-2", "author": "p-tom-becker", "created_at": "2026-10-01T16:20:00Z", "body": "Reading the Learn units in the hub is a real time saver. No more twenty open tabs.", "likes": 5 }
+        { "id": "r-102-2", "author": "p-tom-becker", "created_at": "2026-10-01T16:20:00Z", "body": "Reading the Learn units in Nexus is a real time saver. No more twenty open tabs.", "likes": 5 }
       ]
     },
     {
@@ -191,7 +191,7 @@
       "topics": ["Learning", "Generative AI"],
       "likes": 7,
       "replies": [
-        { "id": "r-108-1", "author": "p-grace-kim", "created_at": "2026-09-25T09:40:00Z", "body": "Start with Microsoft Learn's Explore Generative AI. It is short and you can read it inside the hub. Then take a Pluralsight course for depth in your area.", "likes": 6 },
+        { "id": "r-108-1", "author": "p-grace-kim", "created_at": "2026-09-25T09:40:00Z", "body": "Start with Microsoft Learn's Explore Generative AI. It is short and you can read it inside Nexus. Then take a Pluralsight course for depth in your area.", "likes": 6 },
         { "id": "r-108-2", "author": "p-omar-haddad", "created_at": "2026-09-25T10:10:00Z", "body": "Perfect, starting today.", "likes": 0 }
       ]
     },
@@ -216,7 +216,7 @@
       "created_at": "2026-09-23T10:00:00Z",
       "kind": "question",
       "body": "Where do I ask for access to an agent?",
-      "topics": ["AI Hub"],
+      "topics": ["Nexus"],
       "likes": 5,
       "replies": [
         { "id": "r-110-1", "author": "p-ana-ortega", "created_at": "2026-09-23T10:20:00Z", "body": "Open the agent's page in Discover and choose Request access. You can follow the request from your account page.", "likes": 4 }

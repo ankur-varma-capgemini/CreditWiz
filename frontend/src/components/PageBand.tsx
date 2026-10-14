@@ -14,7 +14,7 @@ interface Props {
 }
 
 /**
- * The light header every page opens with. One consistent anchor across the hub:
+ * The light header every page opens with. One consistent anchor across Nexus:
  * kicker, title, lead, an optional control row and an optional right-hand slot.
  */
 export function PageBand({ title, lead, aside, children, compact, kicker }: Props) {

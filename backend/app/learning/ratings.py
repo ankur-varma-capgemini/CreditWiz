@@ -23,7 +23,7 @@ MIN_SHOWN = 3
 # Shrinkage strength: how many "catalogue average" votes every item starts with.
 PRIOR_WEIGHT = 5.0
 # The catalogue mean is itself shrunk toward the midpoint, because early on the
-# catalogue is a handful of votes. Without this, the first rating in the hub is
+# catalogue is a handful of votes. Without this, the first rating in Nexus is
 # the catalogue mean, shrinking it toward itself is a no-op, and a lone 5 lands
 # at exactly 5.0 -- the thing the weighting exists to prevent.
 CATALOG_PRIOR = 10.0

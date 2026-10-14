@@ -31,7 +31,7 @@ def production() -> bool:
 def user_id() -> str:
     value = current_id.get()
     if not value:
-        raise HTTPException(401, "Sign in to the MUFG AI Hub")
+        raise HTTPException(401, "Sign in to Nexus")
     return value
 
 

@@ -47,7 +47,7 @@ interface Props {
  * The Super Agent: one conversation across every pillar. Before the first
  * question: the composer, suggestions and recent conversations. After it: a
  * transcript filling the screen, with the composer resting at its foot. Each
- * reply comes from /api/ask, the hub's graph: the job, what every pillar
+ * reply comes from /api/ask, Nexus's graph: the job, what every pillar
  * found, and how it was chosen.
  *
  * Every conversation is kept (lib/chats). The latest are listed under the
@@ -126,7 +126,7 @@ export function SuperAgentChat({ userId, firstName, initials, persona, personaLa
           : { surface: 'chat', kind: ask.kind },
       })
     } catch (e: unknown) {
-      const error = e instanceof Error ? e.message : 'The hub could not answer just now.'
+      const error = e instanceof Error ? e.message : 'Nexus could not answer just now.'
       updateTurn(userId, current.id, id, (t) => ({ ...t, status: 'error', error, live: undefined }))
     }
   }

@@ -1,6 +1,6 @@
 """Which connected systems are live for this person, and what blocks the rest.
 
-When a system is not live the hub still works, on sample content, and this is
+When a system is not live Nexus still works, on sample content, and this is
 where it says exactly which credential or permission is missing, in words an
 MUFG administrator can act on. Errors are the systems' own short reasons
 (an AADSTS code, an HTTP status); never a token or anything a person wrote.
@@ -69,7 +69,7 @@ class Integration(BaseModel):
     # The system's own reason for the last failure, when there was one.
     blocking: str = ""
     needs: list[Need]
-    # What the hub calls once it is live.
+    # What Nexus calls once it is live.
     calls: list[str]
     # Where the integration lives in the code.
     code: str
@@ -87,9 +87,9 @@ def _entra(uid: str | None) -> Integration:
     blocking = last_error("entra", uid) or last_error("entra", None)
     state: State = "blocked" if blocking else "live" if signed_in else "signed_out" if configured else "not_configured"
     summary = {
-        "live": "You are signed in with your Microsoft account. The hub holds your tokens on the server only.",
-        "signed_out": "Ready. Sign in with Microsoft to let the hub call Microsoft 365 as you.",
-        "not_configured": "Not set up. The hub needs MUFG's app registration in Microsoft Entra ID.",
+        "live": "You are signed in with your Microsoft account. Nexus holds your tokens on the server only.",
+        "signed_out": "Ready. Sign in with Microsoft to let Nexus call Microsoft 365 as you.",
+        "not_configured": "Not set up. Nexus needs MUFG's app registration in Microsoft Entra ID.",
         "blocked": "Sign-in failed. The reason Microsoft gave is below.",
         "sample": "",
     }[state]
@@ -101,7 +101,7 @@ def _entra(uid: str | None) -> Integration:
         blocking=blocking,
         needs=[
             Need(what="Directory (tenant) ID of MUFG's Entra tenant", setting="ENTRA_TENANT_ID", met=_set("ENTRA_TENANT_ID")),
-            Need(what="Application (client) ID of an app registration for the hub", setting="ENTRA_CLIENT_ID", met=_set("ENTRA_CLIENT_ID")),
+            Need(what="Application (client) ID of an app registration for Nexus", setting="ENTRA_CLIENT_ID", met=_set("ENTRA_CLIENT_ID")),
             Need(what="A client secret for that app registration", setting="ENTRA_CLIENT_SECRET", met=_set("ENTRA_CLIENT_SECRET")),
             Need(
                 what=f"Redirect URI {entra.redirect_uri()} added to the app registration (Web platform)",
@@ -226,10 +226,10 @@ def _microsoft_learn() -> Integration:
         summary=(
             "Microsoft Learn didn't answer the last call. The reason is below."
             if blocking
-            else "Live. Search and read Learn modules in the hub through Microsoft's public Learn MCP server; no credentials needed."
+            else "Live. Search and read Learn modules in Nexus through Microsoft's public Learn MCP server; no credentials needed."
         ),
         blocking=blocking,
-        needs=[Need(what="Outbound HTTPS from the hub to learn.microsoft.com", met=not blocking)],
+        needs=[Need(what="Outbound HTTPS from Nexus to learn.microsoft.com", met=not blocking)],
         calls=[
             "POST https://learn.microsoft.com/api/mcp microsoft_docs_search (search Learn)",
             "POST https://learn.microsoft.com/api/mcp microsoft_docs_fetch (read a module or unit as markdown)",

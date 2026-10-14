@@ -17,7 +17,7 @@ ConversationKind = Literal["greeting", "small_talk", "thanks", "goodbye", "help"
 
 
 class Capability(BaseModel):
-    """One of the hub's five capabilities, as the help answer presents it."""
+    """One of Nexus's five capabilities, as the help answer presents it."""
 
     intent: Intent
     label: str
@@ -131,7 +131,7 @@ class AskResponse(BaseModel):
     pillars: list[PillarGroup] = []
     # A prompt written from validated ones, when they asked for one.
     draft: Draft | None = None
-    # For help, and for a request nothing in the hub matched: what the hub
+    # For help, and for a request nothing in Nexus matched: what Nexus
     # can do, each with a request to try.
     capabilities: list[Capability] = []
     reply: str

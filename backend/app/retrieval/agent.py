@@ -40,7 +40,7 @@ KEYWORD_RELATIVE_FLOOR = 0.5
 # A keyword rescue must rest on most of what was typed. One shared word, such
 # as "best" in "best pizza near me", scores as high as a rare acronym and
 # would rescue anything that happens to contain it. Half the query's terms:
-# the rule every word search on the hub already uses.
+# the rule every word search on Nexus already uses.
 KEYWORD_COVERAGE = 0.5
 RRF_K = 60
 # The shortlist each agent returns, and the most the reranker reads.

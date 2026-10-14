@@ -54,7 +54,7 @@ class Asset(BaseModel):
     kind: AssetKind
     title: str
     summary: str
-    # The system where the work happens. Blank when the asset is used in the hub.
+    # The system where the work happens. Blank when the asset is used in Nexus.
     provided_by: str = ""
     action_label: str = ""
     action_url: str = ""

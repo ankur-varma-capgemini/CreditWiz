@@ -96,7 +96,7 @@ def _card(p: Prompt, viewer: Desk | None, saved: set[str]) -> PromptCard:
 
 
 def cards(prompts: list[Prompt]) -> list[PromptCard]:
-    """Cards for the signed-in viewer. Used by the hub's prompts pillar too."""
+    """Cards for the signed-in viewer. Used by Nexus's prompts pillar too."""
     viewer, saved = _viewer(), _saved()
     return [_card(p, viewer, saved) for p in prompts]
 

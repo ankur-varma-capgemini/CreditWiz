@@ -1,6 +1,6 @@
 """The home assistant's API.
 
-    POST /api/ask                              one question, answered across the hub
+    POST /api/ask                              one question, answered across Nexus
     POST /api/ask/stream                       the same, as server-sent events
     POST /api/ask/turns/{turn_id}/feedback     was the answer helpful
     POST /api/ask/turns/{turn_id}/selected     which recommendation they opened
@@ -190,7 +190,7 @@ def ask_stream(req: AskRequest) -> StreamingResponse:
             events.put({"type": "complete", "response": _response(req, final, took).model_dump(mode="json")})
         except Exception as exc:  # noqa: BLE001 - the page is told; the request is never logged
             log.warning("hub stream failed: %s", type(exc).__name__)
-            events.put({"type": "error", "message": "The hub could not answer just now. Try again."})
+            events.put({"type": "error", "message": "Nexus could not answer just now. Try again."})
         finally:
             events.put(None)
 
